@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.jregex</groupId>
+  <artifactId>jregex</artifactId>
+  <version>1.2_01</version>
+  <versioning>
+    <versions>
+      <version>1.2_01</version>
+    </versions>
+    <lastUpdated>20101015141927</lastUpdated>
+  </versioning>
+</metadata>
