@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+    <artifactId>play</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.3.2</version>
+
+    <name>...</name>
+    <description>...</description>
+    <url>http://www.playframework.org</url>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.9.0.GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.jdmk</groupId>
+                    <artifactId>jmxtools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jmx</groupId>
+                    <artifactId>jmxri</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.oval</groupId>
+            <artifactId>oval</artifactId>
+            <version>1.31</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>jline</groupId>
+                    <artifactId>jline</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.fusesource.jansi</groupId>
+                    <artifactId>jansi</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>ejb3-persistence</artifactId>
+            <version>1.0.2.GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+            <artifactId>hibernate3</artifactId>
+            <version>1.0.3.2</version> <!-- zmienic -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+            <artifactId>hibernate3-ast</artifactId>
+            <version>1.0.3.2</version> <!-- zmienic -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.jregex</groupId>
+            <artifactId>jregex</artifactId>
+            <version>1.2_01</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.com.jamonapi</groupId>
+            <artifactId>jamon</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+    </dependencies>
+</project>
