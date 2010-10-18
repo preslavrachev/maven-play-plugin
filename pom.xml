@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.0-alpha1</version>
+    <version>1.0.0-alpha2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Play! framework Maven Plugin Parent</name>
@@ -29,9 +29,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/tags/parent-1.0.0-alpha1</connection>
-        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/tags/parent-1.0.0-alpha1</developerConnection>
-        <url>http://code.google.com/p/maven-play-plugin/source/browse/tags/parent-1.0.0-alpha1</url>
+        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/</developerConnection>
+        <url>http://code.google.com/p/maven-play-plugin/source/browse/</url>
     </scm>
 
     <issueManagement>
