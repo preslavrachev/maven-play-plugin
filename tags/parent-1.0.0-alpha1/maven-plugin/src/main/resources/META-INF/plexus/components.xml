@@ -1,0 +1,91 @@
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+-->
+<component-set>
+  <components>
+    <component>
+      <role>org.apache.maven.lifecycle.mapping.LifecycleMapping</role>
+      <role-hint>play</role-hint>
+      <implementation>org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping</implementation>
+      <configuration>
+        <lifecycles>
+          <lifecycle>
+            <id>default</id>
+            <!-- START SNIPPET: bundle-lifecycle -->
+            <phases>
+              <generate-sources>
+                com.google.code.maven-play-plugin:maven-play-plugin:add-app-source,
+                com.google.code.maven-play-plugin:maven-play-plugin:add-module-app-sources
+              </generate-sources>
+              <generate-resources>
+                com.google.code.maven-play-plugin:maven-play-plugin:add-app-resource,
+                com.google.code.maven-play-plugin:maven-play-plugin:add-module-app-resources
+              </generate-resources>
+<!--              <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>-->
+              <compile>
+                org.apache.maven.plugins:maven-compiler-plugin:compile
+              </compile>
+              <generate-test-sources>
+                com.google.code.maven-play-plugin:maven-play-plugin:add-test-source
+              </generate-test-sources>
+              <generate-test-resources>
+                com.google.code.maven-play-plugin:maven-play-plugin:add-test-resource
+              </generate-test-resources>
+<!--              <process-test-resources>org.apache.maven.plugins:maven-resources-plugin:testResources</process-test-resources>-->
+              <test-compile>
+                org.apache.maven.plugins:maven-compiler-plugin:testCompile
+              </test-compile>
+<!-- not finished yet
+              <process-test-classes>
+                com.google.code.maven-play-plugin:maven-play-plugin:cobertura-helper
+              </process-test-classes>
+-->
+              <test>
+                com.google.code.maven-play-plugin:maven-play-plugin:test
+              </test>
+<!--              <package>org.apache.felix:maven-bundle-plugin:bundle</package>-->
+<!--              <package>org.apache.maven.plugins:maven-jar-plugin:jar</package>??-->
+              <package>
+                com.google.code.maven-play-plugin:maven-play-plugin:zip
+              </package><!--??-->
+              <install>
+                org.apache.maven.plugins:maven-install-plugin:install
+              </install>
+              <deploy>
+                org.apache.maven.plugins:maven-deploy-plugin:deploy
+              </deploy>
+            </phases>
+            <!-- END SNIPPET: bundle-lifecycle -->
+          </lifecycle>
+        </lifecycles>
+      </configuration>
+    </component>
+    <component>
+      <role>org.apache.maven.artifact.handler.ArtifactHandler</role>
+      <role-hint>play</role-hint>
+      <implementation>org.apache.maven.artifact.handler.DefaultArtifactHandler</implementation>
+      <configuration>
+        <type>play</type>
+        <includesDependencies>false</includesDependencies>
+        <language>java</language>
+        <extension>zip</extension>
+        <addedToClasspath>false</addedToClasspath>
+      </configuration>
+    </component>
+  </components>
+</component-set>
