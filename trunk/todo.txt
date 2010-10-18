@@ -1,0 +1,8 @@
+- TODO z mojo test (na koncu pliku)
+- TODO z mojo war (na koncu pliku)
+- w mojo 'uberzip' dodac modyfikacje sciezek do modulow tak, jak w mojo 'war'
+- nowe mojo "war-exploded"?
+...
+- dynamiczny download frameworku play!, jezeli nie zdefiniowana zmienna ${play.home}
+- dynamiczny download modulu, jezeli go nie ma we frameworku Play!
+
