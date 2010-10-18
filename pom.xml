@@ -24,7 +24,7 @@
         <site>
             <id>com.google.code.maven-play-plugin-sites</id>
             <name>Maven Play Plugin - sites</name>
-            <url>dav:https://maven-play-plugin.googlecode.com/svn/sites/${project.artifactId}/${project.version}</url>
+            <url>dav:https://maven-play-plugin.googlecode.com/svn/mavensite/${project.version}</url>
         </site>
     </distributionManagement>
 
