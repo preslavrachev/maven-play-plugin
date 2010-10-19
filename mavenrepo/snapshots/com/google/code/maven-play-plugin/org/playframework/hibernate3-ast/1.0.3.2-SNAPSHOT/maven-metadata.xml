@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+  <artifactId>hibernate3-ast</artifactId>
+  <version>1.0.3.2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20101019.074700</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20101019074701</lastUpdated>
+  </versioning>
+</metadata>
