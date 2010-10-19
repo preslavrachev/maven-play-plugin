@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.yaml</groupId>
+  <artifactId>snakeyaml</artifactId>
+  <version>1.2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20101019.083322</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20101019083323</lastUpdated>
+  </versioning>
+</metadata>
