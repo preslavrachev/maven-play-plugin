@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <plugins>
+    <plugin>
+      <name>Play! framework Maven Plugin</name>
+      <prefix>play</prefix>
+      <artifactId>maven-play-plugin</artifactId>
+    </plugin>
+  </plugins>
+</metadata>
