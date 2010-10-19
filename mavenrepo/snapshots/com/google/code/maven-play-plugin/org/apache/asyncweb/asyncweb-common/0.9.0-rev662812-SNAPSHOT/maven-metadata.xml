@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin..org.apache.asyncweb</groupId>
+  <artifactId>asyncweb-common</artifactId>
+  <version>0.9.0-rev662812-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20101019.090152</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20101019090155</lastUpdated>
+  </versioning>
+</metadata>
