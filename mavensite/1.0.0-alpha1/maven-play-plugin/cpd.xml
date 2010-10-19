@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="27" tokens="107">
+<file line="38" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\target\checkout\maven-plugin\src\main\java\com\google\code\play\PlayAddModuleAppResourcesMojo.java"/>
+<file line="37" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\target\checkout\maven-plugin\src\main\java\com\google\code\play\PlayAddModuleAppSourcesMojo.java"/>
+<codefragment>
+<![CDATA[
+    extends AbstractPlayMojo
+{
+
+    /**
+     * ...
+     * 
+     * @parameter expression="${play.compileApp}"
+     */
+    private boolean compileApp;
+
+    protected void internalExecute()
+        throws MojoExecutionException, MojoFailureException, IOException
+    {
+        if ( compileApp )
+        {
+            File baseDir = project.getBasedir();
+
+            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playHome, playId );
+            configParser.parse();
+            Map<String, File> modules = configParser.getModules();
+
+            for ( String moduleName : modules.keySet() )
+            {
+                File modulePath = modules.get( moduleName );
+                File moduleAppPath = new File( modulePath, "app" );
+                if ( moduleAppPath.isDirectory() )
+                {
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>

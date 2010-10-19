@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.2.5" timestamp="2010-10-19T08:35:43.593">
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\target\checkout\maven-plugin\src\main\java\com\google\code\play\AbstractPlayMojo.java">
+<violation beginline="220" endline="224" begincolumn="17" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="com.google.code.play" class="AbstractPlayMojo" method="loadModules" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+Avoid empty if statements
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\target\checkout\maven-plugin\src\main\java\com\google\code\play\PlayWarMojo.java">
+<violation beginline="218" endline="255" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="com.google.code.play" class="PlayWarMojo" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'modules'.
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\target\checkout\maven-plugin\src\main\java\com\google\code\play\TestRunner.java">
+<violation beginline="112" endline="112" begincolumn="47" endcolumn="65" rule="AvoidThreadGroup" ruleset="Basic Rules" package="com.google.code.play" class="TestRunner" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidThreadGroup" priority="3">
+Avoid using ThreadGroup; it is not thread safe
+</violation>
+<violation beginline="330" endline="330" begincolumn="43" endcolumn="57" rule="AvoidThreadGroup" ruleset="Basic Rules" package="com.google.code.play" class="TestRunner" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidThreadGroup" priority="3">
+Avoid using ThreadGroup; it is not thread safe
+</violation>
+<violation beginline="337" endline="337" begincolumn="43" endcolumn="57" rule="AvoidThreadGroup" ruleset="Basic Rules" package="com.google.code.play" class="TestRunner" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#AvoidThreadGroup" priority="3">
+Avoid using ThreadGroup; it is not thread safe
+</violation>
+</file>
+</pmd>
