@@ -94,6 +94,9 @@ public class PlayZipMojo
             }
 
             zipArchiver.createArchive();
+
+            project.getArtifact().setFile( destFile );
+
         }
         catch ( ArchiverException e )
         {
