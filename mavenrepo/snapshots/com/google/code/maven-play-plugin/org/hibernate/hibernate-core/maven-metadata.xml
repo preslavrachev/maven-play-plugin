@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.hibernate</groupId>
+  <artifactId>hibernate-core</artifactId>
+  <version>3.5.6-Final-patched-SNAPSHOT</version>
+  <versioning>
+    <versions>
+      <version>3.5.6-Final-patched-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20101222121613</lastUpdated>
+  </versioning>
+</metadata>
