@@ -26,7 +26,6 @@
         <lifecycles>
           <lifecycle>
             <id>default</id>
-            <!-- START SNIPPET: bundle-lifecycle -->
             <phases>
               <generate-sources>
                 com.google.code.maven-play-plugin:maven-play-plugin:add-app-source,
@@ -36,33 +35,33 @@
                 com.google.code.maven-play-plugin:maven-play-plugin:add-app-resource,
                 com.google.code.maven-play-plugin:maven-play-plugin:add-module-app-resources
               </generate-resources>
-<!--              <process-resources>org.apache.maven.plugins:maven-resources-plugin:resources</process-resources>-->
               <compile>
                 org.apache.maven.plugins:maven-compiler-plugin:compile
               </compile>
               <generate-test-sources>
-                com.google.code.maven-play-plugin:maven-play-plugin:add-test-source
+                com.google.code.maven-play-plugin:maven-play-plugin:add-test-source,
+                com.google.code.maven-play-plugin:maven-play-plugin:generate-selenium-junit4-sources
               </generate-test-sources>
               <generate-test-resources>
                 com.google.code.maven-play-plugin:maven-play-plugin:add-test-resource
               </generate-test-resources>
-<!--              <process-test-resources>org.apache.maven.plugins:maven-resources-plugin:testResources</process-test-resources>-->
               <test-compile>
                 org.apache.maven.plugins:maven-compiler-plugin:testCompile
               </test-compile>
-<!-- not finished yet
-              <process-test-classes>
-                com.google.code.maven-play-plugin:maven-play-plugin:cobertura-helper
-              </process-test-classes>
--->
               <test>
-                com.google.code.maven-play-plugin:maven-play-plugin:test
+                org.apache.maven.plugins:maven-surefire-plugin:test
               </test>
-<!--              <package>org.apache.felix:maven-bundle-plugin:bundle</package>-->
-<!--              <package>org.apache.maven.plugins:maven-jar-plugin:jar</package>??-->
               <package>
                 com.google.code.maven-play-plugin:maven-play-plugin:zip
               </package><!--??-->
+              <pre-integration-test>
+                com.google.code.maven-play-plugin:maven-play-plugin:start-server
+              </pre-integration-test>
+              <integration-test>
+              </integration-test>
+              <post-integration-test>
+                com.google.code.maven-play-plugin:maven-play-plugin:stop-server
+              </post-integration-test>
               <install>
                 org.apache.maven.plugins:maven-install-plugin:install
               </install>
@@ -70,7 +69,6 @@
                 org.apache.maven.plugins:maven-deploy-plugin:deploy
               </deploy>
             </phases>
-            <!-- END SNIPPET: bundle-lifecycle -->
           </lifecycle>
         </lifecycles>
       </configuration>

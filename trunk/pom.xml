@@ -6,9 +6,28 @@
     <version>1.0.0-alpha2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Play! framework Maven Plugin Parent</name>
+    <name>Play! Framework Maven Plugin Parent</name>
     <inceptionYear>2010</inceptionYear>
     <url>http://maven-play-plugin.googlecode.com/svn/mavensite/${project.version}</url>
+
+    <repositories>
+        <repository>
+            <id>com.google.code.maven-play-plugin</id>
+            <name>Maven Play Plugin - releases</name>
+            <url>https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>com.google.code.maven-play-plugin-snapshots</id>
+            <name>Maven Play Plugin - snapshots</name>
+            <url>https://maven-play-plugin.googlecode.com/svn/mavenrepo/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <repository>
@@ -41,6 +60,8 @@
 
     <modules>
         <module>maven-plugin</module>
+        <module>play-server-booter</module>
+        <module>surefire-play-junit4</module>
     </modules>
 
     <developers>
