@@ -5,4 +5,11 @@
 ...
 - dynamiczny download frameworku play!, jezeli nie zdefiniowana zmienna ${play.home}
 - dynamiczny download modulu, jezeli go nie ma we frameworku Play!
+- archetypy: aplikacja, modul(?)
 
+
+
+- poprawic generacje testow Selenium (obsluga np. #include)
+- usunac selenium plugin z components.xml, trzeba dodawac do pom'a
+
+- przed wersja 1.0 dodac wszedzie tagi "@since"

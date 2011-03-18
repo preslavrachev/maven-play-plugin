@@ -56,13 +56,13 @@ public class PlayZipMojo
      */
     private String zipName;
 
-    /**
-     * Classifier to add to the generated ZIP. If given, the artifact will be an attachment instead.??? The classifier
-     * will not be applied to the jar file of the project - only to the zip file.
-     * 
-     * @parameter
-     */
-    private String classifier;
+    // /**
+    // * Classifier to add to the generated ZIP. If given, the artifact will be an attachment instead.??? The classifier
+    // * will not be applied to the jar file of the project - only to the zip file.
+    // *
+    // * @parameter
+    // */
+    // private String classifier;
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
@@ -70,7 +70,8 @@ public class PlayZipMojo
         try
         {
             File baseDir = project.getBasedir();
-            File destFile = new File( outputDirectory, getDestinationFileName() );
+            File destFile = new File( outputDirectory, zipName + ".zip" );
+            // File destFile = new File( outputDirectory, getDestinationFileName() );
 
             ZipArchiver zipArchiver = new ZipArchiver();
             zipArchiver.setDuplicateBehavior( Archiver.DUPLICATES_FAIL );// Just in case
@@ -104,20 +105,20 @@ public class PlayZipMojo
         }
     }
 
-    private String getDestinationFileName()
-    {
-        StringBuffer buf = new StringBuffer();
-        buf.append( zipName );
-        if ( classifier != null && !"".equals( classifier ) )
-        {
-            if ( !classifier.startsWith( "-" ) )
-            {
-                buf.append( '-' );
-            }
-            buf.append( classifier );
-        }
-        buf.append( ".zip" );
-        return buf.toString();
-    }
+    // private String getDestinationFileName()
+    // {
+    // StringBuffer buf = new StringBuffer();
+    // buf.append( zipName );
+    // if ( classifier != null && !"".equals( classifier ) )
+    // {
+    // if ( !classifier.startsWith( "-" ) )
+    // {
+    // buf.append( '-' );
+    // }
+    // buf.append( classifier );
+    // }
+    // buf.append( ".zip" );
+    // return buf.toString();
+    // }
 
 }
