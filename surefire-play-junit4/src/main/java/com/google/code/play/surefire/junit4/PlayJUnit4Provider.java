@@ -49,9 +49,8 @@ import play.vfs.VirtualFile;
 
 import java.io.File;
 import java.util.Iterator;
-//import java.util.List;
-//import java.util.ResourceBundle;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 //@SuppressWarnings( { "UnusedDeclaration" } )
@@ -66,18 +65,24 @@ public class PlayJUnit4Provider
     private final ClassLoader testClassLoader;
 
     private final DirectoryScanner directoryScanner;
+    
+    private final Properties providerProperties; 
 
     private final List<RunListener> customRunListeners;
 
     private final JUnit4TestChecker jUnit4TestChecker;
 
     private TestsToRun testsToRun;
+    
+    private final boolean skipPlay;
 
     public PlayJUnit4Provider( ProviderParameters booterParameters )
     {
         this.reporterFactory = booterParameters.getReporterFactory();
         this.testClassLoader = booterParameters.getTestClassLoader();
         this.directoryScanner = booterParameters.getDirectoryScanner();
+        this.providerProperties = booterParameters.getProviderProperties();
+        this.skipPlay = "true".equals(providerProperties.getProperty( "skipPlay" ));
         customRunListeners =
             JUnit4RunListenerFactory.createCustomListeners( booterParameters.getProviderProperties().getProperty( "listener" ) );
         jUnit4TestChecker = new JUnit4TestChecker( testClassLoader );
@@ -88,8 +93,10 @@ public class PlayJUnit4Provider
     public RunResult invoke( Object forkTestSet )
         throws TestSetFailedException, ReporterException
     {
-        System.out.println( "Play! initialization" );
-        initializePlayEngine();// tu?
+        if (!skipPlay) {
+            System.out.println( "Play! initialization" );
+            initializePlayEngine();// tu?
+        }
         try
         {
             if ( testsToRun == null )
@@ -112,8 +119,10 @@ public class PlayJUnit4Provider
         }
         finally
         {
-            System.out.println( "Play! finalization" );
-            finalizePlayEngine();// tu?
+            if (!skipPlay) {
+                System.out.println( "Play! finalization" );
+                finalizePlayEngine();// tu?
+            }
         }
     }
 
@@ -208,7 +217,8 @@ public class PlayJUnit4Provider
 
     private TestsToRun scanClassPath()
     {
-        return directoryScanner.locateTestClasses( Play.classloader/* testClassLoader */, jUnit4TestChecker );
+        ClassLoader classLoader = (this.skipPlay ? testClassLoader : Play.classloader);
+        return directoryScanner.locateTestClasses( classLoader/*test Play.classloader*//* testClassLoader */, jUnit4TestChecker );
     }
 
     public Boolean isRunnable()
