@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.URL;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -83,9 +82,9 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                     if ( playTestFileName.endsWith( ".test.html" ) )
                     {
                         // System.out.println("file: " + playTestFileName);
-                        String javaTestClassName =
+                        String oryginalTestClassName =
                             playTestFileName.substring( 0, playTestFileName.indexOf( ".test.html" ) );
-                        javaTestClassName = javaTestClassName.replace( ".", "_" );
+                        String javaTestClassName = oryginalTestClassName.replace( ".", "_" );
                         BufferedReader r =
                             new BufferedReader( new InputStreamReader( new FileInputStream( playTestFile ), "UTF-8" ) );
                         try
@@ -100,7 +99,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                                                                                              "UTF-8" ) ) );
                             try
                             {
-                                xxx( playTestFile.getName()/*maybe full path?*/, javaTestClassName, r, w );
+                                xxx( playTestFile.getName()/*maybe full path?*/, oryginalTestClassName, javaTestClassName, r, w );
                             }
                             finally
                             {
@@ -119,7 +118,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         }
     }
 
-    private void xxx( String playTestFileName, String javaTestClassName, BufferedReader r, PrintWriter w )
+    private void xxx( String playTestFileName, String oryginalTestClassName, String javaTestClassName, BufferedReader r, PrintWriter w )
         throws IOException, MojoExecutionException
     {
         w.println( "package selenium;" );// TODO sparametryzowac
@@ -135,7 +134,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         w.println();
         w.println( "\t@Before" );
         w.println( "\tpublic void setUp() throws Exception {" );
-        w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + javaTestClassName + ".test.html\");" );
+        w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + oryginalTestClassName + ".test.html\");" );
         w.println( "\t\ttestUrl.getContent();//ignore result, invoked only to reload fixtures" );
         w.println( "\t\t" );
         w.println( "\t\tString seleniumBrowser = System.getProperty(\"selenium.browser\");" );
@@ -244,8 +243,8 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                     throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \"" + line + "\"" );
                 }
                 cmd.command = test[0];
-                cmd.param1 = "\"" + escapeValue( test[1] ) + "\"";
-                cmd.param2 = "\"" + escapeValue( test[2] ) + "\"";
+                cmd.param1 = "\"" + escapeValue( unescape( test[1] ) ) + "\"";
+                cmd.param2 = "\"" + escapeValue( unescape( test[2] ) ) + "\"";
                 if ( "".equals( test[2] ) )
                 {
                     if ( "type".equals( command )
@@ -396,6 +395,14 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
             line = r.readLine();
         }
     }
+    
+    private String unescape(String param) {
+        String result = param;
+        //TODO-this is temporal
+        result = result.replace( "&lt;", "<" );
+        result = result.replace( "&gt;", ">" );
+        return result;
+    }
 }
 
 
@@ -403,3 +410,4 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
 //- configuration to skip fixtures reloading (speeds up tests execution)
 //- generate test sources incrementally (only for newer files)
 //- use includes/excludes?
+//- proper xml unescaping
