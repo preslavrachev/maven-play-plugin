@@ -183,6 +183,7 @@ System.out.println("applicationPath:"+applicationPath);
                         pathelement(location: projectClasspathElement.toString())
                     }
                     pathelement(location: pluginArifact('com.google.code.maven-play-plugin:play-server-booter'))
+                    pathelement(location: pluginArifact('com.google.code.maven-play-plugin.org.playframework:play-testrunner')) //test
                 }
                 /*classpath() {
                     // Add our plugin artifact to pick up log4j configuration

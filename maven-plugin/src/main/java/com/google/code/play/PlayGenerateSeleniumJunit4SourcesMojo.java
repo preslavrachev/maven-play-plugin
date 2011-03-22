@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.URL;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -99,7 +100,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                                                                                              "UTF-8" ) ) );
                             try
                             {
-                                xxx( javaTestClassName, r, w );
+                                xxx( playTestFile.getName()/*maybe full path?*/, javaTestClassName, r, w );
                             }
                             finally
                             {
@@ -118,12 +119,13 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         }
     }
 
-    private void xxx( String javaTestClassName, BufferedReader r, PrintWriter w )
-        throws IOException
+    private void xxx( String playTestFileName, String javaTestClassName, BufferedReader r, PrintWriter w )
+        throws IOException, MojoExecutionException
     {
         w.println( "package selenium;" );// TODO sparametryzowac
         w.println();
         w.println( "import com.thoughtworks.selenium.*;" );
+        w.println( "import java.net.URL;" );
         w.println( "import org.junit.After;" );
         w.println( "import org.junit.Before;" );
         w.println( "import org.junit.Test;" );
@@ -133,6 +135,9 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         w.println();
         w.println( "\t@Before" );
         w.println( "\tpublic void setUp() throws Exception {" );
+        w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + javaTestClassName + ".test.html\");" );
+        w.println( "\t\ttestUrl.getContent();//ignore result, invoked only to reload fixtures" );
+        w.println( "\t\t" );
         w.println( "\t\tString seleniumBrowser = System.getProperty(\"selenium.browser\");" );
         w.println( "\t\tif (seleniumBrowser == null) {" );
         w.println( "\t\t    seleniumBrowser = \"*chrome\";" );
@@ -150,7 +155,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                                                                                         // metody
 
         // tutaj dodac tresc testu
-        processCommands( r, w );
+        processCommands( playTestFileName, r, w );
 
         w.println( "\t}" );
         w.println();
@@ -177,8 +182,8 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         return result;
     }
 
-    private void processCommands( BufferedReader r, PrintWriter w )
-        throws IOException
+    private void processCommands( String playTestFileName, BufferedReader r, PrintWriter w )
+        throws IOException, MojoExecutionException
     {
         String line = r.readLine();
         while ( line != null )
@@ -205,7 +210,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 int p = line.indexOf( '(' );
                 if ( p < 0 )
                 {
-                    System.out.println( "co jest" );
+                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \"" + line + "\"" );
                 }// ????
                 String command = line.substring( 0, p ).trim();
                 cmd.command = command;
@@ -236,7 +241,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 String[] test = play.test.Helpers.seleniumCommand( line );
                 if ( test == null )
                 {
-                    System.out.print( 1 );
+                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \"" + line + "\"" );
                 }
                 cmd.command = test[0];
                 cmd.param1 = "\"" + escapeValue( test[1] ) + "\"";
@@ -392,3 +397,9 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         }
     }
 }
+
+
+//TODO
+//- configuration to skip fixtures reloading (speeds up tests execution)
+//- generate test sources incrementally (only for newer files)
+//- use includes/excludes?
