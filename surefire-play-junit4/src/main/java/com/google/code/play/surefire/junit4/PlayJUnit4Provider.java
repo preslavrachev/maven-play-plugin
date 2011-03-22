@@ -135,10 +135,6 @@ public class PlayJUnit4Provider
         Play.frameworkPath = playHome;
         Play.init( applicationPath, "test"/* ??? playId */);
 
-        // hack, add TestRunner plugin as dependency instead?
-        VirtualFile appRoot = VirtualFile.open( Play.applicationPath );
-        Play.javaPath.add( appRoot.child( "test" ) );
-
         Play.start();
         for ( PlayPlugin playPlugin : Play.plugins )
         {
