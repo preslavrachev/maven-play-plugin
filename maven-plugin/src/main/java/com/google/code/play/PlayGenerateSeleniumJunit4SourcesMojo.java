@@ -68,14 +68,13 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 return;// nothing to do, add some info???
             }
 
-            destDir.mkdirs();// TODO-spr. wynik
+            boolean somethingGenerated = false;
             for ( File playTestFile : playSeleniumTestFiles )
             {
                 if ( playTestFile.isFile() )
                 {
                     String playTestFileName = playTestFile.getName();
-                    if ( "Application.test.html".equals( playTestFileName )
-                        || "PollForms.test.html".equals( playTestFileName ) )
+                    if ( "Application.test.html".equals( playTestFileName ) )//FIXME remove this hack
                     {
                         continue;// tych testów na razie nie konwertuje dobrze
                     }
@@ -85,43 +84,57 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                         String oryginalTestClassName =
                             playTestFileName.substring( 0, playTestFileName.indexOf( ".test.html" ) );
                         String javaTestClassName = oryginalTestClassName.replace( ".", "_" );
-                        BufferedReader r =
-                            new BufferedReader( new InputStreamReader( new FileInputStream( playTestFile ), "UTF-8" ) );
-                        try
+                        File javaTestFile = new File( destDir, javaTestClassName + "Test.java" );
+                        if ( !javaTestFile.exists()
+                            || ( javaTestFile.lastModified() + 0/* lastUpdatedWithinMsecs */< playTestFile.lastModified() ) )
                         {
-                            File javaTestFile = new File( destDir, javaTestClassName + "Test.java" );
-                            PrintWriter w =
-                                new PrintWriter(
-                                                 new BufferedWriter(
-                                                                     new OutputStreamWriter(
-                                                                                             new FileOutputStream(
-                                                                                                                   javaTestFile ),
-                                                                                             "UTF-8" ) ) );
+                            javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when "false"
+
+                            BufferedReader r =
+                                new BufferedReader(
+                                                    new InputStreamReader( new FileInputStream( playTestFile ), "UTF-8" ) );
                             try
                             {
-                                xxx( playTestFile.getName()/*maybe full path?*/, oryginalTestClassName, javaTestClassName, r, w );
+                                PrintWriter w =
+                                    new PrintWriter(
+                                                     new BufferedWriter(
+                                                                         new OutputStreamWriter(
+                                                                                                 new FileOutputStream(
+                                                                                                                       javaTestFile ),
+                                                                                                 "UTF-8" ) ) );
+                                try
+                                {
+                                    generateTestSource( playTestFile.getName()/* maybe full path? */, oryginalTestClassName,
+                                         javaTestClassName, r, w );
+                                    somethingGenerated = true;
+                                }
+                                finally
+                                {
+                                    w.flush();// ??
+                                    w.close();
+                                }
                             }
                             finally
                             {
-                                w.flush();// ??
-                                w.close();
+                                r.close();
                             }
-                        }
-                        finally
-                        {
-                            r.close();
                         }
                     }
                 }
+            }
+            if (!somethingGenerated)
+            {
+                getLog().info( "Nothing to generate - all Selenium JUnit4 test sources are up to date" );
             }
             project.addTestCompileSourceRoot( new File( project.getBuild().getDirectory(), "selenium/generated" ).getAbsolutePath() );
         }
     }
 
-    private void xxx( String playTestFileName, String oryginalTestClassName, String javaTestClassName, BufferedReader r, PrintWriter w )
+    private void generateTestSource( String playTestFileName, String oryginalTestClassName, String javaTestClassName,
+                      BufferedReader r, PrintWriter w )
         throws IOException, MojoExecutionException
     {
-        w.println( "package selenium;" );// TODO sparametryzowac
+        w.println( "package selenium;" );// TODO parametrize
         w.println();
         w.println( "import com.thoughtworks.selenium.*;" );
         w.println( "import java.net.URL;" );
@@ -134,7 +147,8 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         w.println();
         w.println( "\t@Before" );
         w.println( "\tpublic void setUp() throws Exception {" );
-        w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + oryginalTestClassName + ".test.html\");" );
+        w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + oryginalTestClassName
+            + ".test.html\");" );
         w.println( "\t\ttestUrl.getContent();//ignore result, invoked only to reload fixtures" );
         w.println( "\t\t" );
         w.println( "\t\tString seleniumBrowser = System.getProperty(\"selenium.browser\");" );
@@ -175,9 +189,18 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         public String param2;
     }
 
-    private String escapeValue( String value )
+    private String javaEscapeValue( String value )
     {
         String result = value.replace( "\\", "\\\\" ).replace( "\"", "\\\"" );
+        return result;
+    }
+
+    private String xmlUnescape( String value )
+    {
+        String result = value;
+        // TODO-this is temporal
+        result = result.replace( "&lt;", "<" );
+        result = result.replace( "&gt;", ">" );
         return result;
     }
 
@@ -209,7 +232,8 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 int p = line.indexOf( '(' );
                 if ( p < 0 )
                 {
-                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \"" + line + "\"" );
+                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \""
+                        + line + "\"" );
                 }// ????
                 String command = line.substring( 0, p ).trim();
                 cmd.command = command;
@@ -217,7 +241,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 int p2 = line.indexOf( '\'', p + 1 );// GS-obsluzyc sytuacje, gdy nie ma parametrow
                 int p3 = line.indexOf( '\'', p2 + 1 );
                 String param = line.substring( p2 + 1, p3 );
-                cmd.param1 = "\"" + escapeValue( param ) + "\"";
+                cmd.param1 = "\"" + javaEscapeValue( param ) + "\"";
                 // System.out.println(param);
                 p = line.indexOf( ',', p3 + 1 );
                 if ( p >= 0 )
@@ -226,7 +250,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                     p2 = line.indexOf( '\'', p + 1 );
                     p3 = line.indexOf( '\'', p2 + 1 );
                     param = line.substring( p2 + 1, p3 );
-                    cmd.param2 = "\"" + escapeValue( param ) + "\"";
+                    cmd.param2 = "\"" + javaEscapeValue( param ) + "\"";
                     // System.out.println(param);
                 }
                 else
@@ -240,11 +264,12 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 String[] test = play.test.Helpers.seleniumCommand( line );
                 if ( test == null )
                 {
-                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \"" + line + "\"" );
+                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \""
+                        + line + "\"" );
                 }
                 cmd.command = test[0];
-                cmd.param1 = "\"" + escapeValue( unescape( test[1] ) ) + "\"";
-                cmd.param2 = "\"" + escapeValue( unescape( test[2] ) ) + "\"";
+                cmd.param1 = "\"" + javaEscapeValue( xmlUnescape( test[1] ) ) + "\"";
+                cmd.param2 = "\"" + javaEscapeValue( xmlUnescape( test[2] ) ) + "\"";
                 if ( "".equals( test[2] ) )
                 {
                     if ( "type".equals( command )
@@ -395,19 +420,11 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
             line = r.readLine();
         }
     }
-    
-    private String unescape(String param) {
-        String result = param;
-        //TODO-this is temporal
-        result = result.replace( "&lt;", "<" );
-        result = result.replace( "&gt;", ">" );
-        return result;
-    }
+
 }
 
-
-//TODO
-//- configuration to skip fixtures reloading (speeds up tests execution)
-//- generate test sources incrementally (only for newer files)
-//- use includes/excludes?
-//- proper xml unescaping
+// TODO
+// - configuration to skip fixtures reloading (speeds up tests execution)
+// - generate test sources incrementally (only for newer files)
+// - use includes/excludes?
+// - proper xml unescaping
