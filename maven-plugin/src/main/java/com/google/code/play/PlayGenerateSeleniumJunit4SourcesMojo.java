@@ -136,12 +136,13 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
     {
         w.println( "package selenium;" );// TODO parametrize
         w.println();
-        w.println( "import com.thoughtworks.selenium.*;" );
+        w.println( "import com.thoughtworks.selenium.DefaultSelenium;" );
+        w.println( "import com.thoughtworks.selenium.SeleneseTestCase;" );
         w.println( "import java.net.URL;" );
         w.println( "import org.junit.After;" );
         w.println( "import org.junit.Before;" );
         w.println( "import org.junit.Test;" );
-        w.println( "import java.util.regex.Pattern;" );// TODO-opcjonalnie
+        w.println( "//import java.util.regex.Pattern;" );// TODO-opcjonalnie
         w.println();
         w.println( "public class " + javaTestClassName + "Test extends SeleneseTestCase {" );
         w.println();
@@ -161,13 +162,15 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         w.println( "\t\t}" );
         w.println( "\t\tselenium = new DefaultSelenium(\"localhost\", 4444, seleniumBrowser, seleniumUrl);" );
         w.println( "\t\tselenium.start();" );
+        w.println( "\t\t//There are no cookies by default" );
+        w.println( "\t\t//selenium.deleteCookie(\"PLAY_SESSION\", \"path=/,domain=localhost,recurse=true\");" );
+        w.println( "\t\t//selenium.deleteCookie(\"PLAY_ERRORS\", \"path=/,domain=localhost,recurse=true\");" );
+        w.println( "\t\t//selenium.deleteCookie(\"PLAY_FLASH\", \"path=/,domain=localhost,recurse=true\");" );
         w.println( "\t}" );
         w.println();
         w.println( "\t@Test" );
         w.println( "\tpublic void test" + javaTestClassName + "() throws Exception {" );// TODO-zrobic sensowna nazwe
                                                                                         // metody
-
-        // tutaj dodac tresc testu
         processCommands( playTestFileName, r, w );
 
         w.println( "\t}" );
@@ -329,7 +332,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                         {
                             realCmd = "verifyTrue";
                             cmd.param1 =
-                                "Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) + ").matcher("
+                                "java.util.regex.Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) + ").matcher("
                                     + cmd.param2 + ").find()";
                             cmd.param2 = null;
                         }
@@ -371,7 +374,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                         {
                             realCmd = "assertTrue";// TODO-a moze czasem false?
                             cmd.param1 =
-                                "Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) + ").matcher("
+                                "java.util.regex.Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) + ").matcher("
                                     + cmd.param2 + ").find()";
                             cmd.param2 = null;
                         }
