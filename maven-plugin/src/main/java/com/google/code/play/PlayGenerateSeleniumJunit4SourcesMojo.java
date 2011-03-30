@@ -148,6 +148,8 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         w.println();
         w.println( "\t@Before" );
         w.println( "\tpublic void setUp() throws Exception {" );
+        w.println( "\t\tsuper.setUp();" );
+        w.println( "\t\t" );
         w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + oryginalTestClassName
             + ".test.html\");" );
         w.println( "\t\ttestUrl.getContent();//ignore result, invoked only to reload fixtures" );
@@ -177,7 +179,9 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         w.println();
         w.println( "\t@After" );
         w.println( "\tpublic void tearDown() throws Exception {" );
-        w.println( "\t\tselenium.stop();" );
+        w.println( "\t\tselenium.stop();" );//TODO-add try/catch
+        w.println( "\t\t" );
+        w.println( "\t\tsuper.tearDown();" );
         w.println( "\t}" );
         w.println();
         w.println( "}" );
