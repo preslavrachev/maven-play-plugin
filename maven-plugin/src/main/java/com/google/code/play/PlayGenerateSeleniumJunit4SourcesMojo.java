@@ -205,9 +205,11 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
     private String xmlUnescape( String value )
     {
         String result = value;
-        // TODO-this is temporal
+        result = result.replace( "&quot;", "\"" );
+        result = result.replace( "&apos;", "'" );
         result = result.replace( "&lt;", "<" );
         result = result.replace( "&gt;", ">" );
+        result = result.replace( "&amp;", "&" );
         return result;
     }
 
