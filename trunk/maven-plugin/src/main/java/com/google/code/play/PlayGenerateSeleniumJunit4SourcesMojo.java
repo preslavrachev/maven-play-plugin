@@ -236,7 +236,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 // command
                 Command cmd = new Command();
 
-                int p = line.indexOf( '(' );
+/*old                int p = line.indexOf( '(' );
                 if ( p < 0 )
                 {
                     throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \""
@@ -267,7 +267,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                         cmd.param2 = "\"\"";
                     }
                 }
-
+*/
                 String[] test = play.test.Helpers.seleniumCommand( line );
                 if ( test == null )
                 {
@@ -279,13 +279,13 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 cmd.param2 = "\"" + javaEscapeValue( xmlUnescape( test[2] ) ) + "\"";
                 if ( "".equals( test[2] ) )
                 {
-                    if ( "type".equals( command )
+                    if ( "type".equals( cmd.command )
                         ||
                         // command.startsWith("verify") ||
-                        "verifyTable".equals( command ) || "verifyNotTable".equals( command )
-                        || "verifySelectedValue".equals( command ) || "verifyNotSelectedValue".equals( command )
-                        || "verifyText".equals( command ) || "verifyNotText".equals( command )
-                        || "verifyValue".equals( command ) || "verifyNotValue".equals( command ) )
+                        "verifyTable".equals( cmd.command ) || "verifyNotTable".equals( cmd.command )
+                        || "verifySelectedValue".equals( cmd.command ) || "verifyNotSelectedValue".equals( cmd.command )
+                        || "verifyText".equals( cmd.command ) || "verifyNotText".equals( cmd.command )
+                        || "verifyValue".equals( cmd.command ) || "verifyNotValue".equals( cmd.command ) )
                     {// jakie jeszcze polecenia?
                      // bez zmian
                     }
