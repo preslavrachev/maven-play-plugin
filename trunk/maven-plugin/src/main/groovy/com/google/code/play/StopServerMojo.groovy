@@ -72,7 +72,7 @@ class StopServerMojo
         try {
             url.openConnection().content
         }
-        catch (java.net.ConnectException e) {
+        catch (java.net.SocketException e) {
             //ignore
         }
         
