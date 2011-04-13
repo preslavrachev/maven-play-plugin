@@ -199,6 +199,9 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
     private String javaEscapeValue( String value )
     {
         String result = value.replace( "\\", "\\\\" ).replace( "\"", "\\\"" );
+        //maybe change method name, because it does not fit to the logic below
+        result = result.replace( "${space}", " " );
+        result = result.replace( "${nbsp}", "\u00A0" );
         return result;
     }
 
