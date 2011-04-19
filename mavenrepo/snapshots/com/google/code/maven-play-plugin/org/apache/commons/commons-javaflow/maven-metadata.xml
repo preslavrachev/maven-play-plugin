@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.apache.commons</groupId>
+  <artifactId>commons-javaflow</artifactId>
+  <version>1066591-SNAPSHOT</version>
+  <versioning>
+    <versions>
+      <version>1066591-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20110419102919</lastUpdated>
+  </versioning>
+</metadata>
