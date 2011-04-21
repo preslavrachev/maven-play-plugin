@@ -288,6 +288,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                         ||
                         // command.startsWith("verify") ||
                         "verifyTable".equals( cmd.command ) || "verifyNotTable".equals( cmd.command )
+                        || "verifySelectedLabel".equals( cmd.command ) || "verifyNotSelectedLabel".equals( cmd.command )
                         || "verifySelectedValue".equals( cmd.command ) || "verifyNotSelectedValue".equals( cmd.command )
                         || "verifyText".equals( cmd.command ) || "verifyNotText".equals( cmd.command )
                         || "verifyValue".equals( cmd.command ) || "verifyNotValue".equals( cmd.command ) )
