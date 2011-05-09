@@ -89,13 +89,12 @@ public class PlayJUnit4Provider
 
     }
 
-    // @SuppressWarnings( { "UnnecessaryUnboxing" } )
     public RunResult invoke( Object forkTestSet )
         throws TestSetFailedException, ReporterException
     {
         if (!skipPlay) {
-            System.out.println( "Play! initialization" );
-            initializePlayEngine();// tu?
+            System.out.println( "Play! initialization" );//TODO System.out -> log.debug
+            initializePlayEngine();// here?
         }
         try
         {
@@ -121,7 +120,7 @@ public class PlayJUnit4Provider
         {
             if (!skipPlay) {
                 System.out.println( "Play! finalization" );
-                finalizePlayEngine();// tu?
+                finalizePlayEngine();// here?
             }
         }
     }
