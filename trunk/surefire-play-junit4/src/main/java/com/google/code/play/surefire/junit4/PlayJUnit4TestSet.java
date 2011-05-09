@@ -24,14 +24,36 @@ import org.junit.runner.Request;
 import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 
+import play.Play;
+import play.PlayPlugin;
+
 public class PlayJUnit4TestSet
 {
 
     public static void execute( Class testClass, RunNotifier fNotifier )
         throws TestSetFailedException
     {
-        Runner junitTestRunner = Request.aClass( testClass ).getRunner();
+        for ( PlayPlugin playPlugin : Play.plugins )
+        {
+            playPlugin.beforeInvocation();
+        }
+        try
+        {
+            Runner junitTestRunner = Request.aClass( testClass ).getRunner();
 
-        junitTestRunner.run( fNotifier );
+            junitTestRunner.run( fNotifier );
+        }
+        finally
+        {
+            for ( PlayPlugin playPlugin : Play.plugins )
+            {
+                playPlugin.afterInvocation();
+            }
+            for ( PlayPlugin playPlugin : Play.plugins )
+            {
+                playPlugin.invocationFinally();
+            }
+
+        }
     }
 }

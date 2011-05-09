@@ -136,22 +136,10 @@ public class PlayJUnit4Provider
         Play.init( applicationPath, "test"/* ??? playId */);
 
         Play.start();
-        for ( PlayPlugin playPlugin : Play.plugins )
-        {
-            playPlugin.beforeInvocation();
-        }
     }
 
     private void finalizePlayEngine()
     {
-        for ( PlayPlugin playPlugin : Play.plugins )
-        {
-            playPlugin.afterInvocation();
-        }
-        for ( PlayPlugin playPlugin : Play.plugins )
-        {
-            playPlugin.invocationFinally();
-        }
         Play.stop();
     }
 
