@@ -19,41 +19,45 @@ package com.google.code.play.surefire.junit4;
  * under the License.
  */
 
+import java.lang.reflect.Constructor;
+
 import org.apache.maven.surefire.testset.TestSetFailedException;
-import org.junit.runner.Request;
-import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 
+import play.Invoker;
 import play.Play;
-import play.PlayPlugin;
 
 public class PlayJUnit4TestSet
 {
 
-    public static void execute( Class testClass, RunNotifier fNotifier )
+    public static void execute( Class<?> testClass, RunNotifier fNotifier )
         throws TestSetFailedException
     {
-        for ( PlayPlugin playPlugin : Play.plugins )
-        {
-            playPlugin.beforeInvocation();
-        }
         try
         {
-            Runner junitTestRunner = Request.aClass( testClass ).getRunner();
-
-            junitTestRunner.run( fNotifier );
+            String invocationClassName = "com.google.code.play.surefire.junit4.TestInvocation";
+            if ( "1.2".equals( Play.version ) || Play.version.startsWith( "1.2." ) )// TODO do it smarter
+            {
+                invocationClassName = "com.google.code.play.surefire.junit4.Play12TestInvocation";
+            }
+            Invoker.DirectInvocation invocation = getInvocation( invocationClassName, testClass, fNotifier );
+            Invoker.invokeInThread( invocation );
         }
-        finally
+        catch ( Throwable e )
         {
-            for ( PlayPlugin playPlugin : Play.plugins )
-            {
-                playPlugin.afterInvocation();
-            }
-            for ( PlayPlugin playPlugin : Play.plugins )
-            {
-                playPlugin.invocationFinally();
-            }
-
+            throw new TestSetFailedException( e );
+            // ????? throw ExceptionUtils.getRootCause(e);
         }
+    }
+
+    public static Invoker.DirectInvocation getInvocation( String invocationClassName, Class<?> testClass,
+                                                          RunNotifier fNotifier )
+        throws Throwable
+    {
+        Invoker.DirectInvocation invocation = null;
+        Class<?> cl = Class.forName( invocationClassName );
+        Constructor<?> c = cl.getConstructor( Class.class, RunNotifier.class );
+        invocation = (Invoker.DirectInvocation) c.newInstance( testClass, fNotifier );
+        return invocation;
     }
 }
