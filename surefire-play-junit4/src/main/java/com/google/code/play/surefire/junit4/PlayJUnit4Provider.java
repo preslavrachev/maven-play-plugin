@@ -39,13 +39,6 @@ import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 
 import play.Play;
-import play.PlayPlugin;
-import play.vfs.VirtualFile;
-//import org.apache.maven.surefire.util.DefaultDirectoryScanner;
-//import org.apache.maven.surefire.util.DirectoryScanner;
-//import org.apache.maven.surefire.util.TestsToRun;
-//import org.junit.runner.notification.RunListener;
-//import org.junit.runner.notification.RunNotifier;
 
 import java.io.File;
 import java.util.Iterator;
@@ -53,7 +46,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-//@SuppressWarnings( { "UnusedDeclaration" } )
 public class PlayJUnit4Provider
     implements SurefireProvider
 {
@@ -100,14 +92,14 @@ public class PlayJUnit4Provider
         {
             if ( testsToRun == null )
             {
-                testsToRun = forkTestSet == null ? scanClassPath() : TestsToRun.fromClass( (Class) forkTestSet );
+                testsToRun = forkTestSet == null ? scanClassPath() : TestsToRun.fromClass( (Class<?>) forkTestSet );
             }
 
             Reporter reporter = reporterFactory.createReporter();
             JUnit4RunListener jUnit4TestSetReporter = new JUnit4RunListener( reporter );
             RunNotifier runNotifer = getRunNotifer( jUnit4TestSetReporter, customRunListeners );
 
-            for ( Class clazz : testsToRun.getLocatedClasses() )
+            for ( Class<?> clazz : testsToRun.getLocatedClasses() )
             {
                 executeTestSet( clazz, reporter, testClassLoader, runNotifer );
             }
@@ -142,7 +134,7 @@ public class PlayJUnit4Provider
         Play.stop();
     }
 
-    private void executeTestSet( Class clazz, Reporter reporter, ClassLoader classLoader, RunNotifier listeners )
+    private void executeTestSet( Class<?> clazz, Reporter reporter, ClassLoader classLoader, RunNotifier listeners )
         throws ReporterException, TestSetFailedException
     {
         final ReportEntry report = new SimpleReportEntry( this.getClass().getName(), clazz.getName() );
