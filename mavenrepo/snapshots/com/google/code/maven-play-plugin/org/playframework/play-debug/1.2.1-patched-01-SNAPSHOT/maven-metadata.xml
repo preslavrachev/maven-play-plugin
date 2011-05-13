@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+  <artifactId>play-debug</artifactId>
+  <version>1.2.1-patched-01-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20110513.122947</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20110513122952</lastUpdated>
+  </versioning>
+</metadata>
