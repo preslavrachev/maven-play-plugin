@@ -165,6 +165,26 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 					}
 				}
 
+				if (command.startsWith( "verify" ) || command.startsWith( "assert" )) {
+				    String cmd = command.replace( "verify", "" ).replace("assert", "");
+				    if (cmd.startsWith( "Not" )) {
+				        cmd = cmd.substring( "Not".length() );
+				    }
+				    if ("Alert".equals(cmd) ||
+			            "BodyText".equals( cmd ) ||
+                        "Confirmation".equals( cmd ) ||
+                        "Cookie".equals( cmd ) ||
+                        "HtmlSource".equals( cmd ) ||
+                        "Location".equals( cmd ) ||
+                        "MouseSpeed".equals( cmd ) ||
+                        "Prompt".equals( cmd ) ||
+                        "Speed".equals( cmd ) ||
+                        "Title".equals( cmd )) {
+				        param2 = param1; // value to compare with
+				        param1 = null; // parameterless command
+				    }
+				}
+				
 				Step cmd = null;
 				if (command.endsWith("AndWait")) {
 					String innerCmd = command.substring(0,
@@ -255,16 +275,20 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 						 */
 					}
 				} else if (command.startsWith("waitFor")) {
-					if (!"waitForCondition".equals(command)
-							&& !"waitForFrameToLoad".equals(command)
-							&& !"waitForPageToLoad".equals(command)
-							&& !"selenium.waitForPopUp".equals(command)) {
-						String innerCmd = "is"
-								+ command.substring("waitFor".length());
-						cmd = new WaitForStep(new SeleniumCommand(
-								commandProcessor, innerCmd, param1, param2));
+					if ("waitForCondition".equals(command)
+							|| "waitForFrameToLoad".equals(command)
+							|| "waitForPageToLoad".equals(command)
+							|| "waitForPopUp".equals(command)) {
+	                    cmd = new SeleniumCommand(commandProcessor, command,
+	                                              param1, param2);
 					}
-					// else ?????
+					else
+					{
+                        String innerCmd = "is"
+                            + command.substring("waitFor".length());
+                    cmd = new WaitForStep(new SeleniumCommand(
+                            commandProcessor, innerCmd, param1, param2));
+					}
 				} else {
 					cmd = new SeleniumCommand(commandProcessor, command,
 							param1, param2);
