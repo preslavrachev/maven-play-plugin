@@ -19,13 +19,10 @@ package com.google.code.play;
  * under the License.
  */
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
@@ -33,7 +30,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * Adds application resources ('app' directory) to Play! application. FIXME
+ * ... //FIXME
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal generate-selenium-junit4-sources
@@ -68,19 +65,18 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 return;// nothing to do, add some info???
             }
 
-            boolean somethingGenerated = false;
+            int classesGenerated = 0;
             for ( File playTestFile : playSeleniumTestFiles )
             {
                 if ( playTestFile.isFile() )
                 {
                     String playTestFileName = playTestFile.getName();
-                    if ( "Application.test.html".equals( playTestFileName ) )//FIXME remove this hack
+                    if ( "Application.test.html".equals( playTestFileName ) )// FIXME remove this hack
                     {
                         continue;// tych testów na razie nie konwertuje dobrze
                     }
                     if ( playTestFileName.endsWith( ".test.html" ) )
                     {
-                        // System.out.println("file: " + playTestFileName);
                         String oryginalTestClassName =
                             playTestFileName.substring( 0, playTestFileName.indexOf( ".test.html" ) );
                         String javaTestClassName = oryginalTestClassName.replace( ".", "_" );
@@ -88,41 +84,32 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                         if ( !javaTestFile.exists()
                             || ( javaTestFile.lastModified() + 0/* lastUpdatedWithinMsecs */< playTestFile.lastModified() ) )
                         {
-                            javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when "false"
-
-                            BufferedReader r =
-                                new BufferedReader(
-                                                    new InputStreamReader( new FileInputStream( playTestFile ), "UTF-8" ) );
+                            javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when
+                                                                  // "false"
+                            PrintWriter w =
+                                new PrintWriter(
+                                                 new BufferedWriter(
+                                                                     new OutputStreamWriter(
+                                                                                             new FileOutputStream(
+                                                                                                                   javaTestFile ),
+                                                                                             "UTF-8" ) ) );
                             try
                             {
-                                PrintWriter w =
-                                    new PrintWriter(
-                                                     new BufferedWriter(
-                                                                         new OutputStreamWriter(
-                                                                                                 new FileOutputStream(
-                                                                                                                       javaTestFile ),
-                                                                                                 "UTF-8" ) ) );
-                                try
-                                {
-                                    generateTestSource( playTestFile.getName()/* maybe full path? */, oryginalTestClassName,
-                                         javaTestClassName, r, w );
-                                    somethingGenerated = true;
-                                }
-                                finally
-                                {
-                                    w.flush();// ??
-                                    w.close();
-                                }
+                                generateTestSource( playTestFile.getName()/* maybe full path? */,
+                                                    oryginalTestClassName, javaTestClassName, w );
+                                classesGenerated++;
                             }
                             finally
                             {
-                                r.close();
+                                w.flush();// ??
+                                w.close();
                             }
                         }
                     }
                 }
             }
-            if (!somethingGenerated)
+
+            if ( classesGenerated == 0 )
             {
                 getLog().info( "Nothing to generate - all Selenium JUnit4 test sources are up to date" );
             }
@@ -131,313 +118,27 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
     }
 
     private void generateTestSource( String playTestFileName, String oryginalTestClassName, String javaTestClassName,
-                      BufferedReader r, PrintWriter w )
+                                     PrintWriter w )
         throws IOException, MojoExecutionException
     {
         w.println( "package selenium;" );// TODO parametrize
         w.println();
-        w.println( "import com.thoughtworks.selenium.DefaultSelenium;" );
-        w.println( "import com.thoughtworks.selenium.SeleneseTestCase;" );
-        w.println( "import java.net.URL;" );
-        w.println( "import org.junit.After;" );
-        w.println( "import org.junit.Before;" );
         w.println( "import org.junit.Test;" );
-        w.println( "//import java.util.regex.Pattern;" );// TODO-opcjonalnie
         w.println();
-        w.println( "public class " + javaTestClassName + "Test extends SeleneseTestCase {" );
+        w.println( "import com.google.code.play.selenium.PlaySeleniumTest;" );
         w.println();
-        w.println( "\t@Before" );
-        w.println( "\tpublic void setUp() throws Exception {" );
-        w.println( "\t\t//don't do it! super.setUp();" );
-        w.println( "\t\t" );
-        w.println( "\t\tURL testUrl = new URL(\"http://localhost:9000/@tests/selenium/" + oryginalTestClassName
-            + ".test.html\");" );
-        w.println( "\t\ttestUrl.getContent();//ignore result, invoked only to reload fixtures" );
-        w.println( "\t\t" );
-        w.println( "\t\tString seleniumBrowser = System.getProperty(\"selenium.browser\");" );
-        w.println( "\t\tif (seleniumBrowser == null) {" );
-        w.println( "\t\t    seleniumBrowser = \"*chrome\";" );
-        w.println( "\t\t}" );
-        w.println( "\t\tString seleniumUrl = System.getProperty(\"selenium.url\");" );
-        w.println( "\t\tif (seleniumUrl == null) {" );
-        w.println( "\t\t    seleniumUrl = \"http://localhost:9000\";" );
-        w.println( "\t\t}" );
-        w.println( "\t\tselenium = new DefaultSelenium(\"localhost\", 4444, seleniumBrowser, seleniumUrl);" );
-        w.println( "\t\tselenium.start();" );
-        w.println( "\t\t//There are no cookies by default" );
-        w.println( "\t\t//selenium.deleteCookie(\"PLAY_SESSION\", \"path=/,domain=localhost,recurse=true\");" );
-        w.println( "\t\t//selenium.deleteCookie(\"PLAY_ERRORS\", \"path=/,domain=localhost,recurse=true\");" );
-        w.println( "\t\t//selenium.deleteCookie(\"PLAY_FLASH\", \"path=/,domain=localhost,recurse=true\");" );
-        w.println( "\t}" );
+        w.println( "public class " + javaTestClassName + "Test extends PlaySeleniumTest {" );
         w.println();
         w.println( "\t@Test" );
         w.println( "\tpublic void test" + javaTestClassName + "() throws Exception {" );// TODO-zrobic sensowna nazwe
-                                                                                        // metody
-        processCommands( playTestFileName, r, w );
-
-        w.println( "\t}" );
-        w.println();
-        w.println( "\t@After" );
-        w.println( "\tpublic void tearDown() throws Exception {" );
-        w.println( "\t\tselenium.stop();" );//TODO-add try/catch
-        w.println( "\t\t" );
-        w.println( "\t\tsuper.tearDown();" );
+        w.println( "\t\tseleniumTest(\"selenium/" + oryginalTestClassName + ".test.html\");" );
         w.println( "\t}" );
         w.println();
         w.println( "}" );
     }
-
-    private static class Command
-    {
-        public String command;
-
-        public String param1;
-
-        public String param2;
-    }
-
-    private String javaEscapeValue( String value )
-    {
-        String result = value.replace( "\\", "\\\\" ).replace( "\"", "\\\"" );
-        //maybe change method name, because it does not fit to the logic below
-        result = result.replace( "${space}", " " );
-        result = result.replace( "${nbsp}", "\u00A0" );
-        return result;
-    }
-
-    private String xmlUnescape( String value )
-    {
-        String result = value;
-        result = result.replace( "&quot;", "\"" );
-        result = result.replace( "&apos;", "'" );
-        result = result.replace( "&lt;", "<" );
-        result = result.replace( "&gt;", ">" );
-        result = result.replace( "&amp;", "&" );
-        return result;
-    }
-
-    private void processCommands( String playTestFileName, BufferedReader r, PrintWriter w )
-        throws IOException, MojoExecutionException
-    {
-        String line = r.readLine();
-        while ( line != null )
-        {
-            line = line.trim();
-            if ( "".equals( line ) )
-            {
-                // pusta linia
-            }
-            else if ( line.startsWith( "#" ) )
-            {
-                // play macro
-            }
-            else if ( line.startsWith( "//" ) )
-            {
-                // comment
-                w.println( "\t\t" + line );
-            }
-            else
-            {
-                // command
-                Command cmd = new Command();
-
-/*old                int p = line.indexOf( '(' );
-                if ( p < 0 )
-                {
-                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \""
-                        + line + "\"" );
-                }// ????
-                String command = line.substring( 0, p ).trim();
-                cmd.command = command;
-                // System.out.println(command);
-                int p2 = line.indexOf( '\'', p + 1 );// GS-obsluzyc sytuacje, gdy nie ma parametrow
-                int p3 = line.indexOf( '\'', p2 + 1 );
-                String param = line.substring( p2 + 1, p3 );
-                cmd.param1 = "\"" + javaEscapeValue( param ) + "\"";
-                // System.out.println(param);
-                p = line.indexOf( ',', p3 + 1 );
-                if ( p >= 0 )
-                {
-                    // jest drugi parametr
-                    p2 = line.indexOf( '\'', p + 1 );
-                    p3 = line.indexOf( '\'', p2 + 1 );
-                    param = line.substring( p2 + 1, p3 );
-                    cmd.param2 = "\"" + javaEscapeValue( param ) + "\"";
-                    // System.out.println(param);
-                }
-                else
-                {
-                    if ( "type".equals( command ) || "verifyTable".equals( command ) || "verifyValue".equals( command ) )
-                    {// jakie jeszcze polecenia?
-                        cmd.param2 = "\"\"";
-                    }
-                }
-*/
-                String[] test = play.test.Helpers.seleniumCommand( line );
-                if ( test == null )
-                {
-                    throw new MojoExecutionException( "Error parsing file \"" + playTestFileName + "\", line : \""
-                        + line + "\"" );
-                }
-                cmd.command = test[0];
-                cmd.param1 = "\"" + javaEscapeValue( xmlUnescape( test[1] ) ) + "\"";
-                cmd.param2 = "\"" + javaEscapeValue( xmlUnescape( test[2] ) ) + "\"";
-                if ( "".equals( test[2] ) )
-                {
-                    if ( "type".equals( cmd.command )
-                        ||
-                        // command.startsWith("verify") ||
-                        "verifyTable".equals( cmd.command ) || "verifyNotTable".equals( cmd.command )
-                        || "verifySelectedLabel".equals( cmd.command ) || "verifyNotSelectedLabel".equals( cmd.command )
-                        || "verifySelectedValue".equals( cmd.command ) || "verifyNotSelectedValue".equals( cmd.command )
-                        || "verifyText".equals( cmd.command ) || "verifyNotText".equals( cmd.command )
-                        || "verifyValue".equals( cmd.command ) || "verifyNotValue".equals( cmd.command ) )
-                    {// jakie jeszcze polecenia?
-                     // bez zmian
-                    }
-                    else
-                    {
-                        cmd.param2 = null;
-                    }
-                }
-
-                boolean isAndWait = false; // command fooAndWait
-                boolean isWaitFor = false; // command waitForFoo
-
-                String realCmd = "selenium." + cmd.command;
-                if ( realCmd.endsWith( "AndWait" ) )
-                {
-                    realCmd = realCmd.substring( 0, realCmd.indexOf( "AndWait" ) );
-                    isAndWait = true;
-                }
-
-                /* ?else */if ( realCmd.startsWith( "selenium.verify" ) )
-                {
-                    if ( cmd.param2 == null )
-                    { // tylko jeden parametr
-                        String innerCmd = "selenium.is" + realCmd.substring( "selenium.verify".length() );
-                        realCmd = "verifyTrue";
-                        if ( innerCmd.indexOf( "Not" ) >= 0 )
-                        {
-                            realCmd = "verifyFalse";
-                            innerCmd = innerCmd.replace( "Not", "" );
-                        }
-                        cmd.param1 = innerCmd + "(" + cmd.param1 + ")";
-                        cmd.param2 = null;
-                    }
-                    else
-                    { // dwa parametry
-                        String innerCmd = "selenium.get" + realCmd.substring( "selenium.verify".length() );
-                        realCmd = "verifyEquals";
-                        if ( innerCmd.indexOf( "Not" ) >= 0 )
-                        {
-                            realCmd = "verifyNotEquals";
-                            innerCmd = innerCmd.replace( "Not", "" );
-                        }
-                        String par2 = cmd.param2;
-                        cmd.param2 = innerCmd + "(" + cmd.param1 + ")";
-                        cmd.param1 = par2;
-                        // specjalna obsluga regexp
-                        if ( cmd.param1.startsWith( "\"regexp:" ) )
-                        {
-                            realCmd = "verifyTrue";
-                            cmd.param1 =
-                                "java.util.regex.Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) + ").matcher("
-                                    + cmd.param2 + ").find()";
-                            cmd.param2 = null;
-                        }
-                        else if ( cmd.param1.startsWith( "\"exact:" ) )
-                        {
-                            cmd.param1 = "\"" + cmd.param1.substring( "\"exact:".length() );
-                        }
-                    }
-                }
-                // dokładnie to samo, co dla "verify", tylko dla "assert" - zrobic podmetodę
-                else if ( realCmd.startsWith( "selenium.assert" ) )
-                {
-                    if ( cmd.param2 == null )
-                    { // tylko jeden parametr
-                        String innerCmd = "selenium.is" + realCmd.substring( "selenium.assert".length() );
-                        realCmd = "assertTrue";
-                        if ( innerCmd.indexOf( "Not" ) >= 0 )
-                        {
-                            realCmd = "assertFalse";
-                            innerCmd = innerCmd.replace( "Not", "" );
-                        }
-                        cmd.param1 = innerCmd + "(" + cmd.param1 + ")";
-                        cmd.param2 = null;
-                    }
-                    else
-                    { // dwa parametry
-                        String innerCmd = "selenium.get" + realCmd.substring( "selenium.assert".length() );
-                        realCmd = "assertEquals";
-                        if ( innerCmd.indexOf( "Not" ) >= 0 )
-                        {
-                            realCmd = "assertNotEquals";
-                            innerCmd = innerCmd.replace( "Not", "" );
-                        }
-                        String par2 = cmd.param2;
-                        cmd.param2 = innerCmd + "(" + cmd.param1 + ")";
-                        cmd.param1 = par2;
-                        // specjalna obsluga regexp
-                        if ( cmd.param1.startsWith( "\"regexp:" ) )
-                        {
-                            realCmd = "assertTrue";// TODO-a moze czasem false?
-                            cmd.param1 =
-                                "java.util.regex.Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) + ").matcher("
-                                    + cmd.param2 + ").find()";
-                            cmd.param2 = null;
-                        }
-                        else if ( cmd.param1.startsWith( "\"exact:" ) )
-                        {
-                            cmd.param1 = "\"" + cmd.param1.substring( "\"exact:".length() );
-                        }
-                    }
-                }
-                else if ( realCmd.startsWith( "selenium.waitFor" ) )
-                {
-                    if ( !"selenium.waitForCondition".equals( realCmd )
-                        && !"selenium.waitForFrameToLoad".equals( realCmd )
-                        && !"selenium.waitForPageToLoad".equals( realCmd ) && !"selenium.waitForPopUp".equals( realCmd ) )
-                    {
-                        realCmd = "selenium.is" + realCmd.substring( "selenium.waitFor".length() );
-                        isWaitFor = true;
-                    }
-                }
-
-                String javaCmd = realCmd + "(" + cmd.param1;
-                if ( cmd.param2 != null )
-                {
-                    javaCmd += ", " + cmd.param2;
-                }
-                javaCmd += ")";
-
-                if ( isWaitFor )
-                {
-                    w.println( "\t\tfor (int second = 0;; second++) {" );
-                    w.println( "\t\t\tif (second >= 60) fail(\"timeout\");" );
-                    w.println( "\t\t\ttry { if (" + javaCmd + ") break; } catch (Exception e) {}" );
-                    w.println( "\t\t\tThread.sleep(1000);" );
-                    w.println( "\t\t}" );
-                }
-                else
-                {
-                    w.println( "\t\t" + javaCmd + ";" );
-                    if ( isAndWait )
-                    {
-                        w.println( "\t\tselenium.waitForPageToLoad(\"30000\");" );// TODO-dorobic parametryzacje czasu
-                                                                                  // timeout
-                    }
-                }
-            }
-            line = r.readLine();
-        }
-    }
-
 }
 
 // TODO
-// - configuration to skip fixtures reloading (speeds up tests execution)
-// - generate test sources incrementally (only for newer files)
+// - option to force test sources generation (not generating incrementally)
 // - use includes/excludes?
 // - proper xml unescaping
