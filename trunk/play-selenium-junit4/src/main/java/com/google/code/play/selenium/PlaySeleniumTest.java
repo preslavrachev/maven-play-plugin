@@ -74,27 +74,32 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 		//System.out.println("contentType:" + conn.getContentType());
 		//System.out.println("contentLength:" + conn.getContentLength());
 		//System.out.println("Header fields:");
-		Map<String, List<String>> headerFields = conn.getHeaderFields();
-		for (String headerField : headerFields.keySet()) {
-			//System.out.println("  " + headerField + " : "
-			//		+ headerFields.get(headerField));
-		}
+		//Map<String, List<String>> headerFields = conn.getHeaderFields();
+		//for (String headerField : headerFields.keySet()) {
+		//	System.out.println("  " + headerField + " : "
+		//			+ headerFields.get(headerField));
+		//}
 		if (!"HTTP/1.1 200 OK".equals(conn.getHeaderField(null))) {
 			// if (conn.getHeaderField(null).indexOf("200 OK") == -1) {
 			return;// TODO handle errors
 		}
 		InputStream is = (InputStream) conn.getContent();
-		String content = readContent(is);
-		// System.out.println("Content:");
-		// System.out.println(content);
-		List<Step> steps = processContent(content);
-		for (Step step : steps) {
-			//System.out.println("Executing: " + step.toString());
-			//try {
-				step.execute();
-			//} catch (Exception e) {
-			//	throw e;
-			//}
+		try {
+		    String content = readContent(is);
+		    // System.out.println("Content:");
+		    // System.out.println(content);
+		    List<Step> steps = processContent(content);
+		    for (Step step : steps) {
+		        //System.out.println("Executing: " + step.toString());
+		        //try {
+				    step.execute();
+				//} catch (Exception e) {
+				//	throw e;
+				//}
+		    }
+		}
+		finally {
+		    is.close();
 		}
 	}
 
