@@ -39,7 +39,7 @@
             <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
             <artifactId>play</artifactId>
             <version>1.1-SNAPSHOT</version>
-<!--??            <scope>provided</scope>-->
+            <scope>provided</scope> <!-- you always need this dependency in your project, maybe other version -->
         </dependency>
 
         <!-- groovy -->
