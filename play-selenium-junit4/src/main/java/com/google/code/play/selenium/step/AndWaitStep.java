@@ -1,7 +1,5 @@
 package com.google.code.play.selenium.step;
 
-import com.thoughtworks.selenium.CommandProcessor;
-
 import com.google.code.play.selenium.Step;
 
 public class AndWaitStep implements Step {
