@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin</groupId>
+  <artifactId>play-selenium-junit4</artifactId>
+  <version>1.0.0-alpha2-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20110516.113426</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20110516113429</lastUpdated>
+  </versioning>
+</metadata>
