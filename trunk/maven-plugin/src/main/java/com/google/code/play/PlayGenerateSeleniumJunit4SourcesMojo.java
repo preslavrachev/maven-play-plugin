@@ -71,10 +71,6 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                 if ( playTestFile.isFile() )
                 {
                     String playTestFileName = playTestFile.getName();
-                    if ( "Application.test.html".equals( playTestFileName ) )// FIXME remove this hack
-                    {
-                        continue;// tych testów na razie nie konwertuje dobrze
-                    }
                     if ( playTestFileName.endsWith( ".test.html" ) )
                     {
                         String oryginalTestClassName =
