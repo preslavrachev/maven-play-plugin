@@ -26,9 +26,9 @@ public class VerifyNotEqualsStep implements Step {
 		}
 
 		public String toString() {
-			String innerCmd = innerCommand.command.substring("get".length());
+			String cmd = innerCommand.command.substring("get".length());
 			return "verifyNot"
-					+ innerCmd
+					+ cmd
 					+ "('"
 					+ innerCommand.param1
 					+ (innerCommand.param2 != null ? "' ,'"

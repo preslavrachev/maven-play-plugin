@@ -24,9 +24,8 @@ public class AssertEqualsStep implements Step {
 		}
 
 		public String toString() {
-			String innerCmd = "get"
-					+ innerCommand.command.substring("get".length());
-			return "assert" + innerCmd + "('" + innerCommand.param1 + "' ,'"
+			String cmd = innerCommand.command.substring("get".length());
+			return "assert" + cmd + "('" + innerCommand.param1 + "' ,'"
 					+ innerCommand.param2 + "')";
 		}
 

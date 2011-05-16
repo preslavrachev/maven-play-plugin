@@ -27,8 +27,8 @@ public class AssertNotEqualsStep implements Step {
 		}
 
 		public String toString() {
-			String innerCmd = innerCommand.command.substring("get".length());
-			return "assertNot" + innerCmd + "('" + innerCommand.param1 + "' ,'"
+			String cmd = innerCommand.command.substring("get".length());
+			return "assertNot" + cmd + "('" + innerCommand.param1 + "' ,'"
 					+ innerCommand.param2 + "')";
 		}
 

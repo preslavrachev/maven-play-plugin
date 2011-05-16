@@ -19,7 +19,13 @@ public class AssertFalseStep implements Step {
 
 		public String toString() {
 			String cmd = innerCommand.command.substring("is".length());
-			return "assertNot" + cmd + "('" + innerCommand.param1 + "')";
+            if (cmd.endsWith("Present")) {
+                cmd = cmd.replace("Present", "NotPresent"); 
+            }
+            else {
+                cmd = "Not" + cmd;
+            }
+			return "assert" + cmd + "('" + innerCommand.param1 + "')";
 		}
 
 }
