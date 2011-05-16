@@ -314,7 +314,7 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 				}
 			}
             result.add(cmd);
-            System.out.println(cmd.toString());
+            //System.out.println(cmd.toString());
 		}
 
 		return result;
