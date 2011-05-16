@@ -126,21 +126,21 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 		List<Element> rows = tbody.elements("tr");
 		for (Element row : rows) {
 			List<Element> data = row.elements("td");
+            Step cmd = null;
 			if (data.size() == 1) { // comment
 				String cmt = data.get(0).getTextTrim();
-				CommentStep comment = new CommentStep(cmt.substring("//".length()));
-				result.add(comment);
+				cmd = new CommentStep(cmt.substring("//".length()));
 			} else {
 				String command = data.get(0).getText();
 				String param1 = data.get(1).getText();
 				if (!"".equals(param1)) {
-					param1 = javaEscapeValue(xmlUnescape(param1));
+					param1 = xmlUnescape(param1);
 				} else {
 					param1 = null;
 				}
 				String param2 = data.get(2).getText();
 				if (!"".equals(param2)) {
-					param2 = javaEscapeValue(xmlUnescape(param2));
+					param2 = xmlUnescape(param2);
 				} else {
 					param2 = null;
 				}
@@ -166,9 +166,9 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 				}
 
 				if (command.startsWith( "verify" ) || command.startsWith( "assert" )) {
-				    String cmd = command.replace( "verify", "" ).replace("assert", "");
-				    if (cmd.startsWith( "Not" )) {
-				        cmd = cmd.substring( "Not".length() );
+				    String what = command.replace( "verify", "" ).replace("assert", "");
+				    if (what.startsWith( "Not" )) {
+				        what = what.substring( "Not".length() );
 				    }
 				    if ("Alert".equals(cmd) ||
 			            "BodyText".equals( cmd ) ||
@@ -185,7 +185,6 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 				    }
 				}
 				
-				Step cmd = null;
 				if (command.endsWith("AndWait")) {
 					String innerCmd = command.substring(0,
 							command.indexOf("AndWait"));
@@ -193,35 +192,34 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 							innerCmd, param1, param2));
 				}
 				else if (command.startsWith("verify")) {
+                    String verifyWhat = command.substring("verify".length());
 					if (param2 == null) { // only one parameter
-                        if (command.startsWith("verifyNot")) {
+                        if (verifyWhat.startsWith("Not")) {
                             String innerCmd = "is"
-                                + command.substring("verifyNot".length());
+                                + verifyWhat.substring("Not".length());
                             cmd = new VerifyFalseStep(this,
                                     new SeleniumCommand(commandProcessor,
                                             innerCmd, param1));
-                        } else if (command.endsWith("NotPresent")) {
+                        } else if (verifyWhat.endsWith("NotPresent")) {
                             String innerCmd = "is"
-                                + command.substring("verify".length()).replace( "NotPresent", "Present");
+                                + verifyWhat.replace( "NotPresent", "Present");
 							cmd = new VerifyFalseStep(this,
 									new SeleniumCommand(commandProcessor,
 											innerCmd, param1));
 						} else {
-							String innerCmd = "is"
-									+ command.substring("verify".length());
+							String innerCmd = "is" + verifyWhat;
 							cmd = new VerifyTrueStep(this, new SeleniumCommand(
 									commandProcessor, innerCmd, param1));
 						}
 					} else { // two parameters
-						if (command.startsWith("verifyNot")) {
+						if (verifyWhat.startsWith("Not")) {
 							String innerCmd = "get"
-									+ command.substring("verifyNot".length());
+									+ verifyWhat.substring("Not".length());
 							cmd = new VerifyNotEqualsStep(this,
 									new SeleniumCommand(commandProcessor,
 											innerCmd, param1), param2);
 						} else {
-							String innerCmd = "get"
-									+ command.substring("verify".length());
+							String innerCmd = "get" + verifyWhat;
 							cmd = new VerifyEqualsStep(this,
 									new SeleniumCommand(commandProcessor,
 											innerCmd, param1), param2);
@@ -240,34 +238,33 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 					}
 				}
 				else if (command.startsWith("assert")) {
+                    String assertWhat = command.substring("assert".length());
 					if (param2 == null) { // only one parameter
-                        if (command.startsWith("assertNot")) {
+                        if (assertWhat.startsWith("Not")) {
                             String innerCmd = "is"
-                                    + command.substring("assertNot".length());
+                                    + assertWhat.substring("Not".length());
                             cmd = new AssertFalseStep(new SeleniumCommand(
                                     commandProcessor, innerCmd, param1));
-                        } else if (command.endsWith("NotPresent")) {
+                        } else if (assertWhat.endsWith("NotPresent")) {
                             String innerCmd = "is"
-                                    + command.substring("assert".length()).replace( "NotPresent", "Present");
+                                    + assertWhat.replace( "NotPresent", "Present");
                             cmd = new AssertFalseStep(new SeleniumCommand(
                                     commandProcessor, innerCmd, param1));
                         } else {
-							String innerCmd = "is"
-									+ command.substring("assert".length());
+							String innerCmd = "is" + assertWhat;
 							cmd = new AssertTrueStep(new SeleniumCommand(
 									commandProcessor, innerCmd, param1));
 						}
 					} else { // two parameters
-						if (command.startsWith("assertNot")) {
+						if (assertWhat.startsWith("Not")) {
 							String innerCmd = "get"
-									+ command.substring("assertNot".length());
+									+ assertWhat.substring("Not".length());
 							cmd = new AssertNotEqualsStep(
 									/* this, */new SeleniumCommand(
 											commandProcessor, innerCmd, param1),
 									param2);
 						} else {
-							String innerCmd = "get"
-									+ command.substring("assert".length());
+							String innerCmd = "get"	+ assertWhat;
 							cmd = new AssertEqualsStep(
 									/* this, */new SeleniumCommand(
 											commandProcessor, innerCmd, param1),
@@ -286,28 +283,27 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 						 */
 					}
 				} else if (command.startsWith("waitFor")) {
-					if ("waitForCondition".equals(command)
-							|| "waitForFrameToLoad".equals(command)
-							|| "waitForPageToLoad".equals(command)
-							|| "waitForPopUp".equals(command)) {
+                    String waitForWhat = command.substring("waitFor".length());
+					if ("Condition".equals(waitForWhat)
+							|| "FrameToLoad".equals(waitForWhat)
+							|| "PageToLoad".equals(waitForWhat)
+							|| "PopUp".equals(waitForWhat)) {
 	                    cmd = new SeleniumCommand(commandProcessor, command,
 	                                              param1, param2);
 					}
 					else
 					{
-                        if (command.startsWith("waitForNot")) {
-                            String innerCmd = "is"
-                                    + command.substring("waitForNot".length());
+                        if (waitForWhat.startsWith("Not")) {
+                            String innerCmd = "is" + waitForWhat.substring("Not".length());
                             cmd = new WaitForNotStep(new SeleniumCommand(
                                     commandProcessor, innerCmd, param1));
-                        } else if (command.endsWith("NotPresent")) {
+                        } else if (waitForWhat.endsWith("NotPresent")) {
                             String innerCmd = "is"
-                                    + command.substring("waitFor".length()).replace( "NotPresent", "Present");
+                                    + waitForWhat.replace( "NotPresent", "Present");
                             cmd = new WaitForNotStep(new SeleniumCommand(
                                     commandProcessor, innerCmd, param1));
                         } else {
-                            String innerCmd = "is"
-                                    + command.substring("waitFor".length());
+                            String innerCmd = "is" + waitForWhat;
                             cmd = new WaitForStep(new SeleniumCommand(
                                     commandProcessor, innerCmd, param1));
                         }
@@ -316,21 +312,11 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 					cmd = new SeleniumCommand(commandProcessor, command,
 							param1, param2);
 				}
-
-				result.add(cmd);
 			}
+            result.add(cmd);
+            System.out.println(cmd.toString());
 		}
 
-		return result;
-	}
-
-	private String javaEscapeValue(String value) {
-		String result = value;
-		// String result = value.replace( "\\", "\\\\" ).replace( "\"", "\\\""
-		// );
-		// maybe change method name, because it does not fit to the logic below
-		result = result.replace("${space}", " ");
-		result = result.replace("${nbsp}", "\u00A0");
 		return result;
 	}
 
@@ -340,7 +326,9 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 		result = result.replace("&apos;", "'");
 		result = result.replace("&lt;", "<");
 		result = result.replace("&gt;", ">");
-		result = result.replace("&amp;", "&");
+        result = result.replace("&amp;", "&");
+
+        result = result.replace("&nbsp;", "\u00A0");
 		return result;
 	}
 
