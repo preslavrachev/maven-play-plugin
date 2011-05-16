@@ -87,10 +87,18 @@ public abstract class AbstractPlayMojo
         // throw new MojoExecutionException( "The Check configuration is missing." );
         // }
 
-        if ( !playHome.isDirectory() )
+        if ( playHome == null || "".equals( playHome ) )
         {
             throw new MojoExecutionException(
-                                              "Play! home directory not set (\"playHome\" plugin configuration parameter)" );
+                                              "Play! home directory (\"playHome\" plugin configuration parameter) not set" );
+        }
+        if ( !playHome.exists() )
+        {
+            throw new MojoExecutionException( "Play! home directory " + playHome + " does not exist" );
+        }
+        if ( !playHome.isDirectory() )
+        {
+            throw new MojoExecutionException( "Play! home directory " + playHome + " is not a directory" );
         }
 
         ArtifactHandler artifactHandler = project.getArtifact().getArtifactHandler();
