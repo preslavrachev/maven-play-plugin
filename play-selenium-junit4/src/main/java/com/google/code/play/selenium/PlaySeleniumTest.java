@@ -170,16 +170,16 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 				    if (what.startsWith( "Not" )) {
 				        what = what.substring( "Not".length() );
 				    }
-				    if ("Alert".equals(cmd) ||
-			            "BodyText".equals( cmd ) ||
-                        "Confirmation".equals( cmd ) ||
-                        "Cookie".equals( cmd ) ||
-                        "HtmlSource".equals( cmd ) ||
-                        "Location".equals( cmd ) ||
-                        "MouseSpeed".equals( cmd ) ||
-                        "Prompt".equals( cmd ) ||
-                        "Speed".equals( cmd ) ||
-                        "Title".equals( cmd )) {
+				    if ("Alert".equals(what) ||
+			            "BodyText".equals( what ) ||
+                        "Confirmation".equals( what ) ||
+                        "Cookie".equals( what ) ||
+                        "HtmlSource".equals( what ) ||
+                        "Location".equals( what ) ||
+                        "MouseSpeed".equals( what ) ||
+                        "Prompt".equals( what ) ||
+                        "Speed".equals( what ) ||
+                        "Title".equals( what )) {
 				        param2 = param1; // value to compare with
 				        param1 = null; // parameterless command
 				    }
