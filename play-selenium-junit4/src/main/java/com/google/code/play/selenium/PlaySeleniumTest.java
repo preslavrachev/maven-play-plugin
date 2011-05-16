@@ -327,8 +327,6 @@ public class PlaySeleniumTest extends SeleneseTestCase {
 		result = result.replace("&lt;", "<");
 		result = result.replace("&gt;", ">");
         result = result.replace("&amp;", "&");
-
-        result = result.replace("&nbsp;", "\u00A0");
 		return result;
 	}
 
