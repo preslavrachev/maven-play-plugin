@@ -4,35 +4,37 @@ import com.thoughtworks.selenium.SeleneseTestCase;
 
 import com.google.code.play.selenium.Step;
 
-public class VerifyNotEqualsStep implements Step {
+public class VerifyNotEqualsStep
+    implements Step
+{
 
-		public SeleneseTestCase seleneseTestCase;
-		protected SeleniumCommand innerCommand;
-		public Object expected;
+    public SeleneseTestCase seleneseTestCase;
 
-		public VerifyNotEqualsStep(SeleneseTestCase seleneseTestCase,
-				SeleniumCommand innerCommand, Object expected) {
-			this.seleneseTestCase = seleneseTestCase;
-			this.innerCommand = innerCommand;
-			this.expected = expected;
-		}
+    protected SeleniumCommand innerCommand;
 
-		public String execute() throws Exception {
-            String innerCommandResult = innerCommand.execute();
-            boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals(expected, innerCommandResult);
-            seleneseTestCase.verifyFalse( seleniumEqualsResult);
-			return null;
-		}
+    public Object expected;
 
-		public String toString() {
-			String cmd = innerCommand.command.substring("get".length());
-			return "verifyNot"
-					+ cmd
-					+ "('"
-					+ innerCommand.param1
-					+ (innerCommand.param2 != null ? "' ,'"
-							+ innerCommand.param2 : "") + "')";
-		}
+    public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, Object expected )
+    {
+        this.seleneseTestCase = seleneseTestCase;
+        this.innerCommand = innerCommand;
+        this.expected = expected;
+    }
+
+    public String execute()
+        throws Exception
+    {
+        String innerCommandResult = innerCommand.execute();
+        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( expected, innerCommandResult );
+        seleneseTestCase.verifyFalse( seleniumEqualsResult );
+        return null;
+    }
+
+    public String toString()
+    {
+        String cmd = innerCommand.command.substring( "get".length() );
+        return "verifyNot" + cmd + "('" + innerCommand.param1
+            + ( innerCommand.param2 != null ? "' ,'" + innerCommand.param2 : "" ) + "')";
+    }
 
 }
-

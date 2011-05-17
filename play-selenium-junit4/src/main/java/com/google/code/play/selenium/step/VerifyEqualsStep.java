@@ -4,35 +4,37 @@ import com.thoughtworks.selenium.SeleneseTestCase;
 
 import com.google.code.play.selenium.Step;
 
-public class VerifyEqualsStep implements Step {
+public class VerifyEqualsStep
+    implements Step
+{
 
-		public SeleneseTestCase seleneseTestCase;
-		protected SeleniumCommand innerCommand;
-		public Object expected;
+    public SeleneseTestCase seleneseTestCase;
 
-		public VerifyEqualsStep(SeleneseTestCase seleneseTestCase,
-				SeleniumCommand innerCommand, Object expected) {
-			this.seleneseTestCase = seleneseTestCase;
-			this.innerCommand = innerCommand;
-			this.expected = expected;
-		}
+    protected SeleniumCommand innerCommand;
 
-		public String execute() throws Exception {
-		    String innerCommandResult = innerCommand.execute();
-		    boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals(expected, innerCommandResult);
-		    seleneseTestCase.verifyTrue( seleniumEqualsResult);
-			return null;
-		}
+    public Object expected;
 
-		public String toString() {
-			String cmd = innerCommand.command.substring("get".length());
-			return "verify"
-					+ cmd
-					+ "('"
-					+ innerCommand.param1
-					+ (innerCommand.param2 != null ? "' ,'"
-							+ innerCommand.param2 : "") + "')";
-		}
+    public VerifyEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, Object expected )
+    {
+        this.seleneseTestCase = seleneseTestCase;
+        this.innerCommand = innerCommand;
+        this.expected = expected;
+    }
+
+    public String execute()
+        throws Exception
+    {
+        String innerCommandResult = innerCommand.execute();
+        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( expected, innerCommandResult );
+        seleneseTestCase.verifyTrue( seleniumEqualsResult );
+        return null;
+    }
+
+    public String toString()
+    {
+        String cmd = innerCommand.command.substring( "get".length() );
+        return "verify" + cmd + "('" + innerCommand.param1
+            + ( innerCommand.param2 != null ? "' ,'" + innerCommand.param2 : "" ) + "')";
+    }
 
 }
-

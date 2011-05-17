@@ -6,30 +6,33 @@ import com.thoughtworks.selenium.SeleneseTestCase;
 
 import com.google.code.play.selenium.Step;
 
-public class AssertNotEqualsStep implements Step {
+public class AssertNotEqualsStep
+    implements Step
+{
 
-		protected SeleniumCommand innerCommand;
-		public Object expected;
+    protected SeleniumCommand innerCommand;
 
-		public AssertNotEqualsStep(
-				SeleniumCommand innerCommand,
-				Object expected) {
-			this.innerCommand = innerCommand;
-			this.expected = expected;
-		}
+    public Object expected;
 
-		public String execute() throws Exception {
-            String innerCommandResult = innerCommand.execute();
-            boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals(expected, innerCommandResult);
-            Assert.assertFalse( seleniumEqualsResult);
-            return null;
-		}
+    public AssertNotEqualsStep( SeleniumCommand innerCommand, Object expected )
+    {
+        this.innerCommand = innerCommand;
+        this.expected = expected;
+    }
 
-		public String toString() {
-			String cmd = innerCommand.command.substring("get".length());
-			return "assertNot" + cmd + "('" + innerCommand.param1 + "' ,'"
-					+ innerCommand.param2 + "')";
-		}
+    public String execute()
+        throws Exception
+    {
+        String innerCommandResult = innerCommand.execute();
+        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( expected, innerCommandResult );
+        Assert.assertFalse( seleniumEqualsResult );
+        return null;
+    }
+
+    public String toString()
+    {
+        String cmd = innerCommand.command.substring( "get".length() );
+        return "assertNot" + cmd + "('" + innerCommand.param1 + "' ,'" + innerCommand.param2 + "')";
+    }
 
 }
-
