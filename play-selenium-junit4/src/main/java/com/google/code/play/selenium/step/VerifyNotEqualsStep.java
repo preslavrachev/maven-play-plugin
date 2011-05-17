@@ -12,9 +12,9 @@ public class VerifyNotEqualsStep
 
     protected SeleniumCommand innerCommand;
 
-    public Object expected;
+    public String expected;
 
-    public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, Object expected )
+    public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, String expected )
     {
         this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
@@ -25,8 +25,8 @@ public class VerifyNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.execute();
-        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( expected, innerCommandResult );
-        seleneseTestCase.verifyFalse( seleniumEqualsResult );
+        boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( expected, innerCommandResult );
+        seleneseTestCase.verifyTrue( seleniumNotEqualsResult );
         return null;
     }
 
