@@ -166,52 +166,10 @@ public class PlaySeleniumTest
                 {
                     param1 = xmlUnescape( param1 );
                 }
-                else
-                {
-                    param1 = null;
-                }
                 String param2 = data.get( 2 ).getText();
                 if ( !"".equals( param2 ) )
                 {
                     param2 = xmlUnescape( param2 );
-                }
-                else
-                {
-                    param2 = null;
-                }
-
-                if ( param2 == null )
-                {
-                    if ( "type".equals( command )
-                        ||
-                        // command.startsWith("verify") ||
-                        "verifyTable".equals( command ) || "verifyNotTable".equals( command )
-                        || "verifySelectedLabel".equals( command ) || "verifyNotSelectedLabel".equals( command )
-                        || "verifySelectedValue".equals( command ) || "verifyNotSelectedValue".equals( command )
-                        || "verifyText".equals( command ) || "verifyNotText".equals( command )
-                        || "verifyValue".equals( command ) || "verifyNotValue".equals( command ) )
-                    {// jakie
-                     // jeszcze
-                     // polecenia?
-                        param2 = "";
-                    }
-                }
-
-                if ( command.startsWith( "verify" ) || command.startsWith( "assert" ) )
-                {
-                    String what = command.replace( "verify", "" ).replace( "assert", "" );
-                    if ( what.startsWith( "Not" ) )
-                    {
-                        what = what.substring( "Not".length() );
-                    }
-                    if ( "Alert".equals( what ) || "BodyText".equals( what ) || "Confirmation".equals( what )
-                        || "Cookie".equals( what ) || "HtmlSource".equals( what ) || "Location".equals( what )
-                        || "MouseSpeed".equals( what ) || "Prompt".equals( what ) || "Speed".equals( what )
-                        || "Title".equals( what ) )
-                    {
-                        param2 = param1; // value to compare with
-                        param1 = null; // parameterless command
-                    }
                 }
 
                 if ( command.endsWith( "AndWait" ) )
@@ -222,92 +180,103 @@ public class PlaySeleniumTest
                 else if ( command.startsWith( "verify" ) )
                 {
                     String verifyWhat = command.substring( "verify".length() );
-                    if ( param2 == null )
-                    { // only one parameter
-                        if ( verifyWhat.startsWith( "Not" ) )
+                    if ( verifyWhat.endsWith( "NotPresent" ) )
+                    {
+                        String innerCmd = verifyWhat.replace( "NotPresent", "Present" );
+                        cmd =
+                            new VerifyFalseStep( this, new SeleniumCommand( commandProcessor, "is" + innerCmd, param1 ) );
+                    }
+                    else if ( verifyWhat.startsWith( "Not" ) )
+                    {
+                        String innerCmd = verifyWhat.substring( "Not".length() );
+                        if ( isParameterLessCommand( innerCmd ) )
                         {
-                            String innerCmd = "is" + verifyWhat.substring( "Not".length() );
-                            cmd = new VerifyFalseStep( this, new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                            param2 = param1; // value to compare with
+                            param1 = ""; // parameterless command
                         }
-                        else if ( verifyWhat.endsWith( "NotPresent" ) )
+                        if ( isBooleanCommand( innerCmd ) )
                         {
-                            String innerCmd = "is" + verifyWhat.replace( "NotPresent", "Present" );
-                            cmd = new VerifyFalseStep( this, new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                            cmd =
+                                new VerifyFalseStep( this, new SeleniumCommand( commandProcessor, "is" + innerCmd,
+                                                                                param1 ) );
                         }
                         else
                         {
-                            String innerCmd = "is" + verifyWhat;
-                            cmd = new VerifyTrueStep( this, new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                            cmd =
+                                new VerifyNotEqualsStep( this, new SeleniumCommand( commandProcessor, "get" + innerCmd,
+                                                                                    param1 ), param2 );
+
                         }
                     }
                     else
-                    { // two parameters
-                        if ( verifyWhat.startsWith( "Not" ) )
+                    {
+                        String innerCmd = verifyWhat;
+                        if ( isParameterLessCommand( innerCmd ) )
                         {
-                            String innerCmd = "get" + verifyWhat.substring( "Not".length() );
+                            param2 = param1; // value to compare with
+                            param1 = ""; // parameterless command
+                        }
+                        if ( isBooleanCommand( innerCmd ) )
+                        {
                             cmd =
-                                new VerifyNotEqualsStep( this,
-                                                         new SeleniumCommand( commandProcessor, innerCmd, param1 ),
-                                                         param2 );
+                                new VerifyTrueStep( this, new SeleniumCommand( commandProcessor, "is" + innerCmd,
+                                                                               param1 ) );
                         }
                         else
                         {
-                            String innerCmd = "get" + verifyWhat;
                             cmd =
-                                new VerifyEqualsStep( this, new SeleniumCommand( commandProcessor, innerCmd, param1 ),
-                                                      param2 );
+                                new VerifyEqualsStep( this, new SeleniumCommand( commandProcessor, "get" + innerCmd,
+                                                                                 param1 ), param2 );
                         }
-                        // specjalna obsluga regexp
-                        /*
-                         * if ( cmd.param1.startsWith( "\"regexp:" ) ) { realCmd = "verifyTrue"; cmd.param1 =
-                         * "java.util.regex.Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) +
-                         * ").matcher(" + cmd.param2 + ").find()"; cmd.param2 = null; } else if ( cmd.param1.startsWith(
-                         * "\"exact:" ) ) { cmd.param1 = "\"" + cmd.param1.substring( "\"exact:".length() ); }
-                         */
                     }
                 }
                 else if ( command.startsWith( "assert" ) )
                 {
                     String assertWhat = command.substring( "assert".length() );
-                    if ( param2 == null )
-                    { // only one parameter
-                        if ( assertWhat.startsWith( "Not" ) )
+                    if ( assertWhat.endsWith( "NotPresent" ) )
+                    {
+                        String innerCmd = "is" + assertWhat.replace( "NotPresent", "Present" );
+                        cmd = new AssertFalseStep( new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                    }
+                    else if ( assertWhat.startsWith( "Not" ) )
+                    {
+                        String innerCmd = assertWhat.substring( "Not".length() );
+                        if ( isParameterLessCommand( innerCmd ) )
                         {
-                            String innerCmd = "is" + assertWhat.substring( "Not".length() );
-                            cmd = new AssertFalseStep( new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                            param2 = param1; // value to compare with
+                            param1 = ""; // parameterless command
                         }
-                        else if ( assertWhat.endsWith( "NotPresent" ) )
+                        if ( isBooleanCommand( innerCmd ) )
                         {
-                            String innerCmd = "is" + assertWhat.replace( "NotPresent", "Present" );
-                            cmd = new AssertFalseStep( new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                            cmd =
+                                new AssertFalseStep( new SeleniumCommand( commandProcessor, "is" + innerCmd, param1 ) );
                         }
                         else
                         {
-                            String innerCmd = "is" + assertWhat;
-                            cmd = new AssertTrueStep( new SeleniumCommand( commandProcessor, innerCmd, param1 ) );
+                            cmd =
+                                new AssertNotEqualsStep( new SeleniumCommand( commandProcessor, "get" + innerCmd,
+                                                                              param1 ), param2 );
                         }
                     }
                     else
-                    { // two parameters
-                        if ( assertWhat.startsWith( "Not" ) )
+                    {
+                        String innerCmd = assertWhat;
+                        if ( isParameterLessCommand( innerCmd ) )
                         {
-                            String innerCmd = "get" + assertWhat.substring( "Not".length() );
-                            cmd = new AssertNotEqualsStep(
-                            /* this, */new SeleniumCommand( commandProcessor, innerCmd, param1 ), param2 );
+                            param2 = param1; // value to compare with
+                            param1 = ""; // parameterless command
+                        }
+                        if ( isBooleanCommand( innerCmd ) )
+                        {
+                            cmd = new AssertTrueStep( new SeleniumCommand( commandProcessor, "is" + innerCmd, param1 ) );
                         }
                         else
                         {
-                            String innerCmd = "get" + assertWhat;
-                            cmd = new AssertEqualsStep(
-                            /* this, */new SeleniumCommand( commandProcessor, innerCmd, param1 ), param2 );
+                            cmd =
+                                new AssertEqualsStep(
+                                                      new SeleniumCommand( commandProcessor, "get" + innerCmd, param1 ),
+                                                      param2 );
                         }
-                        // specjalna obsluga regexp
-                        /*
-                         * if ( cmd.param1.startsWith( "\"regexp:" ) ) { realCmd = "verifyTrue"; cmd.param1 =
-                         * "java.util.regex.Pattern.compile(\"" + cmd.param1.substring( "\"regexp:".length() ) +
-                         * ").matcher(" + cmd.param2 + ").find()"; cmd.param2 = null; } else if ( cmd.param1.startsWith(
-                         * "\"exact:" ) ) { cmd.param1 = "\"" + cmd.param1.substring( "\"exact:".length() ); }
-                         */
                     }
                 }
                 else if ( command.startsWith( "waitFor" ) )
@@ -357,6 +326,26 @@ public class PlaySeleniumTest
         result = result.replace( "&lt;", "<" );
         result = result.replace( "&gt;", ">" );
         result = result.replace( "&amp;", "&" );
+        return result;
+    }
+
+    private boolean isBooleanCommand( String command )
+    {
+        boolean result =
+            ( "AlertPresent".equals( command ) || "Checked".equals( command ) || "ConfirmationPresent".equals( command )
+                || "CookiePresent".equals( command ) || "Editable".equals( command )
+                || "ElementPresent".equals( command ) || "Ordered".equals( command )
+                || "PromptPresent".equals( command ) || "SomethingSelected".equals( command )
+                || "TextPresent".equals( command ) || "Visible".equals( command ) );
+        return result;
+    }
+
+    private boolean isParameterLessCommand( String command )
+    {
+        boolean result =
+            ( "Alert".equals( command ) || "BodyText".equals( command ) || "Confirmation".equals( command )
+                || "Cookie".equals( command ) || "HtmlSource".equals( command ) || "Location".equals( command )
+                || "MouseSpeed".equals( command ) || "Prompt".equals( command ) || "Speed".equals( command ) || "Title".equals( command ) );
         return result;
     }
 

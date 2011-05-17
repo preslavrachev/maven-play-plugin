@@ -12,9 +12,9 @@ public class AssertEqualsStep
 
     protected SeleniumCommand innerCommand;
 
-    public Object expected;
+    public String expected;
 
-    public AssertEqualsStep( SeleniumCommand innerCommand, Object expected )
+    public AssertEqualsStep( SeleniumCommand innerCommand, String expected )
     {
         this.innerCommand = innerCommand;
         this.expected = expected;

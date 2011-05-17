@@ -12,9 +12,9 @@ public class VerifyEqualsStep
 
     protected SeleniumCommand innerCommand;
 
-    public Object expected;
+    public String expected;
 
-    public VerifyEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, Object expected )
+    public VerifyEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, String expected )
     {
         this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;

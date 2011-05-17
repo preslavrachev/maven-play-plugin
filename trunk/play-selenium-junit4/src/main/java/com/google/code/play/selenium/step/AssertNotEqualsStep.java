@@ -2,8 +2,6 @@ package com.google.code.play.selenium.step;
 
 import junit.framework.Assert;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 import com.google.code.play.selenium.Step;
 
 public class AssertNotEqualsStep
@@ -12,9 +10,9 @@ public class AssertNotEqualsStep
 
     protected SeleniumCommand innerCommand;
 
-    public Object expected;
+    public String expected;
 
-    public AssertNotEqualsStep( SeleniumCommand innerCommand, Object expected )
+    public AssertNotEqualsStep( SeleniumCommand innerCommand, String expected )
     {
         this.innerCommand = innerCommand;
         this.expected = expected;
@@ -24,8 +22,8 @@ public class AssertNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.execute();
-        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( expected, innerCommandResult );
-        Assert.assertFalse( seleniumEqualsResult );
+        boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( expected, innerCommandResult );
+        Assert.assertTrue( seleniumNotEqualsResult );
         return null;
     }
 
