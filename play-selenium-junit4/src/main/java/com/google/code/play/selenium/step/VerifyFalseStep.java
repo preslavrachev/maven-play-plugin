@@ -17,7 +17,8 @@ public class VerifyFalseStep implements Step {
 		}
 
 		public String execute() throws Exception {
-			seleneseTestCase.verifyFalse(innerCommand.executeBoolean());
+            boolean innerCommandResult = innerCommand.executeBoolean();
+			seleneseTestCase.verifyFalse(innerCommandResult);
 			return null;
 		}
 

@@ -2,24 +2,26 @@ package com.google.code.play.selenium.step;
 
 import com.thoughtworks.selenium.SeleneseTestCase;
 
+import junit.framework.Assert;
+
 import com.google.code.play.selenium.Step;
 
 public class AssertEqualsStep implements Step {
 
-		// public SeleneseTestCase seleneseTestCase;
 		protected SeleniumCommand innerCommand;
 		public Object expected;
 
 		public AssertEqualsStep(
-				/* SeleneseTestCase seleneseTestCase, */SeleniumCommand innerCommand,
+				SeleniumCommand innerCommand,
 				Object expected) {
-			// this.seleneseTestCase = seleneseTestCase;
 			this.innerCommand = innerCommand;
 			this.expected = expected;
 		}
 
 		public String execute() throws Exception {
-			SeleneseTestCase.seleniumEquals(expected, innerCommand.execute());
+            String innerCommandResult = innerCommand.execute();
+            boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals(expected, innerCommandResult);
+            Assert.assertTrue( seleniumEqualsResult);
 			return null;
 		}
 

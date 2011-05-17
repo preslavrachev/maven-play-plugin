@@ -13,7 +13,8 @@ public class AssertTrueStep implements Step {
 		}
 
 		public String execute() throws Exception {
-			Assert.assertTrue(innerCommand.executeBoolean());
+            boolean innerCommandResult = innerCommand.executeBoolean();
+			Assert.assertTrue(innerCommandResult);
 			return null;
 		}
 

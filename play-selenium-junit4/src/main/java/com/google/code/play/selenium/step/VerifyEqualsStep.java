@@ -6,19 +6,21 @@ import com.google.code.play.selenium.Step;
 
 public class VerifyEqualsStep implements Step {
 
-		// public SeleneseTestCase seleneseTestCase;
+		public SeleneseTestCase seleneseTestCase;
 		protected SeleniumCommand innerCommand;
 		public Object expected;
 
 		public VerifyEqualsStep(SeleneseTestCase seleneseTestCase,
 				SeleniumCommand innerCommand, Object expected) {
-			// this.seleneseTestCase = seleneseTestCase;
+			this.seleneseTestCase = seleneseTestCase;
 			this.innerCommand = innerCommand;
 			this.expected = expected;
 		}
 
 		public String execute() throws Exception {
-			SeleneseTestCase.seleniumEquals(expected, innerCommand.execute());
+		    String innerCommandResult = innerCommand.execute();
+		    boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals(expected, innerCommandResult);
+		    seleneseTestCase.verifyTrue( seleniumEqualsResult);
 			return null;
 		}
 

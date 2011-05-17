@@ -18,10 +18,9 @@ public class VerifyNotEqualsStep implements Step {
 		}
 
 		public String execute() throws Exception {
-			seleneseTestCase.verifyNotEquals(expected, innerCommand.execute());// TODO-brak
-																				// obslugi
-																				// regexp
-																				// itd.
+            String innerCommandResult = innerCommand.execute();
+            boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals(expected, innerCommandResult);
+            seleneseTestCase.verifyFalse( seleniumEqualsResult);
 			return null;
 		}
 
