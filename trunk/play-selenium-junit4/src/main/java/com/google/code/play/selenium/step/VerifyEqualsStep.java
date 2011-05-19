@@ -25,7 +25,8 @@ public class VerifyEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.execute();
-        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( expected, innerCommandResult );
+        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumEqualsResult );
         return null;
     }

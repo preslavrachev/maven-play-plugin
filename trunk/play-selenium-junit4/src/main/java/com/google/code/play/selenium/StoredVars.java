@@ -30,15 +30,14 @@ public class StoredVars
     public String fillValues( String text )
     {
         String result = text;
-        if ( text != null )
+        for ( String name : storedVars.keySet() )
         {
-            for ( String name : storedVars.keySet() )
+            String value = storedVars.get( name );
+            if ( value == null )
             {
-                String value = storedVars.get( name );
-                if ( value == null )
-                    value = "";// ??
-                result = result.replace( "$[" + name + "]", value );
+                value = "";// ??
             }
+            result = result.replace( "$[" + name + "]", value );
         }
         return result;
     }
@@ -46,12 +45,9 @@ public class StoredVars
     public String changeBraces( String text )
     {
         String result = text;
-        if ( text != null )
+        for ( String name : storedVars.keySet() )
         {
-            for ( String name : storedVars.keySet() )
-            {
-                result = result.replace( "$[" + name + "]", "${" + name + "}" );
-            }
+            result = result.replace( "$[" + name + "]", "${" + name + "}" );
         }
         return result;
     }

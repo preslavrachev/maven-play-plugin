@@ -10,7 +10,7 @@ public class SeleniumCommand
 {
 
     private StoredVars storedVars;
-    
+
     public CommandProcessor commandProcessor;
 
     public String command;
@@ -28,7 +28,8 @@ public class SeleniumCommand
         this.param2 = null;
     }
 
-    public SeleniumCommand( StoredVars storedVars, CommandProcessor commandProcessor, String command, String param1, String param2 )
+    public SeleniumCommand( StoredVars storedVars, CommandProcessor commandProcessor, String command, String param1,
+                            String param2 )
     {
         this( storedVars, commandProcessor, command, param1 );
         this.param2 = param2;
@@ -39,8 +40,18 @@ public class SeleniumCommand
     {
         String result = null;
 
-        String xparam1 = storedVars.changeBraces(param1);
-        String xparam2 = storedVars.changeBraces(param2);
+        String xparam1 = param1;
+        if ( xparam1 != null )
+        {
+            xparam1 = storedVars.changeBraces( param1 );
+            xparam1 = xparam1.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+        }
+        String xparam2 = param2;
+        if ( xparam2 != null )
+        {
+            xparam2 = storedVars.changeBraces( param2 );
+            xparam2 = xparam2.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+        }
 
         if ( command.startsWith( "is" ) || command.startsWith( "get" ) )
         {// TODO-zrobic
