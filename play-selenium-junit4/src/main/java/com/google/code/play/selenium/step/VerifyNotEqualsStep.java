@@ -25,7 +25,8 @@ public class VerifyNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.execute();
-        boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( expected, innerCommandResult );
+        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumNotEqualsResult );
         return null;
     }
