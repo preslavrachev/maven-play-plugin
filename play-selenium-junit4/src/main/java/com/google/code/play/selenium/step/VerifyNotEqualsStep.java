@@ -34,7 +34,7 @@ public class VerifyNotEqualsStep
     {
         String cmd = innerCommand.command.substring( "get".length() );
         return "verifyNot" + cmd + "('" + innerCommand.param1
-            + ( innerCommand.param2 != null ? "' ,'" + innerCommand.param2 : "" ) + "')";
+            + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
     }
 
 }

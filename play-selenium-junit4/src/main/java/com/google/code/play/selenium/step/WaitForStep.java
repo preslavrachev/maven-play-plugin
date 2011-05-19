@@ -39,7 +39,7 @@ public class WaitForStep
     {
         String cmd = innerCommand.command.substring( "is".length() );
         return "waitFor" + cmd + "('" + innerCommand.param1
-            + ( innerCommand.param2 != null ? "' ,'" + innerCommand.param2 : "" ) + "')";
+            + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
     }
 
 }

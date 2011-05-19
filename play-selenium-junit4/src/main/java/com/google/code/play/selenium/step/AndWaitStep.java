@@ -24,7 +24,7 @@ public class AndWaitStep
     public String toString()
     {
         return innerCommand.command + "AndWait('" + innerCommand.param1
-            + ( innerCommand.param2 != null ? "' ,'" + innerCommand.param2 : "" ) + "')";
+            + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
     }
 
 }

@@ -47,7 +47,7 @@ public class WaitForNotStep
             cmd = "Not" + cmd;
         }
         return "waitFor" + cmd + "('" + innerCommand.param1
-            + ( innerCommand.param2 != null ? "' ,'" + innerCommand.param2 : "" ) + "')";
+            + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
     }
 
 }

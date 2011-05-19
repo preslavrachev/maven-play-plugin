@@ -32,7 +32,7 @@ public class AssertEqualsStep
     public String toString()
     {
         String cmd = innerCommand.command.substring( "get".length() );
-        return "assert" + cmd + "('" + innerCommand.param1 + "' ,'" + innerCommand.param2 + "')";
+        return "assert" + cmd + "('" + innerCommand.param1 + "', '" + innerCommand.param2 + "')";
     }
 
 }
