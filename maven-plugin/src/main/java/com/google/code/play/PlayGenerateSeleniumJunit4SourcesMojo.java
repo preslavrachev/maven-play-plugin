@@ -75,10 +75,15 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                     {
                         String oryginalTestClassName =
                             playTestFileName.substring( 0, playTestFileName.indexOf( ".test.html" ) );
-                        String javaTestClassName = oryginalTestClassName.replace( ".", "_" );
+                        String javaTestClassName = oryginalTestClassName;
+                        javaTestClassName = javaTestClassName.replace( ".", "_" );
+                        javaTestClassName = javaTestClassName.replace( "-", "_" );
+                        if ( Character.isDigit( javaTestClassName.charAt( 0 ) ) )
+                        {
+                            javaTestClassName = "_" + javaTestClassName;
+                        }
                         File javaTestFile = new File( destDir, javaTestClassName + "Test.java" );
-                        if ( !javaTestFile.exists()
-                            || ( javaTestFile.lastModified() + 0/* lastUpdatedWithinMsecs */< playTestFile.lastModified() ) )
+                        if ( !javaTestFile.exists() )
                         {
                             javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when
                                                                   // "false"
