@@ -1,7 +1,5 @@
 package com.google.code.play.selenium.step;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 import junit.framework.Assert;
 
 import com.google.code.play.selenium.Step;
@@ -25,7 +23,7 @@ public class AssertEqualsStep
     {
         String innerCommandResult = innerCommand.getString();
         String xexpected = MultiLineHelper.brToNewLine( expected );
-        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
+        boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
         Assert.assertTrue( seleniumEqualsResult );
     }
 

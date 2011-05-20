@@ -26,7 +26,7 @@ public class VerifyEqualsStep
     {
         String innerCommandResult = innerCommand.getString();
         String xexpected = MultiLineHelper.brToNewLine( expected );
-        boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
+        boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumEqualsResult );
     }
 
