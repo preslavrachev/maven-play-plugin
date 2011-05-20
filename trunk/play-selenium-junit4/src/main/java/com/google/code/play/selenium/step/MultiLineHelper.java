@@ -8,7 +8,8 @@ public class MultiLineHelper
     }
 
     /**
-     * Converts <br /> tags to "\n" characters
+     * Converts <br />
+     * tags to "\n" characters
      * 
      * @param parameter input text
      * @return converted input text

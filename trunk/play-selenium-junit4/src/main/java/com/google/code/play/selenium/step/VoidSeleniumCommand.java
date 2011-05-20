@@ -35,7 +35,7 @@ public class VoidSeleniumCommand
             xparam2 = MultiLineHelper.brToNewLine( xparam2 );
         }
 
-        if ( !"".equals(param2) )
+        if ( !"".equals( param2 ) )
         {
             commandProcessor.doCommand( command, new String[] { xparam1, xparam2 } );
         }

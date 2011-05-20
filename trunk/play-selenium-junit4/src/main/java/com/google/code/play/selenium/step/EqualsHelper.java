@@ -53,7 +53,7 @@ public class EqualsHelper
             String expectedExact = expectedPattern.replaceFirst( "exact:", "" );
             if ( !expectedExact.equals( actual ) )
             {
-                //System.out.println( "expected " + actual + " to not match " + expectedPattern );
+                // System.out.println( "expected " + actual + " to not match " + expectedPattern );
                 return false;
             }
             return true;
@@ -66,8 +66,8 @@ public class EqualsHelper
         expectedGlob = expectedGlob.replaceAll( "\\?", "." );
         if ( !Pattern.compile( expectedGlob, Pattern.DOTALL ).matcher( actual ).matches() )
         {
-            //System.out.println( "expected \"" + actual + "\" to not match glob \"" + expectedPattern
-            //    + "\" (had transformed the glob into regexp \"" + expectedGlob + "\"" );
+            // System.out.println( "expected \"" + actual + "\" to not match glob \"" + expectedPattern
+            // + "\" (had transformed the glob into regexp \"" + expectedGlob + "\"" );
             return false;
         }
         return true;
@@ -81,7 +81,7 @@ public class EqualsHelper
             Pattern p = Pattern.compile( expectedRegEx, flags );
             if ( !p.matcher( actual ).matches() )
             {
-                //System.out.println( "expected " + actual + " to not match regexp " + expectedPattern );
+                // System.out.println( "expected " + actual + " to not match regexp " + expectedPattern );
                 return Boolean.FALSE;
             }
             return Boolean.TRUE;
@@ -133,7 +133,7 @@ public class EqualsHelper
             String expectedExact = expectedPattern.replaceFirst( "exact:", "" );
             if ( /* ! */expectedExact.equals( actual ) )
             {
-                //System.out.println( "expected " + actual + " to not match " + expectedPattern );
+                // System.out.println( "expected " + actual + " to not match " + expectedPattern );
                 return false;
             }
             return true;
@@ -146,8 +146,8 @@ public class EqualsHelper
         expectedGlob = expectedGlob.replaceAll( "\\?", "." );
         if ( /* ! */Pattern.compile( expectedGlob, Pattern.DOTALL ).matcher( actual ).matches() )
         {
-            //System.out.println( "expected \"" + actual + "\" to not match glob \"" + expectedPattern
-            //    + "\" (had transformed the glob into regexp \"" + expectedGlob + "\"" );
+            // System.out.println( "expected \"" + actual + "\" to not match glob \"" + expectedPattern
+            // + "\" (had transformed the glob into regexp \"" + expectedGlob + "\"" );
             return false;
         }
         return true;
@@ -161,7 +161,7 @@ public class EqualsHelper
             Pattern p = Pattern.compile( expectedRegEx, flags );
             if ( /* ! */p.matcher( actual ).matches() )
             {
-                //System.out.println( "expected " + actual + " to not match regexp " + expectedPattern );
+                // System.out.println( "expected " + actual + " to not match regexp " + expectedPattern );
                 return Boolean.FALSE;
             }
             return Boolean.TRUE;

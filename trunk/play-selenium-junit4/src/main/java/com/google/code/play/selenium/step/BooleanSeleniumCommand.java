@@ -26,18 +26,18 @@ public class BooleanSeleniumCommand
         boolean result = false;
 
         String xparam1 = param1;
-        if ( !"".equals(xparam1 ))
+        if ( !"".equals( xparam1 ) )
         {
             xparam1 = storedVars.changeBraces( param1 );
-            //not needed here
-            //xparam1 = MultiLineHelper.brToNewLine( xparam1 );
+            // not needed here
+            // xparam1 = MultiLineHelper.brToNewLine( xparam1 );
         }
         String xparam2 = param2;
-        if ( !"".equals(xparam2 ) )
+        if ( !"".equals( xparam2 ) )
         {
             xparam2 = storedVars.changeBraces( param2 );
-            //not needed here
-            //xparam2 = MultiLineHelper.brToNewLine( xparam2 );
+            // not needed here
+            // xparam2 = MultiLineHelper.brToNewLine( xparam2 );
         }
 
         if ( !"".equals( param2 ) )
