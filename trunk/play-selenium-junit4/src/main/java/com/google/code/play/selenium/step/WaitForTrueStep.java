@@ -4,13 +4,13 @@ import junit.framework.Assert;
 
 import com.google.code.play.selenium.Step;
 
-public class WaitForNotStep
+public class WaitForTrueStep
     implements Step
 {
 
     protected SeleniumCommand innerCommand;
 
-    public WaitForNotStep( SeleniumCommand innerCommand )
+    public WaitForTrueStep( SeleniumCommand innerCommand )
     {
         this.innerCommand = innerCommand;
     }
@@ -24,7 +24,8 @@ public class WaitForNotStep
                 Assert.fail( "timeout" );
             try
             {
-                if ( !innerCommand.executeBoolean() )
+                boolean innerCommandResult = innerCommand.executeBoolean();
+                if ( innerCommandResult )
                     break;
             }
             catch ( Exception e )
@@ -38,14 +39,6 @@ public class WaitForNotStep
     public String toString()
     {
         String cmd = innerCommand.command.substring( "is".length() );
-        if ( cmd.endsWith( "Present" ) )
-        {
-            cmd = cmd.replace( "Present", "NotPresent" );
-        }
-        else
-        {
-            cmd = "Not" + cmd;
-        }
         return "waitFor" + cmd + "('" + innerCommand.param1
             + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
     }
