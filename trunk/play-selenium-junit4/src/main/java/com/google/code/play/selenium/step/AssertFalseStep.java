@@ -8,33 +8,36 @@ public class AssertFalseStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    private BooleanSeleniumCommand innerCommand;
 
-    public AssertFalseStep( SeleniumCommand innerCommand )
+    public AssertFalseStep( BooleanSeleniumCommand innerCommand )
     {
         this.innerCommand = innerCommand;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        boolean innerCommandResult = innerCommand.executeBoolean();
+        boolean innerCommandResult = innerCommand.getBoolean();
         Assert.assertFalse( innerCommandResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "is".length() );
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "assert" );
         if ( cmd.endsWith( "Present" ) )
         {
-            cmd = cmd.replace( "Present", "NotPresent" );
+            buf.append( cmd.replace( "Present", "NotPresent" ) );
         }
         else
         {
-            cmd = "Not" + cmd;
+            buf.append( "Not" ).append( cmd );
         }
-        return "assert" + cmd + "('" + innerCommand.param1 + "')";
+        buf.append( "('" ).append( innerCommand.param1 ).append( "')" );
+        return buf.toString();
     }
 
 }

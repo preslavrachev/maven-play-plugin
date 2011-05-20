@@ -8,34 +8,36 @@ public class VerifyEqualsStep
     implements Step
 {
 
-    public SeleneseTestCase seleneseTestCase;
+    private SeleneseTestCase seleneseTestCase;
 
-    protected SeleniumCommand innerCommand;
+    private StringSeleniumCommand innerCommand;
 
-    public String expected;
+    private String expected;
 
-    public VerifyEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, String expected )
+    public VerifyEqualsStep( SeleneseTestCase seleneseTestCase, StringSeleniumCommand innerCommand, String expected )
     {
         this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        String innerCommandResult = innerCommand.execute();
-        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        String innerCommandResult = innerCommand.getString();
+        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
         boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumEqualsResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "get".length() );
-        return "verify" + cmd + "('" + innerCommand.param1
-            + "', '" + expected + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "verify" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        return buf.toString();
     }
 
 }

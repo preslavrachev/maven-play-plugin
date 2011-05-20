@@ -8,28 +8,31 @@ public class VerifyTrueStep
     implements Step
 {
 
-    public SeleneseTestCase seleneseTestCase;
+    private SeleneseTestCase seleneseTestCase;
 
-    protected SeleniumCommand innerCommand;
+    private BooleanSeleniumCommand innerCommand;
 
-    public VerifyTrueStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand )
+    public VerifyTrueStep( SeleneseTestCase seleneseTestCase, BooleanSeleniumCommand innerCommand )
     {
         this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        boolean innerCommandResult = innerCommand.executeBoolean();
+        boolean innerCommandResult = innerCommand.getBoolean();
         seleneseTestCase.verifyTrue( innerCommandResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "is".length() );
-        return "verify" + cmd + "('" + innerCommand.param1 + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "verify" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "')" );
+        return buf.toString();
     }
 
 }

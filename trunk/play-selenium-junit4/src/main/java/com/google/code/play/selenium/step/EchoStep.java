@@ -17,17 +17,18 @@ public class EchoStep
         this.param = param;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
         String result = storedVars.fillValues( param );
         System.out.println( "echo:" + result );
-        return result;
     }
 
     public String toString()
     {
-        return "echo('" + param + "')";
+        StringBuffer buf = new StringBuffer();
+        buf.append( "echo('" ).append( param ).append( "')" );
+        return buf.toString();
     }
 
 }

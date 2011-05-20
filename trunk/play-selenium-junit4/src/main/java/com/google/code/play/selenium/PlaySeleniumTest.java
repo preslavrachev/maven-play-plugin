@@ -181,16 +181,17 @@ public class PlaySeleniumTest
                 {
                     String innerCmd = command.substring( 0, command.indexOf( "AndWait" ) );
                     cmd =
-                        new AndWaitStep( new SeleniumCommand( storedVars, commandProcessor, innerCmd, param1, param2 ) );
+                        new AndWaitStep( new VoidSeleniumCommand( storedVars, commandProcessor, innerCmd, param1,
+                                                                  param2 ) );
                 }
                 else if ( command.startsWith( "store" ) )
                 {
+                    String storeWhat = command.substring( "store".length() );
                     cmd =
-                        new StoreStep( storedVars, new SeleniumCommand( storedVars, commandProcessor, command, param1,
-                                                                        param2 )/*
-                                                                                 * commandProcessor, command, param1,
-                                                                                 * param2
-                                                                                 */);
+                        new StoreStep( storedVars, new VoidSeleniumCommand( storedVars, commandProcessor, command,
+                                                                            param1, param2 ),
+                                       new StringSeleniumCommand( storedVars, commandProcessor, "get" + storeWhat,
+                                                                  param1 ) );
                 }
                 else if ( command.startsWith( "verify" ) )
                 {
@@ -199,7 +200,7 @@ public class PlaySeleniumTest
                     {
                         String innerCmd = verifyWhat.replace( "NotPresent", "Present" );
                         cmd =
-                            new VerifyFalseStep( this, new SeleniumCommand( storedVars, commandProcessor, "is"
+                            new VerifyFalseStep( this, new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
                                 + innerCmd, param1 ) );
                     }
                     else if ( verifyWhat.startsWith( "Not" ) )
@@ -213,14 +214,15 @@ public class PlaySeleniumTest
                         if ( isBooleanCommand( innerCmd ) )
                         {
                             cmd =
-                                new VerifyFalseStep( this, new SeleniumCommand( storedVars, commandProcessor, "is"
-                                    + innerCmd, param1 ) );
+                                new VerifyFalseStep( this, new BooleanSeleniumCommand( storedVars, commandProcessor,
+                                                                                       "is" + innerCmd, param1 ) );
                         }
                         else
                         {
                             cmd =
-                                new VerifyNotEqualsStep( this, new SeleniumCommand( storedVars, commandProcessor, "get"
-                                    + innerCmd, param1 ), param2 );
+                                new VerifyNotEqualsStep( this, new StringSeleniumCommand( storedVars, commandProcessor,
+                                                                                          "get" + innerCmd, param1 ),
+                                                         param2 );
 
                         }
                     }
@@ -235,14 +237,15 @@ public class PlaySeleniumTest
                         if ( isBooleanCommand( innerCmd ) )
                         {
                             cmd =
-                                new VerifyTrueStep( this, new SeleniumCommand( storedVars, commandProcessor, "is"
-                                    + innerCmd, param1 ) );
+                                new VerifyTrueStep( this, new BooleanSeleniumCommand( storedVars, commandProcessor,
+                                                                                      "is" + innerCmd, param1 ) );
                         }
                         else
                         {
                             cmd =
-                                new VerifyEqualsStep( this, new SeleniumCommand( storedVars, commandProcessor, "get"
-                                    + innerCmd, param1 ), param2 );
+                                new VerifyEqualsStep( this, new StringSeleniumCommand( storedVars, commandProcessor,
+                                                                                       "get" + innerCmd, param1 ),
+                                                      param2 );
                         }
                     }
                 }
@@ -253,7 +256,8 @@ public class PlaySeleniumTest
                     {
                         String innerCmd = "is" + assertWhat.replace( "NotPresent", "Present" );
                         cmd =
-                            new AssertFalseStep( new SeleniumCommand( storedVars, commandProcessor, innerCmd, param1 ) );
+                            new AssertFalseStep( new BooleanSeleniumCommand( storedVars, commandProcessor, innerCmd,
+                                                                             param1 ) );
                     }
                     else if ( assertWhat.startsWith( "Not" ) )
                     {
@@ -266,13 +270,13 @@ public class PlaySeleniumTest
                         if ( isBooleanCommand( innerCmd ) )
                         {
                             cmd =
-                                new AssertFalseStep( new SeleniumCommand( storedVars, commandProcessor,
-                                                                          "is" + innerCmd, param1 ) );
+                                new AssertFalseStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
+                                    + innerCmd, param1 ) );
                         }
                         else
                         {
                             cmd =
-                                new AssertNotEqualsStep( new SeleniumCommand( storedVars, commandProcessor, "get"
+                                new AssertNotEqualsStep( new StringSeleniumCommand( storedVars, commandProcessor, "get"
                                     + innerCmd, param1 ), param2 );
                         }
                     }
@@ -287,13 +291,13 @@ public class PlaySeleniumTest
                         if ( isBooleanCommand( innerCmd ) )
                         {
                             cmd =
-                                new AssertTrueStep( new SeleniumCommand( storedVars, commandProcessor, "is" + innerCmd,
-                                                                         param1 ) );
+                                new AssertTrueStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
+                                    + innerCmd, param1 ) );
                         }
                         else
                         {
                             cmd =
-                                new AssertEqualsStep( new SeleniumCommand( storedVars, commandProcessor, "get"
+                                new AssertEqualsStep( new StringSeleniumCommand( storedVars, commandProcessor, "get"
                                     + innerCmd, param1 ), param2 );
                         }
                     }
@@ -304,7 +308,9 @@ public class PlaySeleniumTest
                     if ( "Condition".equals( waitForWhat ) || "FrameToLoad".equals( waitForWhat )
                         || "PageToLoad".equals( waitForWhat ) || "PopUp".equals( waitForWhat ) )
                     {
-                        cmd = new SeleniumCommand( storedVars, commandProcessor, command, param1, param2 );
+                        cmd =
+                            new CommandStep( new VoidSeleniumCommand( storedVars, commandProcessor, command, param1,
+                                                                      param2 ) );
                     }
                     else
                     {
@@ -312,7 +318,7 @@ public class PlaySeleniumTest
                         {
                             String innerCmd = waitForWhat.replace( "NotPresent", "Present" );
                             cmd =
-                                new WaitForFalseStep( new SeleniumCommand( storedVars, commandProcessor, "is"
+                                new WaitForFalseStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
                                     + innerCmd, param1 ) );
                         }
                         else if ( waitForWhat.startsWith( "Not" ) )
@@ -326,14 +332,15 @@ public class PlaySeleniumTest
                             if ( isBooleanCommand( innerCmd ) )
                             {
                                 cmd =
-                                    new WaitForFalseStep( new SeleniumCommand( storedVars, commandProcessor, "is"
-                                        + innerCmd, param1 ) );
+                                    new WaitForFalseStep( new BooleanSeleniumCommand( storedVars, commandProcessor,
+                                                                                      "is" + innerCmd, param1 ) );
                             }
                             else
                             {
                                 cmd =
-                                    new WaitForNotEqualsStep( new SeleniumCommand( storedVars, commandProcessor, "get"
-                                        + innerCmd, param1 ), param2 );
+                                    new WaitForNotEqualsStep( new StringSeleniumCommand( storedVars, commandProcessor,
+                                                                                         "get" + innerCmd, param1 ),
+                                                              param2 );
                             }
                         }
                         else
@@ -347,21 +354,24 @@ public class PlaySeleniumTest
                             if ( isBooleanCommand( innerCmd ) )
                             {
                                 cmd =
-                                    new WaitForTrueStep( new SeleniumCommand( storedVars, commandProcessor, "is"
+                                    new WaitForTrueStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
                                         + innerCmd, param1 ) );
                             }
                             else
                             {
                                 cmd =
-                                    new WaitForEqualsStep( new SeleniumCommand( storedVars, commandProcessor, "get"
-                                        + innerCmd, param1 ), param2 );
+                                    new WaitForEqualsStep( new StringSeleniumCommand( storedVars, commandProcessor,
+                                                                                      "get" + innerCmd, param1 ),
+                                                           param2 );
                             }
                         }
                     }
                 }
                 else
                 {
-                    cmd = new SeleniumCommand( storedVars, commandProcessor, command, param1, param2 );
+                    cmd =
+                        new CommandStep(
+                                         new VoidSeleniumCommand( storedVars, commandProcessor, command, param1, param2 ) );
                 }
             }
             result.add( cmd );

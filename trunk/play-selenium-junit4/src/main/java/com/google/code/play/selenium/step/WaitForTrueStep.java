@@ -8,14 +8,14 @@ public class WaitForTrueStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    private BooleanSeleniumCommand innerCommand;
 
-    public WaitForTrueStep( SeleniumCommand innerCommand )
+    public WaitForTrueStep( BooleanSeleniumCommand innerCommand )
     {
         this.innerCommand = innerCommand;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
         for ( int second = 0;; second++ )
@@ -24,7 +24,7 @@ public class WaitForTrueStep
                 Assert.fail( "timeout" );
             try
             {
-                boolean innerCommandResult = innerCommand.executeBoolean();
+                boolean innerCommandResult = innerCommand.getBoolean();
                 if ( innerCommandResult )
                     break;
             }
@@ -33,14 +33,16 @@ public class WaitForTrueStep
             }
             Thread.sleep( 1000 );
         }
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "is".length() );
-        return "waitFor" + cmd + "('" + innerCommand.param1
-            + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "waitFor" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "')" );
+        return buf.toString();
     }
 
 }

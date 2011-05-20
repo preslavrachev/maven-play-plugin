@@ -8,25 +8,28 @@ public class AssertTrueStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    private BooleanSeleniumCommand innerCommand;
 
-    public AssertTrueStep( SeleniumCommand innerCommand )
+    public AssertTrueStep( BooleanSeleniumCommand innerCommand )
     {
         this.innerCommand = innerCommand;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        boolean innerCommandResult = innerCommand.executeBoolean();
+        boolean innerCommandResult = innerCommand.getBoolean();
         Assert.assertTrue( innerCommandResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "is".length() );
-        return "assert" + cmd + "('" + innerCommand.param1 + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "assert" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "')" );
+        return buf.toString();
     }
 
 }
