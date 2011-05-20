@@ -1,6 +1,6 @@
 package com.google.code.play.selenium;
 
-interface Step
+public interface Step
 {
     public void execute()
         throws Exception;
