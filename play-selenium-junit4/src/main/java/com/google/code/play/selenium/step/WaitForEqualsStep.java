@@ -1,7 +1,5 @@
 package com.google.code.play.selenium.step;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 import junit.framework.Assert;
 
 import com.google.code.play.selenium.Step;
@@ -31,7 +29,7 @@ public class WaitForEqualsStep
             try
             {
                 String innerCommandResult = innerCommand.getString();
-                boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
+                boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
                 if ( seleniumEqualsResult )
                     break;
             }

@@ -29,7 +29,7 @@ public class WaitForNotEqualsStep
             try
             {
                 String innerCommandResult = innerCommand.getString();
-                boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
+                boolean seleniumNotEqualsResult = EqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
                 if ( seleniumNotEqualsResult )
                     break;
             }
