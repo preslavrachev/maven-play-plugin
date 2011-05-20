@@ -26,20 +26,20 @@ public class VoidSeleniumCommand
         if ( xparam1 != null )
         {
             xparam1 = storedVars.changeBraces( param1 );
-            xparam1 = xparam1.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+            xparam1 = MultiLineHelper.brToNewLine( xparam1 );
         }
         String xparam2 = param2;
         if ( xparam2 != null )
         {
             xparam2 = storedVars.changeBraces( param2 );
-            xparam2 = xparam2.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+            xparam2 = MultiLineHelper.brToNewLine( xparam2 );
         }
 
-        if ( param2 != null )
+        if ( !"".equals(param2) )
         {
             commandProcessor.doCommand( command, new String[] { xparam1, xparam2 } );
         }
-        else if ( param1 != null )
+        else if ( !"".equals( param1 ) )
         {
             commandProcessor.doCommand( command, new String[] { xparam1 } );
         }

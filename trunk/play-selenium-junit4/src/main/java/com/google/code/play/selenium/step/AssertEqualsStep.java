@@ -24,7 +24,7 @@ public class AssertEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+        String xexpected = MultiLineHelper.brToNewLine( expected );
         boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
         Assert.assertTrue( seleniumEqualsResult );
     }

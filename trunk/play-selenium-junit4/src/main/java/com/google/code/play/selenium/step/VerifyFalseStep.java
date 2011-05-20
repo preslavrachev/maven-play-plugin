@@ -8,9 +8,9 @@ public class VerifyFalseStep
     implements Step
 {
 
-    public SeleneseTestCase seleneseTestCase;
+    private SeleneseTestCase seleneseTestCase;
 
-    protected BooleanSeleniumCommand innerCommand;
+    private BooleanSeleniumCommand innerCommand;
 
     public VerifyFalseStep( SeleneseTestCase seleneseTestCase, BooleanSeleniumCommand innerCommand )
     {

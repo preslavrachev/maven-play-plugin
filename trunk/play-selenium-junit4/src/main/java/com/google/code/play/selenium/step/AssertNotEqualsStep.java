@@ -22,7 +22,7 @@ public class AssertNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+        String xexpected = MultiLineHelper.brToNewLine( expected );
         boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
         Assert.assertTrue( seleniumNotEqualsResult );
     }

@@ -26,29 +26,31 @@ public class BooleanSeleniumCommand
         boolean result = false;
 
         String xparam1 = param1;
-        if ( xparam1 != null )
+        if ( !"".equals(xparam1 ))
         {
             xparam1 = storedVars.changeBraces( param1 );
-            xparam1 = xparam1.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+            //not needed here
+            //xparam1 = MultiLineHelper.brToNewLine( xparam1 );
         }
         String xparam2 = param2;
-        if ( xparam2 != null )
+        if ( !"".equals(xparam2 ) )
         {
             xparam2 = storedVars.changeBraces( param2 );
-            xparam2 = xparam2.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+            //not needed here
+            //xparam2 = MultiLineHelper.brToNewLine( xparam2 );
         }
 
-        if ( param2 != null )// FIXME- null or ""?
+        if ( !"".equals( param2 ) )
         {
             result = commandProcessor.getBoolean( command, new String[] { xparam1, xparam2 } );
         }
-        else if ( param1 != null )// FIXME- null or ""?
+        else if ( !"".equals( param1 ) )
         {
             result = commandProcessor.getBoolean( command, new String[] { xparam1 } );
         }
         else
         {
-            result = commandProcessor.getBoolean( command, new String[] {} ); // czy ro moze sie zdarzyc?
+            result = commandProcessor.getBoolean( command, new String[] {} ); // czy to moze sie zdarzyc?
         }
         return result;
     }

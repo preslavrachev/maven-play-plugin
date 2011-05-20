@@ -8,11 +8,11 @@ public class VerifyNotEqualsStep
     implements Step
 {
 
-    public SeleneseTestCase seleneseTestCase;
+    private SeleneseTestCase seleneseTestCase;
 
-    protected StringSeleniumCommand innerCommand;
+    private StringSeleniumCommand innerCommand;
 
-    public String expected;
+    private String expected;
 
     public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, StringSeleniumCommand innerCommand, String expected )
     {
@@ -25,7 +25,7 @@ public class VerifyNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+        String xexpected = MultiLineHelper.brToNewLine( expected );
         boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumNotEqualsResult );
     }

@@ -6,7 +6,7 @@ public class AndWaitStep
     implements Step
 {
 
-    protected VoidSeleniumCommand innerCommand;
+    private VoidSeleniumCommand innerCommand;
 
     public AndWaitStep( VoidSeleniumCommand innerCommand )
     {

@@ -9,7 +9,7 @@ public class EchoStep
 
     private StoredVars storedVars;
 
-    public String param;
+    private String param;
 
     public EchoStep( StoredVars storedVars, String param )
     {
