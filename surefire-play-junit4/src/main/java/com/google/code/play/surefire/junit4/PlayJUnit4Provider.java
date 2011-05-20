@@ -1,5 +1,3 @@
-package com.google.code.play.surefire.junit4;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,6 +16,8 @@ package com.google.code.play.surefire.junit4;
  * specific language governing permissions and limitations
  * under the License.
  */
+
+package com.google.code.play.surefire.junit4;
 
 import org.apache.maven.surefire.Surefire;
 import org.apache.maven.surefire.common.junit4.JUnit4RunListener;

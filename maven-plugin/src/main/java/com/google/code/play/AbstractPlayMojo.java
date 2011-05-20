@@ -1,5 +1,3 @@
-package com.google.code.play;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,6 +16,8 @@ package com.google.code.play;
  * specific language governing permissions and limitations
  * under the License.
  */
+
+package com.google.code.play;
 
 //import java.io.File;
 //import java.io.IOException;

@@ -431,7 +431,7 @@
                         <version>2.6</version>
                         <configuration>
                             <configLocation>config/maven_checks.xml</configLocation>
-                            <headerLocation>config/maven-header.txt</headerLocation>
+                            <headerLocation>src/conf/checkstyle-header.txt</headerLocation>
 <!--                            <configLocation>pl/com/tiger/checkstyle5.xml</configLocation>-->
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         </configuration>
