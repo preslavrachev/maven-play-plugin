@@ -29,26 +29,28 @@ public class StringSeleniumCommand
         if ( xparam1 != null )
         {
             xparam1 = storedVars.changeBraces( param1 );
-            xparam1 = xparam1.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+            //not needed here
+            //xparam1 = MultiLineHelper.brToNewLine( xparam1 );
         }
         String xparam2 = param2;
         if ( xparam2 != null )
         {
             xparam2 = storedVars.changeBraces( param2 );
-            xparam2 = xparam2.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+            //not needed here
+            //xparam2 = MultiLineHelper.brToNewLine( xparam2 );
         }
 
-        if ( param2 != null )
+        if ( !"".equals( param2 ) )
         {
             result = commandProcessor.getString( command, new String[] { xparam1, xparam2 } );
         }
-        else if ( param1 != null )
+        else if ( !"".equals( param1 ) )
         {
             result = commandProcessor.getString( command, new String[] { xparam1 } );
         }
         else
         {
-            result = commandProcessor.getString( command, new String[] {} ); // czy ro moze sie zdarzyc?
+            result = commandProcessor.getString( command, new String[] {} ); // czy to moze sie zdarzyc?
         }
         return result;
     }

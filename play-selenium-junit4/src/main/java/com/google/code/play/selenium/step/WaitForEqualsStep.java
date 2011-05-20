@@ -23,7 +23,7 @@ public class WaitForEqualsStep
     public void execute()
         throws Exception
     {
-        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
+        String xexpected = MultiLineHelper.brToNewLine( expected );
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
