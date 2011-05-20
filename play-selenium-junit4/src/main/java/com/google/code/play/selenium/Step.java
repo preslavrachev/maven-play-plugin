@@ -2,8 +2,8 @@ package com.google.code.play.selenium;
 
 public interface Step
 {
-    public String execute()
+    public void execute()
         throws Exception;
 
-    //public String toString();
+    // public String toString();
 }

@@ -10,34 +10,37 @@ public class VerifyFalseStep
 
     public SeleneseTestCase seleneseTestCase;
 
-    protected SeleniumCommand innerCommand;
+    protected BooleanSeleniumCommand innerCommand;
 
-    public VerifyFalseStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand )
+    public VerifyFalseStep( SeleneseTestCase seleneseTestCase, BooleanSeleniumCommand innerCommand )
     {
         this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        boolean innerCommandResult = innerCommand.executeBoolean();
+        boolean innerCommandResult = innerCommand.getBoolean();
         seleneseTestCase.verifyFalse( innerCommandResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "is".length() );
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "verify" );
         if ( cmd.endsWith( "Present" ) )
         {
-            cmd = cmd.replace( "Present", "NotPresent" );
+            buf.append( cmd.replace( "Present", "NotPresent" ) );
         }
         else
         {
-            cmd = "Not" + cmd;
+            buf.append( "Not" ).append( cmd );
         }
-        return "verify" + cmd + "('" + innerCommand.param1 + "')";
+        buf.append( "('" ).append( innerCommand.param1 ).append( "')" );
+        return buf.toString();
     }
 
 }

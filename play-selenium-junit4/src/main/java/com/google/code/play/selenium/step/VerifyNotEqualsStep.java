@@ -10,32 +10,34 @@ public class VerifyNotEqualsStep
 
     public SeleneseTestCase seleneseTestCase;
 
-    protected SeleniumCommand innerCommand;
+    protected StringSeleniumCommand innerCommand;
 
     public String expected;
 
-    public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, SeleniumCommand innerCommand, String expected )
+    public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, StringSeleniumCommand innerCommand, String expected )
     {
         this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        String innerCommandResult = innerCommand.execute();
-        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        String innerCommandResult = innerCommand.getString();
+        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
         boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumNotEqualsResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "get".length() );
-        return "verifyNot" + cmd + "('" + innerCommand.param1
-            + "', '" + expected + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "verifyNot" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        return buf.toString();
     }
 
 }

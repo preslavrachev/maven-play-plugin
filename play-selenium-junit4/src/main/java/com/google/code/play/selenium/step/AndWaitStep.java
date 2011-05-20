@@ -6,25 +6,34 @@ public class AndWaitStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    protected VoidSeleniumCommand innerCommand;
 
-    public AndWaitStep( SeleniumCommand innerCommand )
+    public AndWaitStep( VoidSeleniumCommand innerCommand )
     {
         this.innerCommand = innerCommand;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
         innerCommand.execute();
         innerCommand.commandProcessor.doCommand( "waitForPageToLoad", new String[] { "30000" } );
-        return null;
     }
 
     public String toString()
     {
-        return innerCommand.command + "AndWait('" + innerCommand.param1
-            + ( innerCommand.param2 != null ? "', '" + innerCommand.param2 : "" ) + "')";
+        StringBuffer buf = new StringBuffer();
+        buf.append( innerCommand.command ).append( "AndWait('" );
+        if ( !"".equals( innerCommand.param1 ) )
+        {
+            buf.append( innerCommand.param1 );
+            if ( !"".equals( innerCommand.param2 ) )
+            {
+                buf.append( "', '" ).append( innerCommand.param2 );
+            }
+        }
+        buf.append( "')" );
+        return buf.toString();
     }
 
 }

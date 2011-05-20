@@ -8,30 +8,33 @@ public class AssertNotEqualsStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    private StringSeleniumCommand innerCommand;
 
-    public String expected;
+    private String expected;
 
-    public AssertNotEqualsStep( SeleniumCommand innerCommand, String expected )
+    public AssertNotEqualsStep( StringSeleniumCommand innerCommand, String expected )
     {
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        String innerCommandResult = innerCommand.execute();
-        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        String innerCommandResult = innerCommand.getString();
+        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
         boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
         Assert.assertTrue( seleniumNotEqualsResult );
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "get".length() );
-        return "assertNot" + cmd + "('" + innerCommand.param1 + "', '" + expected + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "assertNot" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        return buf.toString();
     }
 
 }

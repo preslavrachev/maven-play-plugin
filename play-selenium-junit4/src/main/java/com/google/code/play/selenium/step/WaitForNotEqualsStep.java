@@ -8,27 +8,27 @@ public class WaitForNotEqualsStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    private StringSeleniumCommand innerCommand;
 
-    public String expected;
+    private String expected;
 
-    public WaitForNotEqualsStep( SeleniumCommand innerCommand, String expected )
+    public WaitForNotEqualsStep( StringSeleniumCommand innerCommand, String expected )
     {
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
                 Assert.fail( "timeout" );
             try
             {
-                String innerCommandResult = innerCommand.execute();
+                String innerCommandResult = innerCommand.getString();
                 boolean seleniumNotEqualsResult = NotEqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
                 if ( seleniumNotEqualsResult )
                     break;
@@ -38,13 +38,16 @@ public class WaitForNotEqualsStep
             }
             Thread.sleep( 1000 );
         }
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "get".length() );
-        return "waitForNot" + cmd + "('" + innerCommand.param1 + "', '" + expected + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "waitForNot" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        return buf.toString();
     }
 
 }

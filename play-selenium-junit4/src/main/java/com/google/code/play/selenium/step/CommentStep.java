@@ -13,10 +13,9 @@ public class CommentStep
         this.comment = comment;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        return null;
     }
 
     public String toString()

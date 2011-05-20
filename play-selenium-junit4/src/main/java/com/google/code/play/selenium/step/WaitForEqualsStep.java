@@ -10,27 +10,27 @@ public class WaitForEqualsStep
     implements Step
 {
 
-    protected SeleniumCommand innerCommand;
+    private StringSeleniumCommand innerCommand;
 
-    public String expected;
+    private String expected;
 
-    public WaitForEqualsStep( SeleniumCommand innerCommand, String expected )
+    public WaitForEqualsStep( StringSeleniumCommand innerCommand, String expected )
     {
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
 
-    public String execute()
+    public void execute()
         throws Exception
     {
-        String xexpected = expected.replaceAll("<\\s*[bB][rR]\\s*/\\s*>", "\n");//TODO-improve
+        String xexpected = expected.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );// TODO-improve
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
                 Assert.fail( "timeout" );
             try
             {
-                String innerCommandResult = innerCommand.execute();
+                String innerCommandResult = innerCommand.getString();
                 boolean seleniumEqualsResult = SeleneseTestCase.seleniumEquals( xexpected, innerCommandResult );
                 if ( seleniumEqualsResult )
                     break;
@@ -40,13 +40,16 @@ public class WaitForEqualsStep
             }
             Thread.sleep( 1000 );
         }
-        return null;
     }
 
     public String toString()
     {
         String cmd = innerCommand.command.substring( "get".length() );
-        return "waitFor" + cmd + "('" + innerCommand.param1 + "', '" + expected + "')";
+
+        StringBuffer buf = new StringBuffer();
+        buf.append( "waitFor" ).append( cmd ).append( "('" );
+        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        return buf.toString();
     }
 
 }
