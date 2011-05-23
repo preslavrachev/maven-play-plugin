@@ -80,6 +80,10 @@ public class PlaySeleniumTest
         // "path=/,domain=localhost,recurse=true");
         // selenium.deleteCookie("PLAY_FLASH",
         // "path=/,domain=localhost,recurse=true");
+
+        // store $[space] and $[nbsp] because in Java client they are not predefined
+        commandProcessor.doCommand( "storeExpression", new String[] { " ", "space" } );
+        commandProcessor.doCommand( "storeExpression", new String[] { "\u00A0", "nbsp" } );
     }
 
     @After
