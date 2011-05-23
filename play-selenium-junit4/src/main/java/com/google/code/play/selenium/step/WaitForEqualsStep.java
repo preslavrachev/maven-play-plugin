@@ -40,7 +40,8 @@ public class WaitForEqualsStep
     public void execute()
         throws Exception
     {
-        String xexpected = MultiLineHelper.brToNewLine( expected );
+        String xexpected = innerCommand.storedVars.fillValues( expected );
+        xexpected = MultiLineHelper.brToNewLine( xexpected );
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
