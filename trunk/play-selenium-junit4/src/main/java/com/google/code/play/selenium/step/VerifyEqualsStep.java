@@ -44,7 +44,8 @@ public class VerifyEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        String xexpected = MultiLineHelper.brToNewLine( expected );
+        String xexpected = innerCommand.storedVars.fillValues( expected );
+        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
         seleneseTestCase.verifyTrue( seleniumEqualsResult );
     }

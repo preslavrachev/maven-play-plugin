@@ -41,7 +41,8 @@ public class AssertNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        String xexpected = MultiLineHelper.brToNewLine( expected );
+        String xexpected = innerCommand.storedVars.fillValues( expected );
+        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumNotEqualsResult = EqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
         SeleneseTestCase.assertTrue( seleniumNotEqualsResult );
     }
