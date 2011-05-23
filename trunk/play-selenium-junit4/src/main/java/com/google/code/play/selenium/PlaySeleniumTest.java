@@ -35,13 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 //import java.util.Map;
 
-import org.dom4j.Document;//TODO-remove dom4j dependency
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.junit.After;
 import org.junit.Before;
 
+//import com.google.code.play.selenium.parser.Dom4JSeleneseParser;
+import com.google.code.play.selenium.parser.NekoHtmlSeleneseParser;
 import com.google.code.play.selenium.step.*;
 
 public class PlaySeleniumTest
@@ -117,7 +115,11 @@ public class PlaySeleniumTest
             String content = readContent( is );
             // System.out.println("Content:");
             // System.out.println(content);
-            List<Step> steps = processContent( content );
+            // SeleneseParser parser = new Dom4JSeleneseParser();
+            SeleneseParser parser = new NekoHtmlSeleneseParser();
+            List<List<String>> commands = parser.parseSeleneseContent( content );
+            StoredVars storedVars = new StoredVars();
+            List<Step> steps = processContent( commands, storedVars );
             for ( Step step : steps )
             {
                 // System.out.println("Executing: " + step.toString());
@@ -148,6 +150,7 @@ public class PlaySeleniumTest
             {
                 buf.append( line ).append( '\n' );
                 // System.out.println( lineNo + ":" + line );
+                // System.out.println( line );
                 line = br.readLine();
                 // lineNo++;
             }
@@ -159,38 +162,32 @@ public class PlaySeleniumTest
         return buf.toString();
     }
 
-    private List<Step> processContent( String content )
-        throws DocumentException
+    private List<Step> processContent( List<List<String>> content, StoredVars storedVars )
     {
-        StoredVars storedVars = new StoredVars();
+        //StoredVars storedVars = new StoredVars();
         List<Step> result = new ArrayList<Step>();
 
-        Document xmlDoc = DocumentHelper.parseText( content );
-        Element table = xmlDoc.getRootElement();
-        Element tbody = table.element( "tbody" );
-        List<Element> rows = tbody.elements( "tr" );
-        for ( Element row : rows )
+        for ( List<String> row : content )
         {
-            List<Element> data = row.elements( "td" );
             Step cmd = null;
-            if ( data.size() == 1 )
+            if ( row.size() == 1 )
             { // comment
-                String cmt = data.get( 0 ).getTextTrim();
+                String cmt = row.get( 0 );
                 cmd = new CommentStep( cmt.substring( "//".length() ) );
             }
             else
             {
-                String command = data.get( 0 ).getText();
-                String param1 = data.get( 1 ).getText();
-                if ( !"".equals( param1 ) )
-                {
-                    param1 = xmlUnescape( param1 );
-                }
-                String param2 = data.get( 2 ).getText();
-                if ( !"".equals( param2 ) )
-                {
-                    param2 = xmlUnescape( param2 );
-                }
+                String command = row.get( 0 );
+                String param1 = row.get( 1 );
+                // if ( !"".equals( param1 ) )
+                // {
+                // param1 = xmlUnescape( param1 );
+                // }
+                String param2 = row.get( 2 );
+                // if ( !"".equals( param2 ) )
+                // {
+                // param2 = xmlUnescape( param2 );
+                // }
 
                 if ( "echo".equals( command ) )
                 {
@@ -400,6 +397,7 @@ public class PlaySeleniumTest
         return result;
     }
 
+    //only needed in custom html parsing
     private String xmlUnescape( String value )
     {
         String result = value;
