@@ -42,13 +42,13 @@ public class VoidSeleniumCommand
         throws Exception
     {
         String xparam1 = param1;
-        if ( xparam1 != null )
+        if ( !"".equals( param1 ) )
         {
             xparam1 = storedVars.changeBraces( param1 );
             xparam1 = MultiLineHelper.brToNewLine( xparam1 );
         }
         String xparam2 = param2;
-        if ( xparam2 != null )
+        if ( !"".equals( param2 ) )
         {
             xparam2 = storedVars.changeBraces( param2 );
             xparam2 = MultiLineHelper.brToNewLine( xparam2 );
