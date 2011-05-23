@@ -45,14 +45,14 @@ public class StringSeleniumCommand
         String result = null;
 
         String xparam1 = param1;
-        if ( xparam1 != null )
+        if ( !"".equals( param1 ) )
         {
             xparam1 = storedVars.changeBraces( param1 );
             // not needed here
             // xparam1 = MultiLineHelper.brToNewLine( xparam1 );
         }
         String xparam2 = param2;
-        if ( xparam2 != null )
+        if ( !"".equals( param2 ) )
         {
             xparam2 = storedVars.changeBraces( param2 );
             // not needed here
