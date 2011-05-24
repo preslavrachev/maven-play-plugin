@@ -400,18 +400,6 @@ public class PlaySeleniumTest
         return result;
     }
 
-    //only needed in custom html parsing
-    private String xmlUnescape( String value )
-    {
-        String result = value;
-        result = result.replace( "&quot;", "\"" );
-        result = result.replace( "&apos;", "'" );
-        result = result.replace( "&lt;", "<" );
-        result = result.replace( "&gt;", ">" );
-        result = result.replace( "&amp;", "&" );
-        return result;
-    }
-
     private boolean isBooleanCommand( String command )
     {
         boolean result =
