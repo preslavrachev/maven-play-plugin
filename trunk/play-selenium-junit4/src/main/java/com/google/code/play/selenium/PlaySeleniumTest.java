@@ -110,8 +110,7 @@ public class PlaySeleniumTest
         // }
         if ( !"HTTP/1.1 200 OK".equals( conn.getHeaderField( null ) ) )
         {
-            // if (conn.getHeaderField(null).indexOf("200 OK") == -1) {
-            return;// TODO handle errors
+            throw new RuntimeException( "Template rendering error, check Play! server log" );// TODO improve
         }
         InputStream is = (InputStream) conn.getContent();
         try
