@@ -67,6 +67,12 @@ public class PlayJUnit4Provider
     private TestsToRun testsToRun;
     
     private final boolean skipPlay;
+    
+    private final String playId;
+
+    private final String playHome;
+    
+    private final String applicationPath;
 
     public PlayJUnit4Provider( ProviderParameters booterParameters )
     {
@@ -75,10 +81,34 @@ public class PlayJUnit4Provider
         this.directoryScanner = booterParameters.getDirectoryScanner();
         this.providerProperties = booterParameters.getProviderProperties();
         this.skipPlay = "true".equals(providerProperties.getProperty( "skipPlay" ));
+        this.playId =
+            ( providerProperties.containsKey( "play.id" ) ? providerProperties.getProperty( "play.id" ) : "test" );
+        this.playHome = providerProperties.getProperty( "play.home" );
+        checkPath(this.playHome);
+        this.applicationPath = providerProperties.getProperty( "application.path" );
+        checkPath(this.applicationPath);
         customRunListeners =
             JUnit4RunListenerFactory.createCustomListeners( booterParameters.getProviderProperties().getProperty( "listener" ) );
         jUnit4TestChecker = new JUnit4TestChecker( testClassLoader );
 
+    }
+
+    // TODO-what exception classes should I throw?
+    private void checkPath( String path )
+    {
+        if ( path == null )
+        {
+            throw new RuntimeException( "Path is null" );
+        }
+        File file = new File( path );
+        if ( !file.exists() )
+        {
+            throw new RuntimeException( "Path \"" + path + "\" does not exist" );
+        }
+        if ( !file.isDirectory() )
+        {
+            throw new RuntimeException( "Path \"" + path + "\" is not a directory" );
+        }
     }
 
     public RunResult invoke( Object forkTestSet )
@@ -119,12 +149,8 @@ public class PlayJUnit4Provider
 
     private void initializePlayEngine()
     {
-        File playHome = new File( System.getProperty( "play.home" ) );
-        File applicationPath = new File( System.getProperty( "application.path" ) );
-
-        // System.out.println("play.id='"+System.getProperty("play.id")+"'");
-        Play.frameworkPath = playHome;
-        Play.init( applicationPath, "test"/* ??? playId */);
+        Play.frameworkPath = new File(playHome);
+        Play.init( new File(applicationPath), playId );
 
         Play.start();
     }
