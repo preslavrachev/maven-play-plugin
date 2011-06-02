@@ -54,62 +54,9 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         {
             File baseDir = project.getBasedir();
             File playTests = new File( baseDir, "test" );
-            File playSeleniumTests = new File( playTests, "selenium" );
+            File destDir = new File( project.getBuild().getDirectory(), "selenium/generated" );// TODO-parametrize
 
-            File destDir = new File( project.getBuild().getDirectory(), "selenium/generated/selenium" );// TODO-sparametryzowac
-                                                                                                        // nazwe pakietu
-            File[] playSeleniumTestFiles = playSeleniumTests.listFiles();
-
-            if ( playSeleniumTestFiles == null || playSeleniumTestFiles.length == 0 )
-            {
-                return;// nothing to do, add some info???
-            }
-
-            int classesGenerated = 0;
-            for ( File playTestFile : playSeleniumTestFiles )
-            {
-                if ( playTestFile.isFile() )
-                {
-                    String playTestFileName = playTestFile.getName();
-                    if ( playTestFileName.endsWith( ".test.html" ) )
-                    {
-                        String oryginalTestClassName =
-                            playTestFileName.substring( 0, playTestFileName.indexOf( ".test.html" ) );
-                        String javaTestClassName = oryginalTestClassName;
-                        javaTestClassName = javaTestClassName.replace( ".", "_" );
-                        javaTestClassName = javaTestClassName.replace( "-", "_" );
-                        if ( Character.isDigit( javaTestClassName.charAt( 0 ) ) )
-                        {
-                            javaTestClassName = "_" + javaTestClassName;
-                        }
-                        File javaTestFile = new File( destDir, javaTestClassName + "Test.java" );
-                        if ( !javaTestFile.exists() )
-                        {
-                            javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when
-                                                                  // "false"
-                            PrintWriter w =
-                                new PrintWriter(
-                                                 new BufferedWriter(
-                                                                     new OutputStreamWriter(
-                                                                                             new FileOutputStream(
-                                                                                                                   javaTestFile ),
-                                                                                             "UTF-8" ) ) );
-                            try
-                            {
-                                generateTestSource( playTestFile.getName()/* maybe full path? */,
-                                                    oryginalTestClassName, javaTestClassName, w );
-                                classesGenerated++;
-                            }
-                            finally
-                            {
-                                w.flush();// ??
-                                w.close();
-                            }
-                        }
-                    }
-                }
-            }
-
+            int classesGenerated = processTestsInDirectory( playTests, destDir, null );
             if ( classesGenerated == 0 )
             {
                 getLog().info( "Nothing to generate - all Selenium JUnit4 test sources are up to date" );
@@ -118,21 +65,95 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         }
     }
 
-    private void generateTestSource( String playTestFileName, String oryginalTestClassName, String javaTestClassName,
+    protected int processTestsInDirectory( File srcDir, File destDir, String javaPackageName )
+        throws MojoExecutionException, MojoFailureException, IOException
+    {
+        File[] srcFiles = srcDir.listFiles();
+
+        if ( srcFiles == null || srcFiles.length == 0 )
+        {
+            return 0;
+        }
+
+        int classesGenerated = 0;
+        for ( File srcFile : srcFiles )
+        {
+            if ( srcFile.isDirectory() )
+            {
+                String javaSubPackageName = srcFile.getName();
+                if ( javaPackageName != null )
+                {
+                    javaSubPackageName = javaPackageName + "." + javaSubPackageName;
+                }
+                classesGenerated +=
+                    processTestsInDirectory( srcFile, new File( destDir, srcFile.getName() ), javaSubPackageName );
+            }
+            else
+            {
+                String srcFileName = srcFile.getName();
+                if ( srcFileName.endsWith( ".test.html" ) )
+                {
+                    String oryginalTestClassName = srcFileName.substring( 0, srcFileName.indexOf( ".test.html" ) );
+                    String javaTestClassName = oryginalTestClassName;
+                    javaTestClassName = javaTestClassName.replace( ".", "_" );
+                    javaTestClassName = javaTestClassName.replace( "-", "_" );
+                    if ( Character.isDigit( javaTestClassName.charAt( 0 ) ) )
+                    {
+                        javaTestClassName = "_" + javaTestClassName;
+                    }
+                    File javaTestFile = new File( destDir, javaTestClassName + "SeleniumTest.java" );
+                    if ( !javaTestFile.exists() )
+                    {
+                        javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when
+                                                              // "false"
+                        PrintWriter w =
+                            new PrintWriter(
+                                             new BufferedWriter(
+                                                                 new OutputStreamWriter(
+                                                                                         new FileOutputStream(
+                                                                                                               javaTestFile ),
+                                                                                         "UTF-8" ) ) );
+                        try
+                        {
+                            generateTestSource( srcFile.getName()/* maybe full path? */, oryginalTestClassName,
+                                                javaPackageName, javaTestClassName, w );
+                            classesGenerated++;
+                        }
+                        finally
+                        {
+                            w.flush();// ??
+                            w.close();
+                        }
+                    }
+                }
+            }
+        }
+
+        return classesGenerated;
+    }
+
+    private void generateTestSource( String playTestFileName, String oryginalTestClassName, String javaTestPackage, String javaTestClassName,
                                      PrintWriter w )
         throws IOException, MojoExecutionException
     {
-        w.println( "package selenium;" );// TODO parametrize
-        w.println();
+        String playTestPath = oryginalTestClassName + ".test.html";
+        if (javaTestPackage != null) {
+            playTestPath = javaTestPackage.replace( '.', '/' ) + "/" + playTestPath;
+        }
+        if (javaTestPackage != null)
+        {
+            w.println( "package " + javaTestPackage + ";" );
+            w.println();
+        }
         w.println( "import org.junit.Test;" );
         w.println();
         w.println( "import com.google.code.play.selenium.PlaySeleniumTest;" );
         w.println();
-        w.println( "public class " + javaTestClassName + "Test extends PlaySeleniumTest {" );
+        w.println( "public class " + javaTestClassName + "SeleniumTest extends PlaySeleniumTest {" );
         w.println();
         w.println( "\t@Test" );
-        w.println( "\tpublic void test" + javaTestClassName + "() throws Exception {" );// TODO-zrobic sensowna nazwe
-        w.println( "\t\tseleniumTest(\"selenium/" + oryginalTestClassName + ".test.html\");" );
+        w.println( "\tpublic void test" + javaTestClassName + "() throws Exception {" );
+        w.println( "\t\tseleniumTest(\"" + playTestPath + "\");" );
         w.println( "\t}" );
         w.println();
         w.println( "}" );
@@ -142,4 +163,3 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
 // TODO
 // - option to force test sources generation (not generating incrementally)
 // - use includes/excludes?
-// - proper xml unescaping
