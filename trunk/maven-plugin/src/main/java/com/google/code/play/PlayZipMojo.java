@@ -21,7 +21,10 @@ package com.google.code.play;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -35,6 +38,7 @@ import org.codehaus.plexus.archiver.zip.ZipArchiver;
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal zip
  * @phase package
+ * @requiresDependencyResolution runtime
  */
 public class PlayZipMojo
     extends AbstractPlayMojo
@@ -82,9 +86,16 @@ public class PlayZipMojo
             // conf
             zipArchiver.addDirectory( new File( baseDir, "conf" ), "conf/", null, null );
             // lib
-            if ( new File( baseDir, "lib" ).isDirectory() )
+            Set<?> artifacts = project.getArtifacts();
+            for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
             {
-                zipArchiver.addDirectory( new File( baseDir, "lib" ), "lib/", null, null );
+                Artifact artifact = (Artifact) iter.next();
+                if ( !artifact.isOptional() && 
+                                (Artifact.SCOPE_COMPILE.equals( artifact.getScope() ) || // project dependencies
+                                 Artifact.SCOPE_RUNTIME.equals( artifact.getScope() ) ) ) // project dependencies
+                {
+                    zipArchiver.addFile( artifact.getFile(), "lib/" + artifact.getFile().getName() );
+                }
             }
             // public
             zipArchiver.addDirectory( new File( baseDir, "public" ), "public/", null, null );
