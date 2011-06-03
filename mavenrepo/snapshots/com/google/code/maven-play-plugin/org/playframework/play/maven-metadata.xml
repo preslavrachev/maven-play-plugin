@@ -12,7 +12,8 @@
       <version>1.2-patched-01-SNAPSHOT</version>
       <version>1.2.1-SNAPSHOT</version>
       <version>1.2.1-patched-01-SNAPSHOT</version>
+      <version>1.2.2RC1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20110509152354</lastUpdated>
+    <lastUpdated>20110603090441</lastUpdated>
   </versioning>
 </metadata>
