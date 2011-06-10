@@ -29,7 +29,7 @@ import org.codehaus.gmaven.mojo.support.ProcessLauncher
  *
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal start-server
- * @requiresDependencyResolution compile
+ * @requiresDependencyResolution test
  */
 class StartServerMojo
     extends GroovyMojo
