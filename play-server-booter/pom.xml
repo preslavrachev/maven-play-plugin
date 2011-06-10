@@ -18,6 +18,7 @@
             <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
             <artifactId>play</artifactId>
             <version>1.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
