@@ -100,16 +100,29 @@ public class PlaySeleniumTest
     {
         URL testUrl = new URL( seleniumUrl + "/@tests/" + testPath );
         URLConnection conn = testUrl.openConnection();
-        // System.out.println("contentType:" + conn.getContentType());
-        // System.out.println("contentLength:" + conn.getContentLength());
-        // System.out.println("Header fields:");
-        // Map<String, List<String>> headerFields = conn.getHeaderFields();
-        // for (String headerField : headerFields.keySet()) {
-        // System.out.println("  " + headerField + " : "
-        // + headerFields.get(headerField));
-        // }
         if ( !"HTTP/1.1 200 OK".equals( conn.getHeaderField( null ) ) )
         {
+            Object content = null;
+            try
+            {
+                content = conn.getContent();
+            }
+            catch ( IOException e )
+            {
+                throw new RuntimeException( "Template rendering error", e );
+            }
+            // if no exception thrown print what we have (temporary solution):
+            System.out.println( "contentType:" + conn.getContentType() );
+            System.out.println( "contentLength:" + conn.getContentLength() );
+            System.out.println( "Header fields:" );
+            java.util.Map<String, List<String>> headerFields = conn.getHeaderFields();
+            for ( String headerField : headerFields.keySet() )
+            {
+                System.out.println( "  " + headerField + " : " + headerFields.get( headerField ) );
+            }
+            System.out.println( "Content:" );
+            System.out.println( content );
+            System.out.println( "End of content." );
             throw new RuntimeException( "Template rendering error, check Play! server log" );// TODO improve
         }
         InputStream is = (InputStream) conn.getContent();
@@ -167,7 +180,7 @@ public class PlaySeleniumTest
 
     private List<Step> processContent( List<List<String>> content, StoredVars storedVars )
     {
-        //StoredVars storedVars = new StoredVars();
+        // StoredVars storedVars = new StoredVars();
         List<Step> result = new ArrayList<Step>();
 
         for ( List<String> row : content )
