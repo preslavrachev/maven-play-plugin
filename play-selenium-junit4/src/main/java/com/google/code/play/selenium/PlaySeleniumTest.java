@@ -467,6 +467,7 @@ public abstract class PlaySeleniumTest
             line++;
             try
             {
+                step.execute();
                 String logLine = dumpTestStep( line, indent, step );
                 if ( traceTest )
                 {
@@ -476,11 +477,11 @@ public abstract class PlaySeleniumTest
                 {
                     testTraceBuf.append( logLine ).append( '\n' );
                 }
-                step.execute();
             }
             catch ( VerificationError e )
             {
-                String logLine = "     verification failure: " + e.getMessage();
+                String msg = "verification failure: " + e.getMessage();
+                String logLine = dumpTestStep( line, indent, step, msg );
                 if ( traceTest )
                 {
                     System.out.println( logLine );
@@ -494,7 +495,8 @@ public abstract class PlaySeleniumTest
             }
             catch ( AssertionError e )
             {
-                String logLine = "     assertion failure: " + e.getMessage();
+                String msg = "assertion failure: " + e.getMessage();
+                String logLine = dumpTestStep( line, indent, step, msg );
                 if ( traceTest )
                 {
                     System.out.println( logLine );
@@ -507,9 +509,10 @@ public abstract class PlaySeleniumTest
                 }
                 throw e;
             }
-            catch ( Error e )
+            catch ( Error e )//TODO-should I handle Errors?
             {
-                String logLine = "     error: " + e.getMessage();
+                String msg = "error: " + e.getMessage();
+                String logLine = dumpTestStep( line, indent, step, msg );
                 if ( traceTest )
                 {
                     System.out.println( logLine );
@@ -524,7 +527,8 @@ public abstract class PlaySeleniumTest
             }
             catch ( RuntimeException e )
             {
-                String logLine = "     runtime exception: " + e.getMessage();
+                String msg = "runtime exception: " + e.getMessage();
+                String logLine = dumpTestStep( line, indent, step, msg );
                 if ( traceTest )
                 {
                     System.out.println( logLine );
@@ -572,7 +576,18 @@ public abstract class PlaySeleniumTest
         {
             strLine = " " + strLine;// chamskie rozwiazanie, poprawic potem
         }
-        return strLine + ": " + step.toString();
+        return " " + strLine + ": " + step.toString() + " [" + step.getExecutionTimeMillis() + "ms]";
+        // System.out.println( strLine + ": " + step.toString() );
+    }
+
+    private String dumpTestStep( int line, int indent, Step step, String message )
+    {
+        String strLine = String.valueOf( line );
+        while ( strLine.length() < indent )
+        {
+            strLine = " " + strLine;// chamskie rozwiazanie, poprawic potem
+        }
+        return "*" + strLine + ": " + step.toString() + " [" + step.getExecutionTimeMillis() + "ms] " + message;
         // System.out.println( strLine + ": " + step.toString() );
     }
 
