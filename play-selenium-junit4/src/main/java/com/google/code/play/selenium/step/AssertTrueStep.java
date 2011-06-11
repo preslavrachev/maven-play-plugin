@@ -19,9 +19,9 @@
 
 package com.google.code.play.selenium.step;
 
-import com.google.code.play.selenium.Step;
+import org.junit.Assert;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
+import com.google.code.play.selenium.Step;
 
 public class AssertTrueStep
     implements Step
@@ -38,7 +38,20 @@ public class AssertTrueStep
         throws Exception
     {
         boolean innerCommandResult = innerCommand.getBoolean();
-        SeleneseTestCase.assertTrue( innerCommandResult );
+        String assertMessage = null;
+        String cmd = innerCommand.command.substring( "is".length() );
+        if ( cmd.endsWith( "Present" ) )
+        {
+            assertMessage =
+                cmd.replace( "Present", ( !"".equals( innerCommand.param1 ) ? " '" + innerCommand.param1 + "'" : "" )
+                    + " not present" );
+        }
+        else
+        {
+            assertMessage = "'" + innerCommand.param1 + "' not " + cmd; // in this case the parameters is always not
+                                                                        // empty
+        }
+        Assert.assertTrue( assertMessage, innerCommandResult );
     }
 
     public String toString()

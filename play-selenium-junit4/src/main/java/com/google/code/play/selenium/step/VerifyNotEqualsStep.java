@@ -19,23 +19,18 @@
 
 package com.google.code.play.selenium.step;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 import com.google.code.play.selenium.Step;
 
 public class VerifyNotEqualsStep
     implements Step
 {
 
-    private SeleneseTestCase seleneseTestCase;
-
     private StringSeleniumCommand innerCommand;
 
     private String expected;
 
-    public VerifyNotEqualsStep( SeleneseTestCase seleneseTestCase, StringSeleniumCommand innerCommand, String expected )
+    public VerifyNotEqualsStep( StringSeleniumCommand innerCommand, String expected )
     {
-        this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
@@ -44,10 +39,11 @@ public class VerifyNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
+        innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
         String xexpected = innerCommand.storedVars.fillValues( expected );
-        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumNotEqualsResult = EqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
-        seleneseTestCase.verifyTrue( seleniumNotEqualsResult );
+        Verify.verifyTrue( "Actual value \"" + innerCommandResult + "\" did match \"" + xexpected + "\"",
+                           seleniumNotEqualsResult );
     }
 
     public String toString()
@@ -55,8 +51,12 @@ public class VerifyNotEqualsStep
         String cmd = innerCommand.command.substring( "get".length() );
 
         StringBuffer buf = new StringBuffer();
-        buf.append( "verifyNot" ).append( cmd ).append( "('" );
-        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        buf.append( "verifyNot" ).append( cmd ).append( "(" );
+        if ( !"".equals( innerCommand.param1 ) )
+        {
+            buf.append( "'" ).append( innerCommand.param1 ).append( "', " );
+        }
+        buf.append( "'" ).append( expected ).append( "')" );
         return buf.toString();
     }
 

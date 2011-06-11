@@ -40,7 +40,22 @@ public class WaitForFalseStep
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
-                Assert.fail( "timeout" );
+            {
+                String assertMessage = null;
+                String cmd = innerCommand.command.substring( "is".length() );
+                if ( cmd.endsWith( "Present" ) )
+                {
+                    assertMessage =
+                        cmd.replace( "Present", ( !"".equals( innerCommand.param1 ) ? " '" + innerCommand.param1 + "'"
+                                        : "" ) + " present" );
+                }
+                else
+                {
+                    assertMessage = "'" + innerCommand.param1 + "' " + cmd; // in this case the parameters is always not
+                                                                            // empty
+                }
+                Assert.fail( assertMessage );
+            }
             try
             {
                 boolean innerCommandResult = !innerCommand.getBoolean();

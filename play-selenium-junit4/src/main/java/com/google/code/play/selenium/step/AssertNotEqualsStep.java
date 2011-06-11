@@ -19,9 +19,9 @@
 
 package com.google.code.play.selenium.step;
 
-import com.google.code.play.selenium.Step;
+import org.junit.Assert;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
+import com.google.code.play.selenium.Step;
 
 public class AssertNotEqualsStep
     implements Step
@@ -41,10 +41,11 @@ public class AssertNotEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
+        innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
         String xexpected = innerCommand.storedVars.fillValues( expected );
-        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumNotEqualsResult = EqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
-        SeleneseTestCase.assertTrue( seleniumNotEqualsResult );
+        String assertMessage = "Actual value \"" + innerCommandResult + "\" did match \"" + xexpected + "\"";
+        Assert.assertTrue( assertMessage, seleniumNotEqualsResult );
     }
 
     public String toString()
@@ -52,8 +53,12 @@ public class AssertNotEqualsStep
         String cmd = innerCommand.command.substring( "get".length() );
 
         StringBuffer buf = new StringBuffer();
-        buf.append( "assertNot" ).append( cmd ).append( "('" );
-        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        buf.append( "assertNot" ).append( cmd ).append( "(" );
+        if ( !"".equals( innerCommand.param1 ) )
+        {
+            buf.append( "'" ).append( innerCommand.param1 ).append( "', " );
+        }
+        buf.append( "'" ).append( expected ).append( "')" );
         return buf.toString();
     }
 
