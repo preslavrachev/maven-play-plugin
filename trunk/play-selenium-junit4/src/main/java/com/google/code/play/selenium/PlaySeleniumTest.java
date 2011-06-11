@@ -22,8 +22,7 @@ package com.google.code.play.selenium;
 import com.thoughtworks.selenium.CommandProcessor;
 import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.HttpCommandProcessor;
-import com.thoughtworks.selenium.SeleneseTestCase;
-//import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.Selenium;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,30 +35,28 @@ import java.util.List;
 //import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 
 //import com.google.code.play.selenium.parser.Dom4JSeleneseParser;
 import com.google.code.play.selenium.parser.NekoHtmlSeleneseParser;
 import com.google.code.play.selenium.step.*;
 
-public class PlaySeleniumTest
-    extends SeleneseTestCase
+public abstract class PlaySeleniumTest
 {
 
     private String seleniumUrl = null;
 
     private CommandProcessor commandProcessor = null;
 
+    /** Use this object to run all of your selenium tests */
+    private Selenium selenium;
+
+    private boolean traceTest = false;// true;
+
     @Before
     public void setUp()
-        throws Exception
     {
-        // don't do it! super.setUp();
-
-        // URL testUrl = new
-        // URL("http://localhost:9000/@tests/selenium/ActionPermissions.test.html");
-        // String content = (String)testUrl.getContent();
-
         String seleniumBrowser = System.getProperty( "selenium.browser" );
         if ( seleniumBrowser == null )
         {
@@ -88,11 +85,12 @@ public class PlaySeleniumTest
 
     @After
     public void tearDown()
-        throws Exception
     {
-        selenium.stop();
-
-        super.tearDown();
+        if ( selenium != null )
+        {
+            selenium.stop();
+            selenium = null;
+        }
     }
 
     protected void seleniumTest( String testPath )
@@ -100,55 +98,79 @@ public class PlaySeleniumTest
     {
         URL testUrl = new URL( seleniumUrl + "/@tests/" + testPath );
         URLConnection conn = testUrl.openConnection();
-        if ( !"HTTP/1.1 200 OK".equals( conn.getHeaderField( null ) ) )
+
+        // System.out.println( "contentType:" + conn.getContentType() );
+        // System.out.println( "contentLength:" + conn.getContentLength() );
+        // System.out.println( "Header fields:" );
+        // java.util.Map<String, List<String>> headerFields = conn.getHeaderFields();
+        // for ( String headerField : headerFields.keySet() )
+        // {
+        // System.out.println( "  " + headerField + " : " + headerFields.get( headerField ) );
+        // }
+
+        if ( "HTTP/1.1 200 OK".equals( conn.getHeaderField( null ) ) )
         {
-            Object content = null;
+            InputStream is = (InputStream) conn.getContent();
             try
             {
-                content = conn.getContent();
+                String content = readContent( is );
+                String contentType = conn.getContentType();
+                if ( contentType.startsWith( "text/html" ) )
+                {
+                    // SeleneseParser parser = new Dom4JSeleneseParser();
+                    SeleneseParser parser = new NekoHtmlSeleneseParser();
+                    List<List<String>> commands = parser.parseSeleneseContent( content );
+                    StoredVars storedVars = new StoredVars();
+                    List<Step> steps = processContent( commands, storedVars );
+                    executeTestSteps( steps );
+                }
+                else if ( contentType.startsWith( "text/plain" ) )
+                {
+                    throw new RuntimeException( content );
+                }
+                else
+                {
+                    throw new RuntimeException( "Unknown content type: " + contentType );
+                }
+            }
+            finally
+            {
+                is.close();
+            }
+        }
+        else
+        {
+            String content = null;
+            try
+            {
+                InputStream is = (InputStream) conn.getContent();
+                try
+                {
+                    content = readContent( is );
+                }
+                finally
+                {
+                    is.close();
+                }
             }
             catch ( IOException e )
             {
                 throw new RuntimeException( "Template rendering error", e );
             }
             // if no exception thrown print what we have (temporary solution):
-            System.out.println( "contentType:" + conn.getContentType() );
-            System.out.println( "contentLength:" + conn.getContentLength() );
-            System.out.println( "Header fields:" );
-            java.util.Map<String, List<String>> headerFields = conn.getHeaderFields();
-            for ( String headerField : headerFields.keySet() )
-            {
-                System.out.println( "  " + headerField + " : " + headerFields.get( headerField ) );
-            }
-            System.out.println( "Content:" );
-            System.out.println( content );
-            System.out.println( "End of content." );
-            throw new RuntimeException( "Template rendering error, check Play! server log" );// TODO improve
-        }
-        InputStream is = (InputStream) conn.getContent();
-        try
-        {
-            String content = readContent( is );
-            // System.out.println("Content:");
-            // System.out.println(content);
-            // SeleneseParser parser = new Dom4JSeleneseParser();
-            SeleneseParser parser = new NekoHtmlSeleneseParser();
-            List<List<String>> commands = parser.parseSeleneseContent( content );
-            StoredVars storedVars = new StoredVars();
-            List<Step> steps = processContent( commands, storedVars );
-            for ( Step step : steps )
-            {
-                // System.out.println("Executing: " + step.toString());
-                // try {
-                step.execute();
-                // } catch (Exception e) {
-                // throw e;
-                // }
-            }
-        }
-        finally
-        {
-            is.close();
+            // System.out.println( "contentType:" + conn.getContentType() );
+            // System.out.println( "contentLength:" + conn.getContentLength() );
+            // System.out.println( "Header fields:" );
+            // java.util.Map<String, List<String>> headerFields = conn.getHeaderFields();
+            // for ( String headerField : headerFields.keySet() )
+            // {
+            // System.out.println( "  " + headerField + " : " + headerFields.get( headerField ) );
+            // }
+            // System.out.println( "Content:" );
+            // System.out.println( content );
+            // System.out.println( "End of content." );
+            throw new RuntimeException( content/* "Template rendering error, check Play! server log" */);// TODO-add all
+                                                                                                         // fields here?
         }
     }
 
@@ -161,14 +183,10 @@ public class PlaySeleniumTest
         try
         {
             String line = br.readLine();
-            // int lineNo = 1;
             while ( line != null )
             {
                 buf.append( line ).append( '\n' );
-                // System.out.println( lineNo + ":" + line );
-                // System.out.println( line );
                 line = br.readLine();
-                // lineNo++;
             }
         }
         finally
@@ -189,7 +207,9 @@ public class PlaySeleniumTest
             if ( row.size() == 1 )
             { // comment
                 String cmt = row.get( 0 );
-                cmd = new CommentStep( cmt.substring( "//".length() ) );
+                cmt = cmt.trim(); // comments are not trimmed (Selenium commands are)
+                cmt = cmt.substring( "//".length() );
+                cmd = new CommentStep( cmt );
             }
             else
             {
@@ -232,7 +252,7 @@ public class PlaySeleniumTest
                     {
                         String innerCmd = verifyWhat.replace( "NotPresent", "Present" );
                         cmd =
-                            new VerifyFalseStep( this, new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
+                            new VerifyFalseStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
                                 + innerCmd, param1 ) );
                     }
                     else if ( verifyWhat.startsWith( "Not" ) )
@@ -246,15 +266,14 @@ public class PlaySeleniumTest
                         if ( isBooleanCommand( innerCmd ) )
                         {
                             cmd =
-                                new VerifyFalseStep( this, new BooleanSeleniumCommand( storedVars, commandProcessor,
-                                                                                       "is" + innerCmd, param1 ) );
+                                new VerifyFalseStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
+                                    + innerCmd, param1 ) );
                         }
                         else
                         {
                             cmd =
-                                new VerifyNotEqualsStep( this, new StringSeleniumCommand( storedVars, commandProcessor,
-                                                                                          "get" + innerCmd, param1 ),
-                                                         param2 );
+                                new VerifyNotEqualsStep( new StringSeleniumCommand( storedVars, commandProcessor, "get"
+                                    + innerCmd, param1 ), param2 );
 
                         }
                     }
@@ -269,15 +288,14 @@ public class PlaySeleniumTest
                         if ( isBooleanCommand( innerCmd ) )
                         {
                             cmd =
-                                new VerifyTrueStep( this, new BooleanSeleniumCommand( storedVars, commandProcessor,
-                                                                                      "is" + innerCmd, param1 ) );
+                                new VerifyTrueStep( new BooleanSeleniumCommand( storedVars, commandProcessor, "is"
+                                    + innerCmd, param1 ) );
                         }
                         else
                         {
                             cmd =
-                                new VerifyEqualsStep( this, new StringSeleniumCommand( storedVars, commandProcessor,
-                                                                                       "get" + innerCmd, param1 ),
-                                                      param2 );
+                                new VerifyEqualsStep( new StringSeleniumCommand( storedVars, commandProcessor, "get"
+                                    + innerCmd, param1 ), param2 );
                         }
                     }
                 }
@@ -431,6 +449,131 @@ public class PlaySeleniumTest
                 || "Cookie".equals( command ) || "HtmlSource".equals( command ) || "Location".equals( command )
                 || "MouseSpeed".equals( command ) || "Prompt".equals( command ) || "Speed".equals( command ) || "Title".equals( command ) );
         return result;
+    }
+
+    private void executeTestSteps( List<Step> steps )
+        throws Exception
+    {
+        StringBuffer testTraceBuf = new StringBuffer();
+        StringBuffer verificationFailuresBuf = new StringBuffer();
+        // dumpTest(steps);
+        // int stepsCnt = steps.size();
+        // int indent = String.valueOf(stepsCnt).length();
+        int indent = 4;
+        // boolean verificationErrors = false;
+        int line = 0;
+        for ( Step step : steps )
+        {
+            line++;
+            try
+            {
+                String logLine = dumpTestStep( line, indent, step );
+                if ( traceTest )
+                {
+                    System.out.println( logLine );
+                }
+                else
+                {
+                    testTraceBuf.append( logLine ).append( '\n' );
+                }
+                step.execute();
+            }
+            catch ( VerificationError e )
+            {
+                String logLine = "     verification failure: " + e.getMessage();
+                if ( traceTest )
+                {
+                    System.out.println( logLine );
+                }
+                else
+                {
+                    testTraceBuf.append( logLine ).append( '\n' );
+                }
+                // verificationErrors = true;
+                verificationFailuresBuf.append( '\n' ).append( e.getMessage() );
+            }
+            catch ( AssertionError e )
+            {
+                String logLine = "     assertion failure: " + e.getMessage();
+                if ( traceTest )
+                {
+                    System.out.println( logLine );
+                }
+                else
+                {
+                    // buf.append( logLine ).append( '\n' );
+                    testTraceBuf.append( logLine );
+                    System.out.println( testTraceBuf.toString() );
+                }
+                throw e;
+            }
+            catch ( Error e )
+            {
+                String logLine = "     error: " + e.getMessage();
+                if ( traceTest )
+                {
+                    System.out.println( logLine );
+                }
+                else
+                {
+                    // buf.append( logLine ).append( '\n' );
+                    testTraceBuf.append( logLine );
+                    System.out.println( testTraceBuf.toString() );
+                }
+                throw e;
+            }
+            catch ( RuntimeException e )
+            {
+                String logLine = "     runtime exception: " + e.getMessage();
+                if ( traceTest )
+                {
+                    System.out.println( logLine );
+                }
+                else
+                {
+                    // buf.append( logLine ).append( '\n' );
+                    testTraceBuf.append( logLine );
+                    System.out.println( testTraceBuf.toString() );
+                }
+                throw e;
+            }
+        }
+
+        if ( verificationFailuresBuf.length() > 0 )
+        // if ( verificationErrors )
+        {
+            if ( !traceTest )
+            {
+                System.out.println( testTraceBuf.toString() );
+            }
+            Assert.fail( "There are verification errors:" + verificationFailuresBuf.toString() );
+        }
+    }
+
+/*
+    private void dumpTest( List<Step> steps )
+    {
+        int stepsCnt = steps.size();
+        int indent = String.valueOf( stepsCnt ).length();
+        System.out.println( "Test" );// TODO - where is test name?
+        int line = 1;
+        for ( Step step : steps )
+        {
+            dumpTestStep( line, indent, step );
+            line++;
+        }
+    }
+*/
+
+    private String dumpTestStep( int line, int indent, Step step )
+    {
+        String strLine = String.valueOf( line );
+        while ( strLine.length() < indent )
+        {
+            strLine = " " + strLine;// chamskie rozwiazanie, poprawic potem
+        }
+        return strLine + ": " + step.toString();
+        // System.out.println( strLine + ": " + step.toString() );
     }
 
 }

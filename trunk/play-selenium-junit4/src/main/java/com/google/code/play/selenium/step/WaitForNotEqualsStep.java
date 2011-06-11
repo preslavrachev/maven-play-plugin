@@ -40,15 +40,19 @@ public class WaitForNotEqualsStep
     public void execute()
         throws Exception
     {
+        String innerCommandResult = null;// tmp
         String xexpected = innerCommand.storedVars.fillValues( expected );
-        xexpected = MultiLineHelper.brToNewLine( xexpected );
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
-                Assert.fail( "timeout" );
+            {
+                String assertMessage = "Actual value \"" + innerCommandResult + "\" did match \"" + xexpected + "\"";
+                Assert.fail( assertMessage );
+            }
             try
             {
-                String innerCommandResult = innerCommand.getString();
+                /* tmpString */innerCommandResult = innerCommand.getString();
+                innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
                 boolean seleniumNotEqualsResult = EqualsHelper.seleniumNotEquals( xexpected, innerCommandResult );
                 if ( seleniumNotEqualsResult )
                     break;
@@ -65,8 +69,12 @@ public class WaitForNotEqualsStep
         String cmd = innerCommand.command.substring( "get".length() );
 
         StringBuffer buf = new StringBuffer();
-        buf.append( "waitForNot" ).append( cmd ).append( "('" );
-        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        buf.append( "waitForNot" ).append( cmd ).append( "(" );
+        if ( !"".equals( innerCommand.param1 ) )
+        {
+            buf.append( "'" ).append( innerCommand.param1 ).append( "', " );
+        }
+        buf.append( "'" ).append( expected ).append( "')" );
         return buf.toString();
     }
 

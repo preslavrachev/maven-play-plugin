@@ -19,38 +19,14 @@
 
 package com.google.code.play.selenium.step;
 
-import com.google.code.play.selenium.Step;
-
-public class CommandStep
-    implements Step
+public class VerificationError
+    extends Error
 {
+    private static final long serialVersionUID = 1L;
 
-    protected VoidSeleniumCommand command;
-
-    public CommandStep( VoidSeleniumCommand command )
+    public VerificationError( String message )
     {
-        this.command = command;
+        super( message );
     }
 
-    public void execute()
-        throws Exception
-    {
-        command.execute();
-    }
-
-    public String toString()
-    {
-        StringBuffer buf = new StringBuffer();
-        buf.append( command.command ).append( "(" );
-        if ( !"".equals( command.param1 ) )
-        {
-            buf.append( "'" ).append( command.param1 ).append( "'" );
-            if ( !"".equals( command.param2 ) )
-            {
-                buf.append( ", '" ).append( command.param2 ).append( "'" );
-            }
-        }
-        buf.append( ")" );
-        return buf.toString();
-    }
 }

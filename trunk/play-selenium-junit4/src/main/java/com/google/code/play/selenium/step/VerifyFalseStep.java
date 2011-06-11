@@ -19,21 +19,16 @@
 
 package com.google.code.play.selenium.step;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 import com.google.code.play.selenium.Step;
 
 public class VerifyFalseStep
     implements Step
 {
 
-    private SeleneseTestCase seleneseTestCase;
-
     private BooleanSeleniumCommand innerCommand;
 
-    public VerifyFalseStep( SeleneseTestCase seleneseTestCase, BooleanSeleniumCommand innerCommand )
+    public VerifyFalseStep( BooleanSeleniumCommand innerCommand )
     {
-        this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
     }
 
@@ -41,7 +36,19 @@ public class VerifyFalseStep
         throws Exception
     {
         boolean innerCommandResult = innerCommand.getBoolean();
-        seleneseTestCase.verifyFalse( innerCommandResult );
+        String verifyMessage = null;
+        String cmd = innerCommand.command.substring( "is".length() );
+        if ( cmd.endsWith( "Present" ) )
+        {
+            verifyMessage =
+                cmd.replace( "Present", ( !"".equals( innerCommand.param1 ) ? " '" + innerCommand.param1 + "'" : "" )
+                    + " present" );
+        }
+        else
+        {
+            verifyMessage = "'" + innerCommand.param1 + "' " + cmd; // in this case the parameters is always not empty
+        }
+        Verify.verifyFalse( verifyMessage, innerCommandResult );
     }
 
     public String toString()

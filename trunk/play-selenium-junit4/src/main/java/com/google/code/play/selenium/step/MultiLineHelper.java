@@ -38,4 +38,16 @@ public class MultiLineHelper
         return parameter.replaceAll( "<\\s*[bB][rR]\\s*/\\s*>", "\n" );
     }
 
+    /**
+     * Converts "\n" characters to <br />
+     * tags
+     * 
+     * @param parameter input text
+     * @return converted input text
+     */
+    public static String newLineToBr( String parameter )
+    {
+        return parameter.replace( "\n", "<br/>" );
+    }
+
 }

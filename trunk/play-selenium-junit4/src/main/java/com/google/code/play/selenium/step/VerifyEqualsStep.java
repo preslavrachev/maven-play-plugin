@@ -19,23 +19,18 @@
 
 package com.google.code.play.selenium.step;
 
-import com.thoughtworks.selenium.SeleneseTestCase;
-
 import com.google.code.play.selenium.Step;
 
 public class VerifyEqualsStep
     implements Step
 {
 
-    private SeleneseTestCase seleneseTestCase;
-
     private StringSeleniumCommand innerCommand;
 
     private String expected;
 
-    public VerifyEqualsStep( SeleneseTestCase seleneseTestCase, StringSeleniumCommand innerCommand, String expected )
+    public VerifyEqualsStep( StringSeleniumCommand innerCommand, String expected )
     {
-        this.seleneseTestCase = seleneseTestCase;
         this.innerCommand = innerCommand;
         this.expected = expected;
     }
@@ -44,10 +39,11 @@ public class VerifyEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
+        innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
         String xexpected = innerCommand.storedVars.fillValues( expected );
-        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
-        seleneseTestCase.verifyTrue( seleniumEqualsResult );
+        Verify.verifyTrue( "Actual value \"" + innerCommandResult + "\" did not match \"" + xexpected + "\"",
+                           seleniumEqualsResult );
     }
 
     public String toString()
@@ -55,8 +51,12 @@ public class VerifyEqualsStep
         String cmd = innerCommand.command.substring( "get".length() );
 
         StringBuffer buf = new StringBuffer();
-        buf.append( "verify" ).append( cmd ).append( "('" );
-        buf.append( innerCommand.param1 ).append( "', '" ).append( expected ).append( "')" );
+        buf.append( "verify" ).append( cmd ).append( "(" );
+        if ( !"".equals( innerCommand.param1 ) )
+        {
+            buf.append( "'" ).append( innerCommand.param1 ).append( "', " );
+        }
+        buf.append( "'" ).append( expected ).append( "')" );
         return buf.toString();
     }
 
