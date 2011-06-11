@@ -19,10 +19,8 @@
 
 package com.google.code.play.selenium.step;
 
-import com.google.code.play.selenium.Step;
-
 public class CommandStep
-    implements Step
+    extends AbstractSeleniumStep
 {
 
     protected VoidSeleniumCommand command;
@@ -32,7 +30,7 @@ public class CommandStep
         this.command = command;
     }
 
-    public void execute()
+    protected void doExecute()
         throws Exception
     {
         command.execute();

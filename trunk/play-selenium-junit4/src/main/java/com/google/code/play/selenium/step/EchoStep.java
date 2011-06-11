@@ -43,6 +43,11 @@ public class EchoStep
         System.out.println( "echo:" + result );
     }
 
+    public long getExecutionTimeMillis()
+    {
+        return 0L;
+    }
+
     public String toString()
     {
         StringBuffer buf = new StringBuffer();

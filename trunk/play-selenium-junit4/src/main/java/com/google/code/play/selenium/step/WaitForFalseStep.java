@@ -21,10 +21,8 @@ package com.google.code.play.selenium.step;
 
 import junit.framework.Assert;
 
-import com.google.code.play.selenium.Step;
-
 public class WaitForFalseStep
-    implements Step
+    extends AbstractSeleniumStep
 {
 
     private BooleanSeleniumCommand innerCommand;
@@ -34,7 +32,7 @@ public class WaitForFalseStep
         this.innerCommand = innerCommand;
     }
 
-    public void execute()
+    protected void doExecute()
         throws Exception
     {
         for ( int second = 0;; second++ )

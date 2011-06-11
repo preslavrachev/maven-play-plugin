@@ -17,14 +17,37 @@
  * under the License.
  */
 
-package com.google.code.play.selenium;
+package com.google.code.play.selenium.step;
 
-public interface Step
+import com.google.code.play.selenium.Step;
+
+public abstract class AbstractSeleniumStep
+    implements Step
 {
+
+    private long executionTimeMillis = -1;
+    
     public void execute()
+        throws Exception
+    {
+        long start = System.currentTimeMillis();
+        try
+        {
+            doExecute();
+        }
+        finally
+        {
+            long end = System.currentTimeMillis();
+            executionTimeMillis = end - start;
+        }
+    }
+
+    protected abstract void doExecute()
         throws Exception;
 
-    public long getExecutionTimeMillis();
+    public long getExecutionTimeMillis()
+    {
+        return executionTimeMillis;
+    }
 
-    // public String toString();
 }
