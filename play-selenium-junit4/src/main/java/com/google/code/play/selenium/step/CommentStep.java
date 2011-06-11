@@ -37,6 +37,11 @@ public class CommentStep
     {
     }
 
+    public long getExecutionTimeMillis()
+    {
+        return 0L;
+    }
+
     public String toString()
     {
         return "//" + comment;

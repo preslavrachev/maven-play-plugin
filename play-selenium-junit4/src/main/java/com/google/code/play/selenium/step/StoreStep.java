@@ -36,10 +36,10 @@ public class StoreStep
         this.innerGetCommand = innerGetCommand;
     }
 
-    public void execute()
+    protected void doExecute()
         throws Exception
     {
-        super.execute();
+        super.doExecute();
         String result = innerGetCommand.getString();
         storedVars.setVariable( command.param2, result );
     }

@@ -21,10 +21,8 @@ package com.google.code.play.selenium.step;
 
 import org.junit.Assert;
 
-import com.google.code.play.selenium.Step;
-
 public class AssertEqualsStep
-    implements Step
+    extends AbstractSeleniumStep
 {
 
     private StringSeleniumCommand innerCommand;
@@ -37,7 +35,7 @@ public class AssertEqualsStep
         this.expected = expected;
     }
 
-    public void execute()
+    protected void doExecute()
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();

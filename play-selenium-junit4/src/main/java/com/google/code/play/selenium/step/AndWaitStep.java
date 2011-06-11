@@ -19,10 +19,8 @@
 
 package com.google.code.play.selenium.step;
 
-import com.google.code.play.selenium.Step;
-
 public class AndWaitStep
-    implements Step
+    extends AbstractSeleniumStep
 {
 
     private VoidSeleniumCommand innerCommand;
@@ -32,7 +30,7 @@ public class AndWaitStep
         this.innerCommand = innerCommand;
     }
 
-    public void execute()
+    protected void doExecute()
         throws Exception
     {
         innerCommand.execute();

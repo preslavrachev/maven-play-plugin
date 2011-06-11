@@ -19,10 +19,8 @@
 
 package com.google.code.play.selenium.step;
 
-import com.google.code.play.selenium.Step;
-
 public class VerifyTrueStep
-    implements Step
+    extends AbstractSeleniumStep
 {
 
     private BooleanSeleniumCommand innerCommand;
@@ -32,7 +30,7 @@ public class VerifyTrueStep
         this.innerCommand = innerCommand;
     }
 
-    public void execute()
+    protected void doExecute()
         throws Exception
     {
         boolean innerCommandResult = innerCommand.getBoolean();
