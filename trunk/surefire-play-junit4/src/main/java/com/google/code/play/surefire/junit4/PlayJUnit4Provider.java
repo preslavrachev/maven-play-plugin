@@ -19,23 +19,25 @@
 
 package com.google.code.play.surefire.junit4;
 
-import org.apache.maven.surefire.Surefire;
 import org.apache.maven.surefire.common.junit4.JUnit4RunListener;
 import org.apache.maven.surefire.common.junit4.JUnit4RunListenerFactory;
 import org.apache.maven.surefire.common.junit4.JUnit4TestChecker;
+import org.apache.maven.surefire.providerapi.AbstractProvider;
 import org.apache.maven.surefire.providerapi.ProviderParameters;
-import org.apache.maven.surefire.providerapi.SurefireProvider;
+import org.apache.maven.surefire.report.ConsoleOutputCapture;
+import org.apache.maven.surefire.report.ConsoleOutputReceiver;
 import org.apache.maven.surefire.report.PojoStackTraceWriter;
 import org.apache.maven.surefire.report.ReportEntry;
-import org.apache.maven.surefire.report.Reporter;
 import org.apache.maven.surefire.report.ReporterException;
 import org.apache.maven.surefire.report.ReporterFactory;
+import org.apache.maven.surefire.report.RunListener;
 import org.apache.maven.surefire.report.SimpleReportEntry;
 import org.apache.maven.surefire.suite.RunResult;
 import org.apache.maven.surefire.testset.TestSetFailedException;
 import org.apache.maven.surefire.util.DirectoryScanner;
 import org.apache.maven.surefire.util.TestsToRun;
-import org.junit.runner.notification.RunListener;
+
+import org.junit.runner.Result;
 import org.junit.runner.notification.RunNotifier;
 
 import play.Play;
@@ -44,25 +46,20 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class PlayJUnit4Provider
-    implements SurefireProvider
+    extends AbstractProvider
 {
-
-    private static ResourceBundle bundle = ResourceBundle.getBundle( Surefire.SUREFIRE_BUNDLE_NAME );
-
-    private final ReporterFactory reporterFactory;
 
     private final ClassLoader testClassLoader;
 
     private final DirectoryScanner directoryScanner;
     
-    private final Properties providerProperties; 
-
-    private final List<RunListener> customRunListeners;
+    private final List<org.junit.runner.notification.RunListener> customRunListeners;
 
     private final JUnit4TestChecker jUnit4TestChecker;
+
+    private final String requestedTestMethod;
 
     private TestsToRun testsToRun;
     
@@ -74,12 +71,19 @@ public class PlayJUnit4Provider
     
     private final String applicationPath;
 
+    private final ProviderParameters providerParameters;
+
     public PlayJUnit4Provider( ProviderParameters booterParameters )
     {
-        this.reporterFactory = booterParameters.getReporterFactory();
+        this.providerParameters = booterParameters;
         this.testClassLoader = booterParameters.getTestClassLoader();
         this.directoryScanner = booterParameters.getDirectoryScanner();
-        this.providerProperties = booterParameters.getProviderProperties();
+        customRunListeners =
+            JUnit4RunListenerFactory.createCustomListeners( booterParameters.getProviderProperties().getProperty( "listener" ) );
+        jUnit4TestChecker = new JUnit4TestChecker( testClassLoader );
+        requestedTestMethod = booterParameters.getTestRequest().getRequestedTestMethod();
+
+        Properties providerProperties = providerParameters.getProviderProperties();
         this.skipPlay = "true".equals(providerProperties.getProperty( "skipPlay" ));
         this.playId =
             ( providerProperties.containsKey( "play.id" ) ? providerProperties.getProperty( "play.id" ) : "test" );
@@ -87,10 +91,6 @@ public class PlayJUnit4Provider
         checkPath(this.playHome);
         this.applicationPath = providerProperties.getProperty( "application.path" );
         checkPath(this.applicationPath);
-        customRunListeners =
-            JUnit4RunListenerFactory.createCustomListeners( booterParameters.getProviderProperties().getProperty( "listener" ) );
-        jUnit4TestChecker = new JUnit4TestChecker( testClassLoader );
-
     }
 
     // TODO-what exception classes should I throw?
@@ -125,14 +125,26 @@ public class PlayJUnit4Provider
                 testsToRun = forkTestSet == null ? scanClassPath() : TestsToRun.fromClass( (Class<?>) forkTestSet );
             }
 
-            Reporter reporter = reporterFactory.createReporter();
+            final ReporterFactory reporterFactory = providerParameters.getReporterFactory();
+
+            final RunListener reporter = reporterFactory.createReporter();
+
+
+            ConsoleOutputCapture.startCapture( (ConsoleOutputReceiver) reporter );
+
             JUnit4RunListener jUnit4TestSetReporter = new JUnit4RunListener( reporter );
-            RunNotifier runNotifer = getRunNotifer( jUnit4TestSetReporter, customRunListeners );
+
+            Result result = new Result();
+            RunNotifier runNotifer = getRunNotifer( jUnit4TestSetReporter, result, customRunListeners );
+
+            runNotifer.fireTestRunStarted( null );
 
             for ( Class<?> clazz : testsToRun.getLocatedClasses() )
             {
-                executeTestSet( clazz, reporter, testClassLoader, runNotifer );
+                executeTestSet( clazz, reporter, runNotifer );
             }
+
+            runNotifer.fireTestRunFinished( result );
 
             closeRunNotifer( jUnit4TestSetReporter, customRunListeners );
 
@@ -160,7 +172,7 @@ public class PlayJUnit4Provider
         Play.stop();
     }
 
-    private void executeTestSet( Class<?> clazz, Reporter reporter, ClassLoader classLoader, RunNotifier listeners )
+    private void executeTestSet( Class<?> clazz, RunListener reporter/*, ClassLoader classLoader*/, RunNotifier listeners )
         throws ReporterException, TestSetFailedException
     {
         final ReportEntry report = new SimpleReportEntry( this.getClass().getName(), clazz.getName() );
@@ -169,7 +181,7 @@ public class PlayJUnit4Provider
 
         try
         {
-            PlayJUnit4TestSet.execute( clazz, listeners );
+            PlayJUnit4TestSet.execute( clazz, listeners, this.requestedTestMethod );
         }
         catch ( TestSetFailedException e )
         {
@@ -187,11 +199,12 @@ public class PlayJUnit4Provider
         }
     }
 
-    private RunNotifier getRunNotifer( RunListener main, List<RunListener> others )
+    private RunNotifier getRunNotifer( org.junit.runner.notification.RunListener main, Result result, List<org.junit.runner.notification.RunListener> others )
     {
         RunNotifier fNotifier = new RunNotifier();
         fNotifier.addListener( main );
-        for ( RunListener listener : others )
+        fNotifier.addListener(  result.createListener() );
+        for ( org.junit.runner.notification.RunListener listener : others )
         {
             fNotifier.addListener( listener );
         }
@@ -200,11 +213,12 @@ public class PlayJUnit4Provider
 
     // I am not entierly sure as to why we do this explicit freeing, it's one of those
     // pieces of code that just seem to linger on in here ;)
-    private void closeRunNotifer( RunListener main, List<RunListener> others )
+    private void closeRunNotifer( org.junit.runner.notification.RunListener main,
+                                  List<org.junit.runner.notification.RunListener> others )
     {
         RunNotifier fNotifier = new RunNotifier();
         fNotifier.removeListener( main );
-        for ( RunListener listener : others )
+        for ( org.junit.runner.notification.RunListener listener : others )
         {
             fNotifier.removeListener( listener );
         }
@@ -222,8 +236,4 @@ public class PlayJUnit4Provider
         return directoryScanner.locateTestClasses( classLoader/*test Play.classloader*//* testClassLoader */, jUnit4TestChecker );
     }
 
-    public Boolean isRunnable()
-    {
-        return Boolean.TRUE;
-    }
 }

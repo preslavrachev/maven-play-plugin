@@ -30,17 +30,17 @@ import play.Play;
 public class PlayJUnit4TestSet
 {
 
-    public static void execute( Class<?> testClass, RunNotifier fNotifier )
+    public static void execute( Class<?> testClass, RunNotifier fNotifier, String testMethod )
         throws TestSetFailedException
     {
         try
         {
             String invocationClassName = "com.google.code.play.surefire.junit4.TestInvocation";
-            if ( "1.2".equals( Play.version ) || Play.version.startsWith( "1.2." ) )// TODO do it smarter
+            if ( "1.2".compareTo( Play.version ) <= 0 )
             {
                 invocationClassName = "com.google.code.play.surefire.junit4.Play12TestInvocation";
             }
-            Invoker.DirectInvocation invocation = getInvocation( invocationClassName, testClass, fNotifier );
+            Invoker.DirectInvocation invocation = getInvocation( invocationClassName, testClass, fNotifier, testMethod );
             Invoker.invokeInThread( invocation );
         }
         catch ( Throwable e )
@@ -51,13 +51,13 @@ public class PlayJUnit4TestSet
     }
 
     public static Invoker.DirectInvocation getInvocation( String invocationClassName, Class<?> testClass,
-                                                          RunNotifier fNotifier )
+                                                          RunNotifier fNotifier, String testMethod )
         throws Throwable
     {
         Invoker.DirectInvocation invocation = null;
         Class<?> cl = Class.forName( invocationClassName );
-        Constructor<?> c = cl.getConstructor( Class.class, RunNotifier.class );
-        invocation = (Invoker.DirectInvocation) c.newInstance( testClass, fNotifier );
+        Constructor<?> c = cl.getConstructor( Class.class, RunNotifier.class, String.class );
+        invocation = (Invoker.DirectInvocation) c.newInstance( testClass, fNotifier, testMethod );
         return invocation;
     }
 }
