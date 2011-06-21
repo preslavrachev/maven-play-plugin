@@ -52,11 +52,14 @@ public abstract class PlaySeleniumTest
     /** Use this object to run all of your selenium tests */
     private Selenium selenium;
 
-    private boolean traceTest = false;// true;
+    private boolean traceTest = false;
 
     @Before
     public void setUp()
     {
+        String traceTestProperty = System.getProperty( "selenium.test.trace", "false" );
+        traceTest = ( "true".equals( traceTestProperty ) );
+
         String seleniumBrowser = System.getProperty( "selenium.browser" );
         if ( seleniumBrowser == null )
         {
