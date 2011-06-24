@@ -40,6 +40,7 @@ public class WaitForEqualsStep
     {
         String innerCommandResult = null;// tmp
         String xexpected = innerCommand.storedVars.fillValues( expected );
+        xexpected = MultiLineHelper.brToNewLine( xexpected );
         for ( int second = 0;; second++ )
         {
             if ( second >= 60 )
@@ -51,7 +52,6 @@ public class WaitForEqualsStep
             try
             {
                 /* tmpString */innerCommandResult = innerCommand.getString();
-                innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
                 boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
                 if ( seleniumEqualsResult )
                     break;

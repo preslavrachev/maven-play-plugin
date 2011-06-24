@@ -37,8 +37,8 @@ public class VerifyEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
         String xexpected = innerCommand.storedVars.fillValues( expected );
+        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
         Verify.verifyTrue( "Actual value \"" + innerCommandResult + "\" did not match \"" + xexpected + "\"",
                            seleniumEqualsResult );

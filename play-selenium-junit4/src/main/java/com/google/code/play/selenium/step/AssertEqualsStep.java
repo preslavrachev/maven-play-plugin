@@ -39,8 +39,8 @@ public class AssertEqualsStep
         throws Exception
     {
         String innerCommandResult = innerCommand.getString();
-        innerCommandResult = MultiLineHelper.newLineToBr( innerCommandResult );
         String xexpected = innerCommand.storedVars.fillValues( expected );
+        xexpected = MultiLineHelper.brToNewLine( xexpected );
         boolean seleniumEqualsResult = EqualsHelper.seleniumEquals( xexpected, innerCommandResult );
         String assertMessage = "Actual value \"" + innerCommandResult + "\" did not match \"" + xexpected + "\"";
         Assert.assertTrue( assertMessage, seleniumEqualsResult );
