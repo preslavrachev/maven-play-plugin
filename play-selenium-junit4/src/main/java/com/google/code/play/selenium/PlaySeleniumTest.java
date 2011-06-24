@@ -463,7 +463,6 @@ public abstract class PlaySeleniumTest
         // int stepsCnt = steps.size();
         // int indent = String.valueOf(stepsCnt).length();
         int indent = 4;
-        // boolean verificationErrors = false;
         int line = 0;
         for ( Step step : steps )
         {
@@ -493,7 +492,6 @@ public abstract class PlaySeleniumTest
                 {
                     testTraceBuf.append( logLine ).append( '\n' );
                 }
-                // verificationErrors = true;
                 verificationFailuresBuf.append( '\n' ).append( e.getMessage() );
             }
             catch ( AssertionError e )
@@ -547,13 +545,12 @@ public abstract class PlaySeleniumTest
         }
 
         if ( verificationFailuresBuf.length() > 0 )
-        // if ( verificationErrors )
         {
             if ( !traceTest )
             {
                 System.out.println( testTraceBuf.toString() );
             }
-            Assert.fail( "There are verification errors:" + verificationFailuresBuf.toString() );
+            Assert.fail( "There are verification failures:" + verificationFailuresBuf.toString() );
         }
     }
 
