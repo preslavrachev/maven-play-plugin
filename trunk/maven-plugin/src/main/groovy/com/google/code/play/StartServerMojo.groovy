@@ -80,7 +80,7 @@ class StartServerMojo
     boolean background
 
     /**
-     * Configure the Selenium Server to use <tt>http.nonProxyHosts</tt>.
+     * ...
      *
      * @parameter expression="${playHome}"
      * @required
@@ -88,11 +88,19 @@ class StartServerMojo
     String playHome
 
     /**
-     * Configure the Selenium Server to use <tt>http.nonProxyHosts</tt>.
+     * ...
      *
      * @parameter expression="${applicationPath}" default-value="${basedir}"
      */
     String applicationPath
+
+    /**
+     * ...
+     *
+     * @parameter expression="${playId}" default-value="test"
+     * @required
+     */
+    String playTestProfile
 
     /**
      * Allows the server startup to be skipped.
@@ -107,6 +115,14 @@ class StartServerMojo
      * @parameter expression="${play.skipSeleniumTests}" default-value="false"
      */
     boolean skipSeleniumTests
+    
+    /**
+     * Arbitrary JVM options to set on the command line.
+     *
+     * @parameter expression="${play.forked.argLine}"
+     * @since 1.0
+     */
+    private String forkedProcessArgLine;
     
     //
     // Components
@@ -164,9 +180,10 @@ class StartServerMojo
             return artifact.file
         }
         
-System.out.println("playHome:"+playHome);
-System.out.println("applicationPath:"+applicationPath);
-
+//System.out.println("playHome:"+playHome);
+//System.out.println("applicationPath:"+applicationPath);
+//System.out.println("playId:"+playTestProfile);
+        
         def launcher = new ProcessLauncher(name: 'Play! Server', background: background)
         
         launcher.process = {
@@ -197,17 +214,19 @@ System.out.println("applicationPath:"+applicationPath);
                 }
                 
                 sysproperty(key: 'play.home', value: playHome)
+                sysproperty(key: 'play.id', value: playTestProfile)
                 sysproperty(key: 'application.path', value: applicationPath)
-
-                //compilation debug, temporal
-                //sysproperty(key: 'precompile', value: 'true')
-
-                //GS-tymczasowo nie parametryzowalne
-                sysproperty(key: 'play.id', value: 'test')
-				
-                //GS-tymczasowo
-                //jvmarg(value: "-Xdebug");
-                //jvmarg(value: "-Xrunjdwp:transport=dt_socket,address=8001,server=y,suspend=y");
+                
+                if (forkedProcessArgLine != null) {
+                    String argLine = forkedProcessArgLine.trim();
+                    if (!"".equals(argLine)) {
+                        String[] args = argLine.split( " " );
+                        for (String arg: args) {
+                            jvmarg(value: arg);
+                            //System.out.println("jvmarg:'"+arg+"'");
+                        }
+                    }
+                }
             }
         }
         
