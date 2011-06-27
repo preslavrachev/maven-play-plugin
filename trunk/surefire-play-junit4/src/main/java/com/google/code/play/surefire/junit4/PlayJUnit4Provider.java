@@ -24,6 +24,7 @@ import org.apache.maven.surefire.common.junit4.JUnit4RunListenerFactory;
 import org.apache.maven.surefire.common.junit4.JUnit4TestChecker;
 import org.apache.maven.surefire.providerapi.AbstractProvider;
 import org.apache.maven.surefire.providerapi.ProviderParameters;
+import org.apache.maven.surefire.report.ConsoleLogger;
 import org.apache.maven.surefire.report.ConsoleOutputCapture;
 import org.apache.maven.surefire.report.ConsoleOutputReceiver;
 import org.apache.maven.surefire.report.PojoStackTraceWriter;
@@ -33,8 +34,10 @@ import org.apache.maven.surefire.report.ReporterFactory;
 import org.apache.maven.surefire.report.RunListener;
 import org.apache.maven.surefire.report.SimpleReportEntry;
 import org.apache.maven.surefire.suite.RunResult;
+import org.apache.maven.surefire.testset.DirectoryScannerParameters;
 import org.apache.maven.surefire.testset.TestSetFailedException;
-import org.apache.maven.surefire.util.DirectoryScanner;
+//import org.apache.maven.surefire.util.DirectoryScanner;
+//import org.apache.maven.surefire.util.DefaultDirectoryScanner;
 import org.apache.maven.surefire.util.TestsToRun;
 
 import org.junit.runner.Result;
@@ -50,10 +53,9 @@ import java.util.Properties;
 public class PlayJUnit4Provider
     extends AbstractProvider
 {
-
     private final ClassLoader testClassLoader;
 
-    private final DirectoryScanner directoryScanner;
+    private final PlayDirectoryScanner directoryScanner;
     
     private final List<org.junit.runner.notification.RunListener> customRunListeners;
 
@@ -63,8 +65,6 @@ public class PlayJUnit4Provider
 
     private TestsToRun testsToRun;
     
-    private final boolean skipPlay;
-    
     private final String playId;
 
     private final String playHome;
@@ -73,24 +73,32 @@ public class PlayJUnit4Provider
 
     private final ProviderParameters providerParameters;
 
+    private final ConsoleLogger consoleLogger;
+
     public PlayJUnit4Provider( ProviderParameters booterParameters )
     {
         this.providerParameters = booterParameters;
-        this.testClassLoader = booterParameters.getTestClassLoader();
-        this.directoryScanner = booterParameters.getDirectoryScanner();
-        customRunListeners =
-            JUnit4RunListenerFactory.createCustomListeners( booterParameters.getProviderProperties().getProperty( "listener" ) );
-        jUnit4TestChecker = new JUnit4TestChecker( testClassLoader );
-        requestedTestMethod = booterParameters.getTestRequest().getRequestedTestMethod();
 
         Properties providerProperties = providerParameters.getProviderProperties();
-        this.skipPlay = "true".equals(providerProperties.getProperty( "skipPlay" ));
         this.playId =
             ( providerProperties.containsKey( "play.id" ) ? providerProperties.getProperty( "play.id" ) : "test" );
         this.playHome = providerProperties.getProperty( "play.home" );
         checkPath(this.playHome);
         this.applicationPath = providerProperties.getProperty( "application.path" );
         checkPath(this.applicationPath);
+
+        this.testClassLoader = booterParameters.getTestClassLoader();
+        DirectoryScannerParameters directoryScannerParameters = booterParameters.getDirectoryScannerParameters();
+        this.directoryScanner = new PlayDirectoryScanner(new File(new File(applicationPath), "test"),
+                                                         directoryScannerParameters.getIncludes(),
+                                                         directoryScannerParameters.getExcludes(),
+                                                         directoryScannerParameters.getRunOrder());
+        customRunListeners =
+            JUnit4RunListenerFactory.createCustomListeners( booterParameters.getProviderProperties().getProperty( "listener" ) );
+        jUnit4TestChecker = new JUnit4TestChecker( testClassLoader );
+        requestedTestMethod = booterParameters.getTestRequest().getRequestedTestMethod();
+
+        consoleLogger = booterParameters.getConsoleLogger();
     }
 
     // TODO-what exception classes should I throw?
@@ -114,16 +122,16 @@ public class PlayJUnit4Provider
     public RunResult invoke( Object forkTestSet )
         throws TestSetFailedException, ReporterException
     {
-        if (!skipPlay) {
-            System.out.println( "Play! initialization" );//TODO System.out -> log.debug
-            initializePlayEngine();// here?
-        }
+        consoleLogger.info( "Play! initialization" );
+        initializePlayEngine();
         try
         {
             if ( testsToRun == null )
             {
                 testsToRun = forkTestSet == null ? scanClassPath() : TestsToRun.fromClass( (Class<?>) forkTestSet );
             }
+
+            upgradeCheck();
 
             final ReporterFactory reporterFactory = providerParameters.getReporterFactory();
 
@@ -152,10 +160,8 @@ public class PlayJUnit4Provider
         }
         finally
         {
-            if (!skipPlay) {
-                System.out.println( "Play! finalization" );
-                finalizePlayEngine();// here?
-            }
+            consoleLogger.info( "Play! finalization" );
+            finalizePlayEngine();
         }
     }
 
@@ -163,7 +169,6 @@ public class PlayJUnit4Provider
     {
         Play.frameworkPath = new File(playHome);
         Play.init( new File(applicationPath), playId );
-
         Play.start();
     }
 
@@ -172,7 +177,7 @@ public class PlayJUnit4Provider
         Play.stop();
     }
 
-    private void executeTestSet( Class<?> clazz, RunListener reporter/*, ClassLoader classLoader*/, RunNotifier listeners )
+    private void executeTestSet( Class<?> clazz, RunListener reporter, RunNotifier listeners )
         throws ReporterException, TestSetFailedException
     {
         final ReportEntry report = new SimpleReportEntry( this.getClass().getName(), clazz.getName() );
@@ -232,8 +237,33 @@ public class PlayJUnit4Provider
 
     private TestsToRun scanClassPath()
     {
-        ClassLoader classLoader = (this.skipPlay ? testClassLoader : Play.classloader);
-        return directoryScanner.locateTestClasses( classLoader/*test Play.classloader*//* testClassLoader */, jUnit4TestChecker );
+        return directoryScanner.locateTestClasses( Play.classloader, jUnit4TestChecker );
+    }
+
+    private void upgradeCheck()
+        throws TestSetFailedException
+    {
+        if ( isJunit4UpgradeCheck()
+            && directoryScanner.getClassesSkippedByValidation().size() > 0 )
+        {
+            StringBuilder reason = new StringBuilder();
+            reason.append( "Updated check failed\n" );
+            reason.append( "There are tests that would be run with junit4 / surefire 2.6 but not with [2.7,):\n" );
+            // noinspection unchecked
+            for ( Class<?> testClass : (List<Class<?>>) directoryScanner.getClassesSkippedByValidation() )
+            {
+                reason.append( "   " );
+                reason.append( testClass.getCanonicalName() );
+                reason.append( "\n" );
+            }
+            throw new TestSetFailedException( reason.toString() );
+        }
+    }
+
+    private boolean isJunit4UpgradeCheck()
+    {
+        final String property = System.getProperty( "surefire.junit4.upgradecheck" );
+        return property != null;
     }
 
 }
