@@ -45,15 +45,21 @@
               </test>
               <package>
                 com.google.code.maven-play-plugin:maven-play-plugin:zip
-              </package><!--??-->
+              </package>
               <pre-integration-test>
-                com.google.code.maven-play-plugin:maven-play-plugin:start-server
+                com.google.code.maven-play-plugin:maven-play-plugin:start-server,
+                org.codehaus.mojo:selenium-maven-plugin:start-server
               </pre-integration-test>
               <integration-test>
+                org.apache.maven.plugins:maven-failsafe-plugin:integration-test
               </integration-test>
               <post-integration-test>
+                org.codehaus.mojo:selenium-maven-plugin:stop-server,
                 com.google.code.maven-play-plugin:maven-play-plugin:stop-server
               </post-integration-test>
+              <verify>
+                org.apache.maven.plugins:maven-failsafe-plugin:verify
+              </verify>
               <install>
                 org.apache.maven.plugins:maven-install-plugin:install
               </install>
