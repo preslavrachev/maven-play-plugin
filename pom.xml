@@ -60,6 +60,7 @@
 
     <modules>
         <module>maven-plugin</module>
+        <module>play-app-default-parent</module>
         <module>play-selenium-junit4</module>
         <module>play-server-booter</module>
         <module>play12-extensions</module>
