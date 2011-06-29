@@ -122,7 +122,7 @@ public class PlayJUnit4Provider
     public RunResult invoke( Object forkTestSet )
         throws TestSetFailedException, ReporterException
     {
-        consoleLogger.info( "Play! initialization" );
+        consoleLogger.info( "Play! initialization\n" );
         initializePlayEngine();
         try
         {
@@ -160,7 +160,7 @@ public class PlayJUnit4Provider
         }
         finally
         {
-            consoleLogger.info( "Play! finalization" );
+            consoleLogger.info( "Play! finalization\n" );
             finalizePlayEngine();
         }
     }
