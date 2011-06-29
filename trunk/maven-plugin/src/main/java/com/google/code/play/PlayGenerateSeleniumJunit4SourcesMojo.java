@@ -45,12 +45,12 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
      * 
      * @parameter expression="${play.selenium.skip}"
      */
-    private boolean skip;
+    private boolean seleniumSkip;
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
-        if ( !skip )
+        if ( !seleniumSkip )
         {
             File baseDir = project.getBasedir();
             File playTests = new File( baseDir, "test" );
