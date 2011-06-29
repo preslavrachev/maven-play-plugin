@@ -43,7 +43,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
     /**
      * ...
      * 
-     * @parameter expression="${play.skipSeleniumTests}"
+     * @parameter expression="${play.selenium.skip}"
      */
     private boolean skip;
 
