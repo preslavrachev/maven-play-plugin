@@ -97,7 +97,7 @@ class StartServerMojo
     /**
      * ...
      *
-     * @parameter expression="${playId}" default-value="test"
+     * @parameter expression="${play.test.profile}" default-value="test"
      * @required
      */
     String playTestProfile
@@ -105,16 +105,9 @@ class StartServerMojo
     /**
      * Allows the server startup to be skipped.
      *
-     * @parameter expression="${maven.test.skip}" default-value="false"
+     * @parameter expression="${maven.selenium.skip}" default-value="false"
      */
-    boolean skip
-    
-    /**
-     * Allows the server startup to be skipped.
-     *
-     * @parameter expression="${play.skipSeleniumTests}" default-value="false"
-     */
-    boolean skipSeleniumTests
+    boolean seleniumSkip
     
     /**
      * Arbitrary JVM options to set on the command line.
@@ -158,7 +151,7 @@ class StartServerMojo
     //
 
     void execute() {
-        if (skip || skipSeleniumTests) {
+        if (seleniumSkip) {
             log.info('Skipping startup')
             return
         }
