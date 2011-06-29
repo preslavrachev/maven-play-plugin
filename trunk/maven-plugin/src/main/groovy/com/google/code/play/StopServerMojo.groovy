@@ -41,23 +41,16 @@ class StopServerMojo
     /**
      * Skip goal execution
      *
-     * @parameter expression="${maven.test.skip}" default-value="false"
+     * @parameter expression="${maven.selenium.skip}" default-value="false"
      */
-    boolean skip
-    
-    /**
-     * Allows the server startup to be skipped.
-     *
-     * @parameter expression="${play.skipSeleniumTests}" default-value="false"
-     */
-    boolean skipSeleniumTests
+    boolean seleniumSkip
 
     //
     // Mojo
     //
 
     void execute() {
-        if (skip || skipSeleniumTests) {
+        if (seleniumSkip) {
             log.info('Skipping execution')
             return
         }
