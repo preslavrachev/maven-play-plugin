@@ -105,7 +105,7 @@ class StartServerMojo
     /**
      * Allows the server startup to be skipped.
      *
-     * @parameter expression="${maven.selenium.skip}" default-value="false"
+     * @parameter expression="${play.selenium.skip}" default-value="false"
      */
     boolean seleniumSkip
     
