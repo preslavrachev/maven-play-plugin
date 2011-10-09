@@ -34,8 +34,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.plugin.AbstractMojo;
@@ -62,7 +62,7 @@ public abstract class AbstractPlayMojo
     /**
      * The directory for the generated ZIP.
      * 
-     * @parameter expression="${playHome}"
+     * @parameter expression="${play.home}"
      * @required
      */
     protected File playHome;
@@ -182,6 +182,7 @@ public abstract class AbstractPlayMojo
      * protected void print( String text, Object... args ) { System.out.printf( text, args ); System.out.println(); }
      */
 
+/*TODO-what was it for?
     protected void checkApplication()
     {
 
@@ -335,5 +336,5 @@ public abstract class AbstractPlayMojo
 
         return result;
     }
-
+*/
 }

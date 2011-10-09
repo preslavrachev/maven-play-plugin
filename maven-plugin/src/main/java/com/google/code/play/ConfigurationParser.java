@@ -31,7 +31,7 @@ import java.util.Properties;
 public class ConfigurationParser
 {
 
-    private File directory;
+    private File configurationFile;
 
     private File playHome;
 
@@ -42,9 +42,9 @@ public class ConfigurationParser
     // private String applicationName;
     // private Map<String, File> modules;
 
-    public ConfigurationParser( File directory, File playHome, String playId )
+    public ConfigurationParser( File configurationFile, File playHome, String playId )
     {
-        this.directory = directory;
+        this.configurationFile = configurationFile;
         this.playHome = playHome;
         this.playId = playId;
         // modules = new HashMap<String, File>();
@@ -102,8 +102,7 @@ public class ConfigurationParser
     public void parse()
         throws IOException/* , JSONException */
     {
-        File configFile = new File( directory, "application.conf" );
-        InputStream inputStream = new BufferedInputStream( new FileInputStream( configFile ) );
+        InputStream inputStream = new BufferedInputStream( new FileInputStream( configurationFile ) );
         try
         {
             Properties props = new Properties();

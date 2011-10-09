@@ -43,7 +43,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
     /**
      * ...
      * 
-     * @parameter expression="${play.selenium.skip}"
+     * @parameter expression="${play.seleniumSkip}" default-value="false"
      */
     private boolean seleniumSkip;
 
