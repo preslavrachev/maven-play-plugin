@@ -41,7 +41,7 @@ class StopServerMojo
     /**
      * Skip goal execution
      *
-     * @parameter expression="${play.selenium.skip}" default-value="false"
+     * @parameter expression="${play.seleniumSkip}" default-value="false"
      */
     boolean seleniumSkip
 

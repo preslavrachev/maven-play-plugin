@@ -72,17 +72,9 @@ class StartServerMojo
     File logFile
 
     /**
-     * Flag to control if we background the server or block Maven execution.
-     *
-     * @parameter expression="${background}" default-value="true"
-     * @required
-     */
-    boolean background
-
-    /**
      * ...
      *
-     * @parameter expression="${playHome}"
+     * @parameter expression="${play.home}"
      * @required
      */
     String playHome
@@ -90,32 +82,25 @@ class StartServerMojo
     /**
      * ...
      *
-     * @parameter expression="${applicationPath}" default-value="${basedir}"
-     */
-    String applicationPath
-
-    /**
-     * ...
-     *
-     * @parameter expression="${play.test.profile}" default-value="test"
+     * @parameter expression="${play.testProfile}" default-value="test"
      * @required
      */
-    String playTestProfile
+    String testProfile
 
     /**
      * Allows the server startup to be skipped.
      *
-     * @parameter expression="${play.selenium.skip}" default-value="false"
+     * @parameter expression="${play.seleniumSkip}" default-value="false"
      */
     boolean seleniumSkip
     
     /**
      * Arbitrary JVM options to set on the command line.
      *
-     * @parameter expression="${play.forked.argLine}"
+     * @parameter expression="${play.seleniumServerProcessArgLine}"
      * @since 1.0
      */
-    private String forkedProcessArgLine;
+    private String seleniumServerProcessArgLine;
     
     //
     // Components
@@ -156,6 +141,8 @@ class StartServerMojo
             return
         }
         
+        def applicationPath = project.basedir;
+        
         ant.mkdir(dir: workingDirectory)
         
         if (logOutput) {
@@ -172,12 +159,12 @@ class StartServerMojo
             
             return artifact.file
         }
-        
+
 //System.out.println("playHome:"+playHome);
 //System.out.println("applicationPath:"+applicationPath);
-//System.out.println("playId:"+playTestProfile);
+//System.out.println("playId:"+testProfile);
         
-        def launcher = new ProcessLauncher(name: 'Play! Server', background: background)
+        def launcher = new ProcessLauncher(name: 'Play! Server', background: true)
         
         launcher.process = {
             ant.java(classname: 'com.google.code.play.PlayServerBooter',
@@ -207,11 +194,11 @@ class StartServerMojo
                 }
                 
                 sysproperty(key: 'play.home', value: playHome)
-                sysproperty(key: 'play.id', value: playTestProfile)
+                sysproperty(key: 'play.id', value: testProfile)
                 sysproperty(key: 'application.path', value: applicationPath)
                 
-                if (forkedProcessArgLine != null) {
-                    String argLine = forkedProcessArgLine.trim();
+                if (seleniumServerProcessArgLine != null) {
+                    String argLine = seleniumServerProcessArgLine.trim();
                     if (!"".equals(argLine)) {
                         String[] args = argLine.split( " " );
                         for (String arg: args) {
