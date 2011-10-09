@@ -1,17 +1,39 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
     <artifactId>play-app-default-parent</artifactId>
-    <version>1.0.0-alpha2-SNAPSHOT</version>
+    <version>1.0.0-alpha3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Play! Application Default Configuration Parent</name>
 
     <properties>
-        <play.test.profile>test</play.test.profile> <!-- change the name to  -->
-        <play.selenium.skip>false</play.selenium.skip>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <play.testProfile>test</play.testProfile>
+        <play.seleniumSkip>false</play.seleniumSkip>
         <selenium.browser></selenium.browser>
     </properties>
 
@@ -20,26 +42,21 @@
             <plugins>
                 <plugin>
                     <groupId>com.google.code.maven-play-plugin</groupId>
-                    <artifactId>maven-play-plugin</artifactId>
-                    <version>1.0.0-alpha2-SNAPSHOT</version>
+                    <artifactId>play-maven-plugin</artifactId>
+                    <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} --> 
                     <configuration>
-                        <compileApp>false</compileApp>
-                        <compileTest>false</compileTest>
-                        <playHome>${play.home}</playHome>
                         <!-- options for starting server -->
-<!--                        <background>true</background>-->
-                        <logOutput>true</logOutput>
-                        <playTestProfile>${play.test.profile}</playTestProfile>
-                        <forkedProcessArgLine></forkedProcessArgLine>
+                        <logOutput>true</logOutput> <!--???-->
                     </configuration>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
                     <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
+                        <source>1.5</source>
+                        <target>1.5</target>
                     </configuration>
                 </plugin>
 
@@ -58,7 +75,7 @@
                           </property>
                           <property>
                             <name>play.id</name>
-                            <value>${play.test.profile}</value>
+                            <value>${play.testProfile}</value>
                           </property>
                           <property>
                             <name>application.path</name>
@@ -71,7 +88,7 @@
                         <dependency>
                             <groupId>com.google.code.maven-play-plugin</groupId>
                             <artifactId>surefire-play-junit4</artifactId>
-                            <version>1.0.0-alpha2-SNAPSHOT</version>
+                            <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} --> 
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -81,7 +98,7 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>2.7.2</version>
                     <configuration>
-                        <skip>${play.selenium.skip}</skip>
+                        <skip>${play.seleniumSkip}</skip>
                         <forkMode>never</forkMode> <!-- experimental -->
                         <includes>
                             <include>**/*SeleniumTest.java</include>
@@ -105,7 +122,7 @@
                         <debug>true</debug>
                         <defaultUserExtensionsEnabled>false</defaultUserExtensionsEnabled>
                         <logOutput>true</logOutput>
-                        <skip>${play.selenium.skip}</skip>
+                        <skip>${play.seleniumSkip}</skip>
                         <userExtensions>${play.home}/modules/testrunner/public/test-runner/selenium/scripts/user-extensions.js</userExtensions>
                     </configuration>
                 </plugin>
