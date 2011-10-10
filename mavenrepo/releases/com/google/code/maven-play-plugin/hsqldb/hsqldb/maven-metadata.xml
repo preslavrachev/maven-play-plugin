@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.hsqldb</groupId>
+  <artifactId>hsqldb</artifactId>
+  <version>1.8.1.2</version>
+  <versioning>
+    <versions>
+      <version>1.8.1.2</version>
+    </versions>
+    <lastUpdated>20111010071338</lastUpdated>
+  </versioning>
+</metadata>
