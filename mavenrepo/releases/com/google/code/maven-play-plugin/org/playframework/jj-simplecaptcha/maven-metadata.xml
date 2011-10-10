@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+  <artifactId>jj-simplecaptcha</artifactId>
+  <version>1.1</version>
+  <versioning>
+    <versions>
+      <version>1.1</version>
+    </versions>
+    <lastUpdated>20111010072757</lastUpdated>
+  </versioning>
+</metadata>
