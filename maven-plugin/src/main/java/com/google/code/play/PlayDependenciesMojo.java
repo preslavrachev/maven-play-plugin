@@ -142,7 +142,6 @@ public class PlayDependenciesMojo
                     zipUnArchiver.setSourceFile( zipFile );
                     zipUnArchiver.setDestDirectory( toDirectory );
                     zipUnArchiver.setOverwrite( false/* ??true */);
-                    zipUnArchiver.setFileSelectors( new FileSelector[] {new LibDirExcludeFileSelector()} );
                     zipUnArchiver.extract();
 
                     moduleTypeArtifacts.put( artifact, toDirectory );
