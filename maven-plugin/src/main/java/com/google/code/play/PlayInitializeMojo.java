@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +33,10 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.codehaus.plexus.archiver.ArchiverException;
+import org.codehaus.plexus.archiver.UnArchiver;
+import org.codehaus.plexus.archiver.manager.ArchiverManager;
+import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
 
 /**
  * Adds application sources ('app' directory) to Play! application.
@@ -53,6 +58,7 @@ public class PlayInitializeMojo
      * ...
      * 
      * @parameter expression="${play.compileApp}" default-value="true"
+     * @since 1.0.0
      */
     private boolean compileApp = true;
 
@@ -60,21 +66,40 @@ public class PlayInitializeMojo
      * ...
      * 
      * @parameter expression="${play.compileTest}" default-value="true"
+     * @since 1.0.0
      */
     private boolean compileTest = true;
+
+    /**
+     * To look up Archiver/UnArchiver implementations.
+     * 
+     * @component role="org.codehaus.plexus.archiver.manager.ArchiverManager"
+     * @required
+     */
+    private ArchiverManager archiverManager;
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
+        checkPlayHomeExtended();
+        
         File baseDir = project.getBasedir();
         File confDir = new File( baseDir, "conf" );
         File configurationFile = new File( confDir, "application.conf" );
 
-        ConfigurationParser configParser = new ConfigurationParser( configurationFile, playHome, playId );
+        ConfigurationParser configParser = new ConfigurationParser( configurationFile/*, playHome*/, playId );
         configParser.parse();
-        
         // Get modules
-        Map<String, File> modules = configParser.getModules(); // Play 1.1.x
+        Map<String, File> modules = new HashMap<String, File>();
+
+        // Play 1.1.x
+        Map<String, String/*File*/> modulePaths = configParser.getModules();
+        for (String moduleName: modulePaths.keySet())
+        {
+            String modulePath = modulePaths.get( moduleName );
+            modulePath = modulePath.replace( "${play.path}", playHome.getPath() );
+            modules.put( moduleName, new File( modulePath ) );
+        }
         // Play 1.2.x
         String playVersion = null;
         Set<?> artifacts = project.getArtifacts();
@@ -177,4 +202,196 @@ public class PlayInitializeMojo
             // add test sources from dependent modules?
         }
     }
+
+    protected void checkPlayHomeExtended() throws MojoExecutionException, IOException
+    {
+        if ( playHome == null || "".equals( playHome ) )
+        {
+            Artifact frameworkArtifact = findFrameworkArtifact();
+            Map<String, Artifact> providedModuleArtifacts = findAllProvidedModuleArtifacts();
+            
+            if (frameworkArtifact != null)
+            {
+                try {
+                    decompressFrameworkAndSetPlayHome( frameworkArtifact, providedModuleArtifacts );
+                }
+                catch ( ArchiverException e )
+                {
+                    throw new MojoExecutionException( "?", e );
+                }
+                catch ( NoSuchArchiverException e )
+                {
+                    throw new MojoExecutionException( "?", e );
+                }
+            }
+            else
+            {
+                throw new MojoExecutionException(
+                                "Play! home directory (\"playHome\" plugin configuration parameter) not set" );
+                //super.playHomeNotDefined();
+            }
+        }
+        else
+        {
+            if ( !playHome.exists() )
+            {
+                throw new MojoExecutionException( "Play! home directory " + playHome + " does not exist" );
+            }
+            if ( !playHome.isDirectory() )
+            {
+                throw new MojoExecutionException( "Play! home directory " + playHome + " is not a directory" );
+            }
+        }
+    }
+
+    private Artifact findFrameworkArtifact() {
+        Artifact result = null;
+
+        Set<?> artifacts = project.getArtifacts();
+        for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( "zip".equals( artifact.getType() ) )
+            {
+                if ( "framework".equals( artifact.getClassifier() ) )
+                {
+                    result = artifact;
+                    //System.out.println( "added framework: " + artifact.getGroupId() + ":" + artifact.getArtifactId() );
+                    // don't break, maybe there is "framework-resources" artifact too
+                }
+                // "module-resources" overrides "module" (if present)
+                else if ( "framework-resources".equals( artifact.getClassifier() ) )
+                {
+                    result = artifact;
+                    //System.out.println( "added framework-resources: " + artifact.getGroupId() + ":"
+                    //    + artifact.getArtifactId() );
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    private Map<String, Artifact> findAllProvidedModuleArtifacts() {
+        Map<String, Artifact> result = new HashMap<String, Artifact>();
+
+        Set<?> artifacts = project.getArtifacts();
+        for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) &&
+                 "zip".equals( artifact.getType() ) )
+            {
+                if ( "module".equals( artifact.getClassifier() )
+                    || "module-resources".equals( artifact.getClassifier() ) )
+                {
+                    String moduleName = artifact.getArtifactId();
+                    if ( moduleName.startsWith( "play-" ) )
+                    {
+                        moduleName = moduleName.substring( "play-".length() );
+                    }
+                    
+                    if ( "module".equals( artifact.getClassifier() ) )
+                    {
+                        if ( result.get( moduleName ) == null ) // if "module-resources" already in map, don't use "module" artifact
+                        {
+                            result.put( moduleName, artifact );
+                            //System.out.println("added module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+                        }
+                    }
+                    else // "module-resources" overrides "module" (if present)
+                    {
+                        result.put( moduleName, artifact );
+                        //System.out.println("added module-resources: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private void decompressFrameworkAndSetPlayHome( Artifact frameworkAtifact, Map<String, Artifact> providedModuleArtifacts ) throws ArchiverException, NoSuchArchiverException, IOException
+    {
+        File targetDir = new File(project.getBuild().getDirectory());
+        File playTmpDir = new File(targetDir, "play");
+        
+        File playHomeDirectory = new File( playTmpDir, "home" );
+        if (!playHomeDirectory.isDirectory())
+        {
+            //decompress framework
+            createDir( playHomeDirectory );
+            UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
+            zipUnArchiver.setSourceFile( frameworkAtifact.getFile() );
+            zipUnArchiver.setDestDirectory( playHomeDirectory );
+            zipUnArchiver.setOverwrite( false/* ??true */);
+            zipUnArchiver.extract();
+
+            //decompress provided-scoped modules
+            File modulesDirectory = new File(playHomeDirectory, "modules" );
+            for (String moduleName: providedModuleArtifacts.keySet())
+            {
+                Artifact moduleArtifact = providedModuleArtifacts.get( moduleName );
+                File moduleDirectory = new File(modulesDirectory, moduleName );
+                createDir( moduleDirectory );
+                //can I reuse? UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
+                zipUnArchiver.setSourceFile( moduleArtifact.getFile() );
+                zipUnArchiver.setDestDirectory( moduleDirectory );
+                zipUnArchiver.setOverwrite( false/* ??true */);
+                zipUnArchiver.extract();
+            }
+        }
+
+        playHome = playHomeDirectory;
+        project.getProperties().setProperty( "play.home", playHome.getCanonicalPath() );
+    }
+
+    private void createDir( File directory )
+        throws IOException
+    {
+        if ( directory.isFile() )
+        {
+            getLog().info( String.format( "Deleting \"%s\" file", directory ) );// TODO-more descriptive message
+            if ( !directory.delete() )
+            {
+                throw new IOException( String.format( "Cannot delete \"%s\" file", directory.getCanonicalPath() ) );
+            }
+        }
+        if ( !directory.exists() )
+        {
+            if ( !directory.mkdirs() )
+            {
+                throw new IOException( String.format( "Cannot create \"%s\" directory", directory.getCanonicalPath() ) );
+            }
+        }
+    }
+
+    /*    protected boolean isPlayHomeRequired()//TODO-ugly code!
+    {
+        return true;//
+        boolean result = false;
+        
+        File baseDir = project.getBasedir();
+        File confDir = new File( baseDir, "conf" );
+        File configurationFile = new File( confDir, "application.conf" );
+
+        ConfigurationParser configParser = new ConfigurationParser( configurationFile, playId );
+        try {
+            configParser.parse();
+            Map<String, String> modulePaths = configParser.getModules();
+            for (String modulePath: modulePaths.values())
+            {
+                if (modulePath.contains( "${play.path}" ))
+                {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            //???
+        }
+        return result;
+    }*/
+
 }

@@ -32,12 +32,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 //import java.util.ArrayList;
 //import java.util.List;
 
-import org.apache.maven.artifact.handler.ArtifactHandler;
+//import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -56,14 +56,15 @@ public abstract class AbstractPlayMojo
      * ...
      * 
      * @parameter
+     * @since 1.0.0
      */
     protected String playId;
 
     /**
-     * The directory for the generated ZIP.
+     * The directory with Play! distribution.
      * 
      * @parameter expression="${play.home}"
-     * @required
+     * @since 1.0.0
      */
     protected File playHome;
 
@@ -87,6 +88,27 @@ public abstract class AbstractPlayMojo
         // throw new MojoExecutionException( "The Check configuration is missing." );
         // }
 
+        /*ArtifactHandler artifactHandler = project.getArtifact().getArtifactHandler();
+        if ( !"java".equals( artifactHandler.getLanguage() ) )
+        {
+            getLog().info( "Not executing cobertura:instrument as the project is not a Java classpath-capable package" );
+        }
+        else
+        {*/
+            try
+            {
+                resolvePlayId();
+                internalExecute();
+            }
+            catch ( IOException e )
+            {
+                throw new MojoExecutionException( "?", e );
+            }
+        //}
+    }
+
+    protected void checkPlayHome() throws MojoExecutionException
+    {
         if ( playHome == null || "".equals( playHome ) )
         {
             throw new MojoExecutionException(
@@ -99,24 +121,6 @@ public abstract class AbstractPlayMojo
         if ( !playHome.isDirectory() )
         {
             throw new MojoExecutionException( "Play! home directory " + playHome + " is not a directory" );
-        }
-
-        ArtifactHandler artifactHandler = project.getArtifact().getArtifactHandler();
-        if ( !"java".equals( artifactHandler.getLanguage() ) )
-        {
-            getLog().info( "Not executing cobertura:instrument as the project is not a Java classpath-capable package" );
-        }
-        else
-        {
-            try
-            {
-                resolvePlayId();
-                internalExecute();
-            }
-            catch ( IOException e )
-            {
-                throw new MojoExecutionException( "?", e );
-            }
         }
     }
 
@@ -133,11 +137,11 @@ public abstract class AbstractPlayMojo
     }
 
     // a co z buforowaniem?
-    protected final PrintWriter createPrintFileWriter( File file, String encoding )
+/*    protected final PrintWriter createPrintFileWriter( File file, String encoding )
         throws FileNotFoundException, UnsupportedEncodingException
     {
         return new PrintWriter( new OutputStreamWriter( new FileOutputStream( file ), encoding ) );
-    }
+    }*/
 
     protected/* String */void resolvePlayId()
         throws IOException
@@ -155,18 +159,22 @@ public abstract class AbstractPlayMojo
         throws IOException
     {
         String playId = null;
-        File idFile = new File( playHome, "id" );
-        if ( idFile.isFile() )
+        if ( playHome != null )
         {
-            // a moze InputStream, nie Reader?
-            BufferedReader is = new BufferedReader( new InputStreamReader( new FileInputStream( idFile ), "UTF-8" ) );
-            try
+            File idFile = new File( playHome, "id" );
+            if ( idFile.isFile() )
             {
-                playId = is.readLine();
-            }
-            finally
-            {
-                is.close();
+                // a moze InputStream, nie Reader?
+                BufferedReader is =
+                    new BufferedReader( new InputStreamReader( new FileInputStream( idFile ), "UTF-8" ) );
+                try
+                {
+                    playId = is.readLine();
+                }
+                finally
+                {
+                    is.close();
+                }
             }
         }
         return playId;
