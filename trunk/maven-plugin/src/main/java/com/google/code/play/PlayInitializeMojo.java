@@ -93,10 +93,11 @@ public class PlayInitializeMojo
         Map<String, File> modules = new HashMap<String, File>();
 
         // Play 1.1.x
-        Map<String, String/*File*/> modulePaths = configParser.getModules();
-        for (String moduleName: modulePaths.keySet())
+        Map<String, String> modulePaths = configParser.getModules();
+        for (Map.Entry<String, String> modulePathEntry: modulePaths.entrySet())
         {
-            String modulePath = modulePaths.get( moduleName );
+            String moduleName = modulePathEntry.getKey();
+            String modulePath = modulePathEntry.getValue();
             modulePath = modulePath.replace( "${play.path}", playHome.getPath() );
             modules.put( moduleName, new File( modulePath ) );
         }
@@ -136,7 +137,7 @@ public class PlayInitializeMojo
                         else if ( file.isFile() )
                         {
                             // shortcut to module located in "modules" subdirectory of Play! framework location
-                            String realModulePath = new LineNumberReader(new InputStreamReader(new FileInputStream(file), "utf-8")).readLine();
+                            String realModulePath = readFileFirstLine( file );
                             //String realModulePath = play.libs.IO.readContentAsString( file );
                             file = new File( realModulePath );
                             getLog().debug( "Added module '" + moduleName + "': " + file.getAbsolutePath() );
@@ -169,9 +170,8 @@ public class PlayInitializeMojo
             project.addResource( resource );
             getLog().debug( "Added resource: " + resource.getDirectory() );
 
-            for ( String moduleName : modules.keySet() )
+            for (File modulePath: modules.values())
             {
-                File modulePath = modules.get( moduleName );
                 File moduleAppPath = new File( modulePath, "app" );
                 if ( moduleAppPath.isDirectory() )
                 {
@@ -205,7 +205,7 @@ public class PlayInitializeMojo
 
     protected void checkPlayHomeExtended() throws MojoExecutionException, IOException
     {
-        if ( playHome == null || "".equals( playHome ) )
+        if ( playHome == null )
         {
             Artifact frameworkArtifact = findFrameworkArtifact();
             Map<String, Artifact> providedModuleArtifacts = findAllProvidedModuleArtifacts();
@@ -328,9 +328,11 @@ public class PlayInitializeMojo
 
             //decompress provided-scoped modules
             File modulesDirectory = new File(playHomeDirectory, "modules" );
-            for (String moduleName: providedModuleArtifacts.keySet())
+            for (Map.Entry<String, Artifact> providedModuleArtifactEntry: providedModuleArtifacts.entrySet())
             {
-                Artifact moduleArtifact = providedModuleArtifacts.get( moduleName );
+                String moduleName = providedModuleArtifactEntry.getKey();
+                Artifact moduleArtifact = providedModuleArtifactEntry.getValue();
+
                 File moduleDirectory = new File(modulesDirectory, moduleName );
                 createDir( moduleDirectory );
                 //can I reuse? UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
@@ -394,4 +396,21 @@ public class PlayInitializeMojo
         return result;
     }*/
 
+    
+    private String readFileFirstLine( File file )
+        throws IOException
+    {
+        String result = null;
+        LineNumberReader reader = new LineNumberReader( new InputStreamReader( new FileInputStream( file ), "utf-8" ) );
+        try
+        {
+            result = reader.readLine();
+        }
+        finally
+        {
+            reader.close();
+        }
+        return result;
+    }
+    
 }

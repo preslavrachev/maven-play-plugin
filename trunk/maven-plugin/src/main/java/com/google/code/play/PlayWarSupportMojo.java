@@ -84,7 +84,10 @@ public class PlayWarSupportMojo
     {
         if ( !outputDirectory.exists() )
         {
-            outputDirectory.mkdirs();
+            if (!outputDirectory.mkdirs())
+            {
+                throw new IOException( String.format( "Cannot create \"%s\" directory", outputDirectory.getCanonicalPath() ) );
+            }
         }
         File result = new File( outputDirectory, "filtered-web.xml" );
         BufferedReader reader = createBufferedFileReader( webXml, "UTF-8" );
@@ -129,7 +132,10 @@ public class PlayWarSupportMojo
     {
         if ( !outputDirectory.exists() )
         {
-            outputDirectory.mkdirs();
+            if (!outputDirectory.mkdirs())
+            {
+                throw new IOException( String.format( "Cannot create \"%s\" directory", outputDirectory.getCanonicalPath() ) );
+            }
         }
         File result = new File( outputDirectory, "filtered-application.conf" );
         BufferedReader reader = createBufferedFileReader( applicationConf, "UTF-8" );

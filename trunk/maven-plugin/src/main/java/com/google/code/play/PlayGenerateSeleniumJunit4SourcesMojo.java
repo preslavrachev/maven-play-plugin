@@ -46,7 +46,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
      * @parameter expression="${play.seleniumSkip}" default-value="false"
      * @since 1.0.0
      */
-    private boolean seleniumSkip;
+    private boolean seleniumSkip = false;
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
@@ -105,8 +105,10 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                     File javaTestFile = new File( destDir, javaTestClassName + "SeleniumTest.java" );
                     if ( !javaTestFile.exists() )
                     {
-                        javaTestFile.getParentFile().mkdirs();// TODO-check the result and throw exception when
-                                                              // "false"
+                        if (!javaTestFile.getParentFile().mkdirs())
+                        {
+                            throw new IOException( String.format( "Cannot create \"%s\" directory", javaTestFile.getParentFile().getCanonicalPath() ) );
+                        }
                         PrintWriter w =
                             new PrintWriter(
                                              new BufferedWriter(

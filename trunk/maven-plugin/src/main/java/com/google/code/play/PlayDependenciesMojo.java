@@ -141,13 +141,15 @@ public class PlayDependenciesMojo
                 //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
                 File jarFile = artifact.getFile();
                 File libDir = new File( baseDir, "lib" );
-                for (Artifact moduleArtifact: moduleTypeArtifacts.keySet())
+                for (Map.Entry<Artifact, File> moduleTypeArtifactEntry: moduleTypeArtifacts.entrySet())
                 {
+                    Artifact moduleArtifact = moduleTypeArtifactEntry.getKey();
                     //System.out.println("checking module: " + moduleArtifact.getGroupId() + ":" + moduleArtifact.getArtifactId());
                     if ( artifact.getGroupId().equals( moduleArtifact.getGroupId() )
                         && artifact.getArtifactId().equals( moduleArtifact.getArtifactId() ) )
                     {
-                        libDir = new File( moduleTypeArtifacts.get( moduleArtifact ), "lib" );
+                        File modulePath = moduleTypeArtifactEntry.getValue();
+                        libDir = new File( modulePath, "lib" );
                         //System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
                         break;
                     }
