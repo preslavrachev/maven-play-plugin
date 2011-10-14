@@ -72,12 +72,12 @@ public class PlayZipMojo
 
     /**
      * To look up Archiver/UnArchiver implementations.
-     *
+     * 
      * @component role="org.codehaus.plexus.archiver.manager.ArchiverManager"
      * @required
      */
     private ArchiverManager archiverManager;
-    
+
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
@@ -88,20 +88,20 @@ public class PlayZipMojo
             String zipName = project.getBuild().getFinalName();
             File destFile = new File( zipOutputDirectory, zipName + ".zip" );
 
-            Archiver zipArchiver = archiverManager.getArchiver( "zip" );//new ZipArchiver();
+            Archiver zipArchiver = archiverManager.getArchiver( "zip" );
             zipArchiver.setDuplicateBehavior( Archiver.DUPLICATES_FAIL );// Just in case
             zipArchiver.setDestFile( destFile );
 
             getLog().debug( "Zip includes: " + zipIncludes );
             getLog().debug( "Zip excludes: " + zipExcludes );
-            String[] includes = (zipIncludes != null ? zipIncludes.split(",") : null);
-            String[] excludes = (zipExcludes != null ? zipExcludes.split(",") : null);
-            zipArchiver.addDirectory( baseDir, includes, excludes);
-            
-            if (zipDependencies)
+            String[] includes = ( zipIncludes != null ? zipIncludes.split( "," ) : null );
+            String[] excludes = ( zipExcludes != null ? zipExcludes.split( "," ) : null );
+            zipArchiver.addDirectory( baseDir, includes, excludes );
+
+            if ( zipDependencies )
             {
-                Map<Artifact, String> moduleTypeArtifacts = processModuleDependencies(zipArchiver);
-                processJarDependencies(zipArchiver, moduleTypeArtifacts); 
+                Map<Artifact, String> moduleTypeArtifacts = processModuleDependencies( zipArchiver );
+                processJarDependencies( zipArchiver, moduleTypeArtifacts );
             }
             zipArchiver.createArchive();
 
@@ -117,10 +117,11 @@ public class PlayZipMojo
         }
     }
 
-    private Map<Artifact, String> processModuleDependencies(Archiver archiver) throws ArchiverException, NoSuchArchiverException, IOException 
+    private Map<Artifact, String> processModuleDependencies( Archiver archiver )
+        throws ArchiverException, NoSuchArchiverException, IOException
     {
         Map<Artifact, String> moduleTypeArtifacts = new HashMap<Artifact, String>();
-        
+
         Set<?> artifacts = project.getArtifacts();
 
         for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
@@ -131,8 +132,8 @@ public class PlayZipMojo
                 if ( "module".equals( artifact.getClassifier() )
                     || "module-resources".equals( artifact.getClassifier() ) )
                 {
-                    //System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
-                    
+                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+
                     // TODO-dorobic detekcje konfliktow nazw
                     // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
                     // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
@@ -143,18 +144,20 @@ public class PlayZipMojo
                     {
                         moduleName = moduleName.substring( "play-".length() );
                     }
-                    String moduleSubDir = String.format("%s-%s", moduleName, artifact.getVersion());
+                    String moduleSubDir = String.format( "%s-%s", moduleName, artifact.getVersion() );
                     archiver.addArchivedFileSet( zipFile, "modules/" + moduleSubDir + "/" );
 
                     moduleTypeArtifacts.put( artifact, moduleSubDir );
-                    //System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added");
+                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId() +
+                    // " added");
                 }
             }
         }
         return moduleTypeArtifacts;
     }
 
-    private void processJarDependencies(Archiver archiver, Map<Artifact, String> moduleTypeArtifacts) throws ArchiverException, NoSuchArchiverException, IOException 
+    private void processJarDependencies( Archiver archiver, Map<Artifact, String> moduleTypeArtifacts )
+        throws ArchiverException, NoSuchArchiverException, IOException
     {
         Set<?> artifacts = project.getArtifacts();
 
@@ -163,26 +166,28 @@ public class PlayZipMojo
             Artifact artifact = (Artifact) iter.next();
             if ( "jar".equals( artifact.getType() ) )
             {
-                //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+                // System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
                 File jarFile = artifact.getFile();
                 String libDir = "lib";
-                for (Map.Entry<Artifact, String> moduleTypeArtifactEntry: moduleTypeArtifacts.entrySet())
+                for ( Map.Entry<Artifact, String> moduleTypeArtifactEntry : moduleTypeArtifacts.entrySet() )
                 {
                     Artifact moduleArtifact = moduleTypeArtifactEntry.getKey();
-                    //System.out.println("checking module: " + moduleArtifact.getGroupId() + ":" + moduleArtifact.getArtifactId());
+                    // System.out.println("checking module: " + moduleArtifact.getGroupId() + ":" +
+                    // moduleArtifact.getArtifactId());
                     if ( artifact.getGroupId().equals( moduleArtifact.getGroupId() )
                         && artifact.getArtifactId().equals( moduleArtifact.getArtifactId() ) )
                     {
                         String moduleSubDir = moduleTypeArtifactEntry.getValue();
                         libDir = String.format( "modules/%s/lib", moduleSubDir );
-                        //System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
+                        // System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
                         break;
                     }
                 }
-                //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added to " + libDir);
+                // System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added to " +
+                // libDir);
                 archiver.addFile( jarFile, libDir + "/" + jarFile.getName() );
             }
         }
     }
-    
+
 }

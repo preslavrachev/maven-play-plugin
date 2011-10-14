@@ -46,8 +46,9 @@ import org.codehaus.plexus.util.FileUtils;
  * @goal dependencies
  * @requiresDependencyResolution runtime
  */
-//a co z zaleznosciami "runtime"? czy na pewno nie sa potrzebne? Play! by je wciagnal
-// jak jest "@requiresDependencyResolution compile", to nie wiem, jak odfiltrowac drzewo bibliotek play'a (ma scope provided)
+// a co z zaleznosciami "runtime"? czy na pewno nie sa potrzebne? Play! by je wciagnal
+// jak jest "@requiresDependencyResolution compile", to nie wiem, jak odfiltrowac drzewo bibliotek play'a (ma scope
+// provided)
 public class PlayDependenciesMojo
     extends AbstractPlayMojo
 {
@@ -66,7 +67,7 @@ public class PlayDependenciesMojo
         try
         {
             Map<Artifact, File> moduleTypeArtifacts = processModuleDependencies();
-            processJarDependencies(moduleTypeArtifacts); 
+            processJarDependencies( moduleTypeArtifacts );
         }
         catch ( ArchiverException e )
         {
@@ -80,10 +81,11 @@ public class PlayDependenciesMojo
         }
     }
 
-    private Map<Artifact, File> processModuleDependencies() throws ArchiverException, NoSuchArchiverException, IOException 
+    private Map<Artifact, File> processModuleDependencies()
+        throws ArchiverException, NoSuchArchiverException, IOException
     {
         Map<Artifact, File> moduleTypeArtifacts = new HashMap<Artifact, File>();
-        
+
         File baseDir = project.getBasedir();
         Set<?> artifacts = project.getArtifacts();
 
@@ -95,8 +97,8 @@ public class PlayDependenciesMojo
                 if ( "module".equals( artifact.getClassifier() )
                     || "module-resources".equals( artifact.getClassifier() ) )
                 {
-                    //System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
-                    
+                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+
                     // TODO-dorobic detekcje konfliktow nazw
                     // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
                     // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
@@ -104,7 +106,7 @@ public class PlayDependenciesMojo
                     File zipFile = artifact.getFile();
 
                     File modulesDir = new File( baseDir, "modules" );
-                    //createDir( modulesDir );
+                    // createDir( modulesDir );
                     String moduleName = artifact.getArtifactId();
                     if ( moduleName.startsWith( "play-" ) )
                     {
@@ -120,14 +122,16 @@ public class PlayDependenciesMojo
                     zipUnArchiver.extract();
 
                     moduleTypeArtifacts.put( artifact, toDirectory );
-                    //System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added");
+                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId() +
+                    // " added");
                 }
             }
         }
         return moduleTypeArtifacts;
     }
 
-    private void processJarDependencies(Map<Artifact, File> moduleTypeArtifacts) throws ArchiverException, NoSuchArchiverException, IOException 
+    private void processJarDependencies( Map<Artifact, File> moduleTypeArtifacts )
+        throws ArchiverException, NoSuchArchiverException, IOException
     {
         File baseDir = project.getBasedir();
         Set<?> artifacts = project.getArtifacts();
@@ -137,29 +141,31 @@ public class PlayDependenciesMojo
             Artifact artifact = (Artifact) iter.next();
             if ( "jar".equals( artifact.getType() ) )
             {
-                //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+                // System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
                 File jarFile = artifact.getFile();
                 File libDir = new File( baseDir, "lib" );
-                for (Map.Entry<Artifact, File> moduleTypeArtifactEntry: moduleTypeArtifacts.entrySet())
+                for ( Map.Entry<Artifact, File> moduleTypeArtifactEntry : moduleTypeArtifacts.entrySet() )
                 {
                     Artifact moduleArtifact = moduleTypeArtifactEntry.getKey();
-                    //System.out.println("checking module: " + moduleArtifact.getGroupId() + ":" + moduleArtifact.getArtifactId());
+                    // System.out.println("checking module: " + moduleArtifact.getGroupId() + ":" +
+                    // moduleArtifact.getArtifactId());
                     if ( artifact.getGroupId().equals( moduleArtifact.getGroupId() )
                         && artifact.getArtifactId().equals( moduleArtifact.getArtifactId() ) )
                     {
                         File modulePath = moduleTypeArtifactEntry.getValue();
                         libDir = new File( modulePath, "lib" );
-                        //System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
+                        // System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
                         break;
                     }
                 }
-                //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added to " + libDir);
+                // System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added to " +
+                // libDir);
                 createDir( libDir );
                 FileUtils.copyFileToDirectoryIfModified( jarFile, libDir );
             }
         }
     }
-    
+
     private void createDir( File directory )
         throws IOException
     {
