@@ -37,15 +37,11 @@ public class ConfigurationParser
 
     private Properties properties;
 
-    // private String applicationName;
-    // private Map<String, File> modules;
-
     public ConfigurationParser( File configurationFile, String playId )
     {
         this.configurationFile = configurationFile;
         this.playId = playId;
         this.properties = null;
-        // modules = new HashMap<String, File>();
     }
 
     public String getProperty( String key )
@@ -64,7 +60,6 @@ public class ConfigurationParser
 
     public String getApplicationName()
     {
-        // return applicationName;
         return getProperty( "application.name" );
     }
 
@@ -96,22 +91,14 @@ public class ConfigurationParser
     }
 
     public void parse()
-        throws IOException/* , JSONException */
+        throws IOException
     {
         InputStream inputStream = new BufferedInputStream( new FileInputStream( configurationFile ) );
         try
         {
             Properties props = new Properties();
             props.load( inputStream );
-            // applicationName = (String)props.get("application.name");
-            /*
-             * for (Object key: props.keySet()) { String strKey = (String)key; if (strKey.startsWith("module.")) {
-             * String moduleName = strKey.substring(7); String modulePath = (String)props.get(key); modulePath =
-             * modulePath.replace("${play.path}", playHome.getCanonicalPath()); modules.put(moduleName, new
-             * File(modulePath)); } }
-             */
             this.properties = props;
-            // result = provides.getString("namespace");
         }
         finally
         {

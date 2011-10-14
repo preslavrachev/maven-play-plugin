@@ -105,9 +105,10 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                     File javaTestFile = new File( destDir, javaTestClassName + "SeleniumTest.java" );
                     if ( !javaTestFile.exists() )
                     {
-                        if (!javaTestFile.getParentFile().mkdirs())
+                        if ( !javaTestFile.getParentFile().mkdirs() )
                         {
-                            throw new IOException( String.format( "Cannot create \"%s\" directory", javaTestFile.getParentFile().getCanonicalPath() ) );
+                            throw new IOException( String.format( "Cannot create \"%s\" directory",
+                                                                  javaTestFile.getParentFile().getCanonicalPath() ) );
                         }
                         PrintWriter w =
                             new PrintWriter(
@@ -139,10 +140,11 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         throws IOException, MojoExecutionException
     {
         String playTestPath = oryginalTestClassName + ".test.html";
-        if (javaTestPackage != null) {
+        if ( javaTestPackage != null )
+        {
             playTestPath = javaTestPackage.replace( '.', '/' ) + "/" + playTestPath;
         }
-        if (javaTestPackage != null)
+        if ( javaTestPackage != null )
         {
             w.println( "package " + javaTestPackage + ";" );
             w.println();

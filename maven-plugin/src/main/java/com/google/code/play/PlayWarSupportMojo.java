@@ -58,32 +58,35 @@ public class PlayWarSupportMojo
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
-            checkPlayHome(playHome);
-            
-            File baseDir = project.getBasedir();
-            File confDir = new File( baseDir, "conf" );
-            File configurationFile = new File( confDir, "application.conf" );
+        checkPlayHome( playHome );
 
-            ConfigurationParser configParser = new ConfigurationParser( configurationFile, playWarId );
-            configParser.parse();
-            //Map<String, File> modules = configParser.getModules();
+        File baseDir = project.getBasedir();
+        File confDir = new File( baseDir, "conf" );
+        File configurationFile = new File( confDir, "application.conf" );
 
-            /*File filteredApplicationConf =
-                *///filterApplicationConf( new File( baseDir, "conf/application.conf" ), modules );
+        ConfigurationParser configParser = new ConfigurationParser( configurationFile, playWarId );
+        configParser.parse();
+        // Map<String, File> modules = configParser.getModules();
 
-            File buildDirectory = new File( project.getBuild().getDirectory() );
-            File outputDirectory = new File( buildDirectory, "play/tmp" );
-            /*File filteredWebXml = */filterWebXml( new File( playHome, "resources/war/web.xml" ), outputDirectory, configParser.getApplicationName() );
+        /*
+         * File filteredApplicationConf =
+         */// filterApplicationConf( new File( baseDir, "conf/application.conf" ), modules );
+
+        File buildDirectory = new File( project.getBuild().getDirectory() );
+        File outputDirectory = new File( buildDirectory, "play/tmp" );
+        /* File filteredWebXml = */filterWebXml( new File( playHome, "resources/war/web.xml" ), outputDirectory,
+                                                 configParser.getApplicationName() );
     }
 
-    private File filterWebXml( File webXml, File outputDirectory, String applicationName/*ConfigurationParser configParser*/ )
+    private File filterWebXml( File webXml, File outputDirectory, String applicationName )
         throws IOException
     {
         if ( !outputDirectory.exists() )
         {
-            if (!outputDirectory.mkdirs())
+            if ( !outputDirectory.mkdirs() )
             {
-                throw new IOException( String.format( "Cannot create \"%s\" directory", outputDirectory.getCanonicalPath() ) );
+                throw new IOException( String.format( "Cannot create \"%s\" directory",
+                                                      outputDirectory.getCanonicalPath() ) );
             }
         }
         File result = new File( outputDirectory, "filtered-web.xml" );
@@ -100,7 +103,8 @@ public class PlayWarSupportMojo
                     getLog().debug( "  " + line );
                     if ( line.indexOf( "%APPLICATION_NAME%" ) >= 0 )
                     {
-                        line = line.replace( "%APPLICATION_NAME%", applicationName/*configParser.getApplicationName()*/ );
+                        line =
+                            line.replace( "%APPLICATION_NAME%", applicationName/* configParser.getApplicationName() */);
                     }
                     if ( line.indexOf( "%PLAY_ID%" ) >= 0 )
                     {

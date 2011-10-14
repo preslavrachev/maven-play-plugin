@@ -39,11 +39,8 @@ import org.codehaus.plexus.archiver.manager.ArchiverManager;
 import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
 
 /**
- * Adds application sources ('app' directory) to Play! application.
- * Adds application resources ('app' directory) to Play! application.
- * ...
- * finish!
- * ...
+ * Adds application sources ('app' directory) to Play! application. Adds application resources ('app' directory) to
+ * Play! application. ... finish! ...
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal initialize
@@ -98,8 +95,8 @@ public class PlayInitializeMojo
         throws MojoExecutionException, MojoFailureException, IOException
     {
         checkPlayHomeExtended();
-        playId = resolvePlayId(playHome, playId);
-        
+        playId = resolvePlayId( playHome, playId );
+
         File baseDir = project.getBasedir();
         File confDir = new File( baseDir, "conf" );
         File configurationFile = new File( confDir, "application.conf" );
@@ -111,7 +108,7 @@ public class PlayInitializeMojo
 
         // Play 1.1.x
         Map<String, String> modulePaths = configParser.getModules();
-        for (Map.Entry<String, String> modulePathEntry: modulePaths.entrySet())
+        for ( Map.Entry<String, String> modulePathEntry : modulePaths.entrySet() )
         {
             String moduleName = modulePathEntry.getKey();
             String modulePath = modulePathEntry.getValue();
@@ -124,17 +121,18 @@ public class PlayInitializeMojo
         for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
         {
             Artifact artifact = (Artifact) iter.next();
-            //System.out.println("artifact: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
-            if ("play".equals( artifact.getArtifactId() ) ) {
-                //temporary solution, maybe use zip to unzip resource from a jar file
+            // System.out.println("artifact: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+            if ( "play".equals( artifact.getArtifactId() ) )
+            {
+                // temporary solution, maybe use zip to unzip resource from a jar file
                 playVersion = artifact.getVersion();
-                //System.out.println("Play version: " + playVersion);
-            //java.net.URL artifactUrl = artifact.getFile().toURI().toURL();
+                // System.out.println("Play version: " + playVersion);
+                // java.net.URL artifactUrl = artifact.getFile().toURI().toURL();
             }
         }
 
         getLog().debug( "Play! version: " + playVersion );
-        if ( (playVersion != null/*nie podoba mi sie to*/) && "1.2".compareTo( /*Play.version*/playVersion ) <= 0 )
+        if ( ( playVersion != null/* nie podoba mi sie to */) && "1.2".compareTo( /* Play.version */playVersion ) <= 0 )
         {
             File modulesDir = new File( baseDir, "modules" );
             if ( modulesDir.isDirectory() )
@@ -155,7 +153,7 @@ public class PlayInitializeMojo
                         {
                             // shortcut to module located in "modules" subdirectory of Play! framework location
                             String realModulePath = readFileFirstLine( file );
-                            //String realModulePath = play.libs.IO.readContentAsString( file );
+                            // String realModulePath = play.libs.IO.readContentAsString( file );
                             file = new File( realModulePath );
                             getLog().debug( "Added module '" + moduleName + "': " + file.getAbsolutePath() );
                             modules.put( moduleName, file );
@@ -164,7 +162,7 @@ public class PlayInitializeMojo
                 }
             }
         }
-        
+
         if ( compileApp )
         {
             File appPath = new File( baseDir, "app" );
@@ -187,7 +185,7 @@ public class PlayInitializeMojo
             project.addResource( resource );
             getLog().debug( "Added resource: " + resource.getDirectory() );
 
-            for (File modulePath: modules.values())
+            for ( File modulePath : modules.values() )
             {
                 File moduleAppPath = new File( modulePath, "app" );
                 if ( moduleAppPath.isDirectory() )
@@ -215,21 +213,23 @@ public class PlayInitializeMojo
             resource.addExclude( "**/*.java" );
             project.addTestResource( resource );
             getLog().debug( "Added test resource: " + resource.getDirectory() );
-            
+
             // add test sources from dependent modules?
         }
     }
 
-    protected void checkPlayHomeExtended() throws MojoExecutionException, IOException
+    protected void checkPlayHomeExtended()
+        throws MojoExecutionException, IOException
     {
         if ( playHome == null )
         {
             Artifact frameworkArtifact = findFrameworkArtifact();
             Map<String, Artifact> providedModuleArtifacts = findAllProvidedModuleArtifacts();
-            
-            if (frameworkArtifact != null)
+
+            if ( frameworkArtifact != null )
             {
-                try {
+                try
+                {
                     decompressFrameworkAndSetPlayHome( frameworkArtifact, providedModuleArtifacts );
                 }
                 catch ( ArchiverException e )
@@ -244,8 +244,8 @@ public class PlayInitializeMojo
             else
             {
                 throw new MojoExecutionException(
-                                "Play! home directory (\"playHome\" plugin configuration parameter) not set" );
-                //super.playHomeNotDefined();
+                                                  "Play! home directory (\"playHome\" plugin configuration parameter) not set" );
+                // super.playHomeNotDefined();
             }
         }
         else
@@ -261,7 +261,8 @@ public class PlayInitializeMojo
         }
     }
 
-    private Artifact findFrameworkArtifact() {
+    private Artifact findFrameworkArtifact()
+    {
         Artifact result = null;
 
         Set<?> artifacts = project.getArtifacts();
@@ -273,15 +274,16 @@ public class PlayInitializeMojo
                 if ( "framework".equals( artifact.getClassifier() ) )
                 {
                     result = artifact;
-                    //System.out.println( "added framework: " + artifact.getGroupId() + ":" + artifact.getArtifactId() );
+                    // System.out.println( "added framework: " + artifact.getGroupId() + ":" + artifact.getArtifactId()
+                    // );
                     // don't break, maybe there is "framework-resources" artifact too
                 }
                 // "module-resources" overrides "module" (if present)
                 else if ( "framework-resources".equals( artifact.getClassifier() ) )
                 {
                     result = artifact;
-                    //System.out.println( "added framework-resources: " + artifact.getGroupId() + ":"
-                    //    + artifact.getArtifactId() );
+                    // System.out.println( "added framework-resources: " + artifact.getGroupId() + ":"
+                    // + artifact.getArtifactId() );
                     break;
                 }
             }
@@ -289,15 +291,15 @@ public class PlayInitializeMojo
         return result;
     }
 
-    private Map<String, Artifact> findAllProvidedModuleArtifacts() {
+    private Map<String, Artifact> findAllProvidedModuleArtifacts()
+    {
         Map<String, Artifact> result = new HashMap<String, Artifact>();
 
         Set<?> artifacts = project.getArtifacts();
         for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
         {
             Artifact artifact = (Artifact) iter.next();
-            if ( Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) &&
-                 "zip".equals( artifact.getType() ) )
+            if ( Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) && "zip".equals( artifact.getType() ) )
             {
                 if ( "module".equals( artifact.getClassifier() )
                     || "module-resources".equals( artifact.getClassifier() ) )
@@ -307,19 +309,23 @@ public class PlayInitializeMojo
                     {
                         moduleName = moduleName.substring( "play-".length() );
                     }
-                    
+
                     if ( "module".equals( artifact.getClassifier() ) )
                     {
-                        if ( result.get( moduleName ) == null ) // if "module-resources" already in map, don't use "module" artifact
+                        if ( result.get( moduleName ) == null ) // if "module-resources" already in map, don't use
+                                                                // "module" artifact
                         {
                             result.put( moduleName, artifact );
-                            //System.out.println("added module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+                            // System.out.println("added module: " + artifact.getGroupId() + ":" +
+                            // artifact.getArtifactId());
                         }
                     }
-                    else // "module-resources" overrides "module" (if present)
+                    else
+                    // "module-resources" overrides "module" (if present)
                     {
                         result.put( moduleName, artifact );
-                        //System.out.println("added module-resources: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+                        // System.out.println("added module-resources: " + artifact.getGroupId() + ":" +
+                        // artifact.getArtifactId());
                     }
                 }
             }
@@ -327,15 +333,17 @@ public class PlayInitializeMojo
         return result;
     }
 
-    private void decompressFrameworkAndSetPlayHome( Artifact frameworkAtifact, Map<String, Artifact> providedModuleArtifacts ) throws ArchiverException, NoSuchArchiverException, IOException
+    private void decompressFrameworkAndSetPlayHome( Artifact frameworkAtifact,
+                                                    Map<String, Artifact> providedModuleArtifacts )
+        throws ArchiverException, NoSuchArchiverException, IOException
     {
-        File targetDir = new File(project.getBuild().getDirectory());
-        File playTmpDir = new File(targetDir, "play");
-        
+        File targetDir = new File( project.getBuild().getDirectory() );
+        File playTmpDir = new File( targetDir, "play" );
+
         File playHomeDirectory = new File( playTmpDir, "home" );
-        if (!playHomeDirectory.isDirectory())
+        if ( !playHomeDirectory.isDirectory() )
         {
-            //decompress framework
+            // decompress framework
             createDir( playHomeDirectory );
             UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
             zipUnArchiver.setSourceFile( frameworkAtifact.getFile() );
@@ -343,16 +351,16 @@ public class PlayInitializeMojo
             zipUnArchiver.setOverwrite( false/* ??true */);
             zipUnArchiver.extract();
 
-            //decompress provided-scoped modules
-            File modulesDirectory = new File(playHomeDirectory, "modules" );
-            for (Map.Entry<String, Artifact> providedModuleArtifactEntry: providedModuleArtifacts.entrySet())
+            // decompress provided-scoped modules
+            File modulesDirectory = new File( playHomeDirectory, "modules" );
+            for ( Map.Entry<String, Artifact> providedModuleArtifactEntry : providedModuleArtifacts.entrySet() )
             {
                 String moduleName = providedModuleArtifactEntry.getKey();
                 Artifact moduleArtifact = providedModuleArtifactEntry.getValue();
 
-                File moduleDirectory = new File(modulesDirectory, moduleName );
+                File moduleDirectory = new File( modulesDirectory, moduleName );
                 createDir( moduleDirectory );
-                //can I reuse? UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
+                // can I reuse? UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
                 zipUnArchiver.setSourceFile( moduleArtifact.getFile() );
                 zipUnArchiver.setDestDirectory( moduleDirectory );
                 zipUnArchiver.setOverwrite( false/* ??true */);
@@ -384,7 +392,6 @@ public class PlayInitializeMojo
         }
     }
 
-    
     private String readFileFirstLine( File file )
         throws IOException
     {
@@ -400,5 +407,5 @@ public class PlayInitializeMojo
         }
         return result;
     }
-    
+
 }
