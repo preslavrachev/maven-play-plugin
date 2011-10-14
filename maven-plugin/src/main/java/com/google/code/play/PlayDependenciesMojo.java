@@ -87,8 +87,9 @@ public class PlayDependenciesMojo
         Map<Artifact, File> moduleTypeArtifacts = new HashMap<Artifact, File>();
 
         File baseDir = project.getBasedir();
-        Set<?> artifacts = project.getArtifacts();
+        File modulesDir = new File( baseDir, "modules" );
 
+        Set<?> artifacts = project.getArtifacts();
         for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
         {
             Artifact artifact = (Artifact) iter.next();
@@ -97,37 +98,44 @@ public class PlayDependenciesMojo
                 if ( "module".equals( artifact.getClassifier() )
                     || "module-resources".equals( artifact.getClassifier() ) )
                 {
-                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
-
-                    // TODO-dorobic detekcje konfliktow nazw
-                    // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
-                    // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
-                    // + artifact.getClassifier() + ":scope=" + artifact.getScope() );
-                    File zipFile = artifact.getFile();
-
-                    File modulesDir = new File( baseDir, "modules" );
-                    // createDir( modulesDir );
-                    String moduleName = artifact.getArtifactId();
-                    if ( moduleName.startsWith( "play-" ) )
-                    {
-                        moduleName = moduleName.substring( "play-".length() );
-                    }
-                    String moduleSubDir = String.format( "%s-%s", moduleName, artifact.getVersion() );
-                    File toDirectory = new File( modulesDir, moduleSubDir );
-                    createDir( toDirectory );
-                    UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
-                    zipUnArchiver.setSourceFile( zipFile );
-                    zipUnArchiver.setDestDirectory( toDirectory );
-                    zipUnArchiver.setOverwrite( false/* ??true */);
-                    zipUnArchiver.extract();
-
-                    moduleTypeArtifacts.put( artifact, toDirectory );
-                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId() +
-                    // " added");
+                    extractZipDependency( artifact, modulesDir, moduleTypeArtifacts ); 
                 }
+            }
+            else if ( "play".equals( artifact.getType() ) )
+            {
+                extractZipDependency( artifact, modulesDir, null ); // it's not necessary to add "play" type dependencies to "moduleTypeArtifacts" map
             }
         }
         return moduleTypeArtifacts;
+    }
+    
+    private void extractZipDependency(Artifact artifact, File modulesDir, Map<Artifact, File> moduleTypeArtifacts) 
+        throws ArchiverException, NoSuchArchiverException, IOException
+    {
+        // TODO-dorobic detekcje konfliktow nazw
+        // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
+        // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
+        // + artifact.getClassifier() + ":scope=" + artifact.getScope() );
+        File zipFile = artifact.getFile();
+
+        String moduleName = artifact.getArtifactId();
+        if ( moduleName.startsWith( "play-" ) )
+        {
+            moduleName = moduleName.substring( "play-".length() );
+        }
+        String moduleSubDir = String.format( "%s-%s", moduleName, artifact.getVersion() );
+        File toDirectory = new File( modulesDir, moduleSubDir );
+        createDir( toDirectory );
+        UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
+        zipUnArchiver.setSourceFile( zipFile );
+        zipUnArchiver.setDestDirectory( toDirectory );
+        zipUnArchiver.setOverwrite( false/* ??true */);
+        zipUnArchiver.extract();
+        
+        if ( moduleTypeArtifacts != null )
+        {
+            moduleTypeArtifacts.put( artifact, toDirectory );
+        }
     }
 
     private void processJarDependencies( Map<Artifact, File> moduleTypeArtifacts )
