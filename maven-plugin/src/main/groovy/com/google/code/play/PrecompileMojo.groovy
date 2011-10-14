@@ -92,6 +92,11 @@ class PrecompileMojo
     //
 
     void execute() {
+        if ( !"play".equals( project.packaging ) )
+        {
+            return;
+        }
+
         if (precompileSkip) {
             log.info('Skipping precompilation')
             return
