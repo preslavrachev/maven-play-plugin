@@ -44,6 +44,7 @@ public class ConfigurationParser
     {
         this.configurationFile = configurationFile;
         this.playId = playId;
+        this.properties = null;
         // modules = new HashMap<String, File>();
     }
 

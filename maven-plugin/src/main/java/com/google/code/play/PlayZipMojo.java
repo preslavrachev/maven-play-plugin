@@ -185,13 +185,15 @@ public class PlayZipMojo
                 //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
                 File jarFile = artifact.getFile();
                 String libDir = "lib";
-                for (Artifact moduleArtifact: moduleTypeArtifacts.keySet())
+                for (Map.Entry<Artifact, String> moduleTypeArtifactEntry: moduleTypeArtifacts.entrySet())
                 {
+                    Artifact moduleArtifact = moduleTypeArtifactEntry.getKey();
                     //System.out.println("checking module: " + moduleArtifact.getGroupId() + ":" + moduleArtifact.getArtifactId());
                     if ( artifact.getGroupId().equals( moduleArtifact.getGroupId() )
                         && artifact.getArtifactId().equals( moduleArtifact.getArtifactId() ) )
                     {
-                        libDir = String.format( "modules/%s/lib", moduleTypeArtifacts.get( moduleArtifact ) );
+                        String moduleSubDir = moduleTypeArtifactEntry.getValue();
+                        libDir = String.format( "modules/%s/lib", moduleSubDir );
                         //System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
                         break;
                     }

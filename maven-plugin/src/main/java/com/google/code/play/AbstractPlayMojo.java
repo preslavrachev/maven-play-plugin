@@ -109,7 +109,7 @@ public abstract class AbstractPlayMojo
 
     protected void checkPlayHome() throws MojoExecutionException
     {
-        if ( playHome == null || "".equals( playHome ) )
+        if ( playHome == null )
         {
             throw new MojoExecutionException(
                                               "Play! home directory (\"playHome\" plugin configuration parameter) not set" );
