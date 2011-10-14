@@ -118,6 +118,11 @@ class StartServerMojo
     //
 
     void execute() {
+        if ( !"play".equals( project.packaging ) )
+        {
+            return;
+        }
+
         if (seleniumSkip) {
             log.info('Skipping startup')
             return

@@ -59,6 +59,11 @@ public abstract class AbstractPlayMojo
     public void execute()
         throws MojoExecutionException, MojoFailureException
     {
+        if ( !"play".equals( project.getPackaging() ) )
+        {
+            return;
+        }
+
         try
         {
             internalExecute();
