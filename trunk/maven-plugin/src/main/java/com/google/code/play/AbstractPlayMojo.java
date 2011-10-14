@@ -52,21 +52,21 @@ public abstract class AbstractPlayMojo
     extends AbstractMojo
 {
 
-    /**
-     * ...
-     * 
-     * @parameter
-     * @since 1.0.0
-     */
-    protected String playId;
+//    /**
+//     * ...
+//     * 
+//     * @parameter
+//     * @since 1.0.0
+//     */
+//    protected String playId;
 
-    /**
-     * The directory with Play! distribution.
-     * 
-     * @parameter expression="${play.home}"
-     * @since 1.0.0
-     */
-    protected File playHome;
+//    /**
+//     * The directory with Play! distribution.
+//     * 
+//     * @parameter expression="${play.home}"
+//     * @since 1.0.0
+//     */
+//    protected File playHome;
 
     /**
      * <i>Maven Internal</i>: Project to interact with.
@@ -97,7 +97,7 @@ public abstract class AbstractPlayMojo
         {*/
             try
             {
-                resolvePlayId();
+                //resolvePlayId();
                 internalExecute();
             }
             catch ( IOException e )
@@ -107,7 +107,7 @@ public abstract class AbstractPlayMojo
         //}
     }
 
-    protected void checkPlayHome() throws MojoExecutionException
+    protected void checkPlayHome(File playHome) throws MojoExecutionException
     {
         if ( playHome == null )
         {
@@ -143,22 +143,23 @@ public abstract class AbstractPlayMojo
         return new PrintWriter( new OutputStreamWriter( new FileOutputStream( file ), encoding ) );
     }*/
 
-    protected/* String */void resolvePlayId()
+    protected String resolvePlayId(File playHome, String defaultPlayId)
         throws IOException
     {
-        // String result = playId;
+        String result = defaultPlayId;
 
-        if ( playId == null || "".equals( playId ) )
+        if ( result == null || "".equals( result ) )
         {
-            playId = readFrameworkPlayId();
+            result = readFrameworkPlayId(playHome);
         }
-        // return result;
+        return result;
     }
 
-    private String readFrameworkPlayId()
+    private String readFrameworkPlayId(File playHome)
         throws IOException
     {
-        String playId = null;
+        String result = null;
+
         if ( playHome != null )
         {
             File idFile = new File( playHome, "id" );
@@ -169,7 +170,7 @@ public abstract class AbstractPlayMojo
                     new BufferedReader( new InputStreamReader( new FileInputStream( idFile ), "UTF-8" ) );
                 try
                 {
-                    playId = is.readLine();
+                    result = is.readLine();
                 }
                 finally
                 {
@@ -177,7 +178,7 @@ public abstract class AbstractPlayMojo
                 }
             }
         }
-        return playId;
+        return result;
     }
 
     /*
