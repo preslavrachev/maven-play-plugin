@@ -39,6 +39,22 @@ public class PlayWarSupportMojo
     extends AbstractPlayMojo
 {
     /**
+     * The directory with Play! distribution.
+     * 
+     * @parameter expression="${play.home}"
+     * @since 1.0.0
+     */
+    protected File playHome;
+
+    /**
+     * ...
+     * 
+     * @parameter expression="${play.id}" default-value="war"
+     * @since 1.0.0
+     */
+    protected String playId;
+
+    /**
      * The directory for the generated (filtered) files.
      * 
      * @parameter expression="${project.build.directory}/play/tmp"
@@ -48,22 +64,10 @@ public class PlayWarSupportMojo
     private File outputDirectory;//??
 
     @Override
-    protected void/* String */resolvePlayId()
-    {
-        // String result = super.resolvePlayId();
-
-        if ( playId == null || "".equals( playId ) )
-        {
-            playId = "war";
-        }
-        // return result;
-    }
-
-    @Override
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
-            checkPlayHome();
+            checkPlayHome(playHome);
             
             File baseDir = project.getBasedir();
             File confDir = new File( baseDir, "conf" );

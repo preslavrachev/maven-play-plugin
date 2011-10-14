@@ -55,6 +55,22 @@ public class PlayInitializeMojo
 {
 
     /**
+     * The directory with Play! distribution.
+     * 
+     * @parameter expression="${play.home}"
+     * @since 1.0.0
+     */
+    protected File playHome;
+
+    /**
+     * ...
+     * 
+     * @parameter expression="${play.id}"
+     * @since 1.0.0
+     */
+    protected String playId;
+
+    /**
      * ...
      * 
      * @parameter expression="${play.compileApp}" default-value="true"
@@ -82,6 +98,7 @@ public class PlayInitializeMojo
         throws MojoExecutionException, MojoFailureException, IOException
     {
         checkPlayHomeExtended();
+        playId = resolvePlayId(playHome, playId);
         
         File baseDir = project.getBasedir();
         File confDir = new File( baseDir, "conf" );
