@@ -65,7 +65,7 @@ public class PlayInitializeMojo
     /**
      * ...
      * 
-     * @parameter expression="${play.id}"
+     * @parameter expression="${play.id}" default-value=""
      * @since 1.0.0
      */
     protected String playId;
@@ -104,7 +104,7 @@ public class PlayInitializeMojo
         File confDir = new File( baseDir, "conf" );
         File configurationFile = new File( confDir, "application.conf" );
 
-        ConfigurationParser configParser = new ConfigurationParser( configurationFile/*, playHome*/, playId );
+        ConfigurationParser configParser = new ConfigurationParser( configurationFile, playId );
         configParser.parse();
         // Get modules
         Map<String, File> modules = new HashMap<String, File>();

@@ -35,72 +35,54 @@ class StartServerMojo
     extends GroovyMojo
 {
     /**
-     * The port number of the server to connect to.
-     *
-     * @parameter expression="${port}" default-value="9000"
-     */
-    int port
-    
-    /**
-     * Timeout for the server in seconds.
-     *
-     * @parameter expression="${timeout}" default-value="-1"
-     */
-    int timeout
-
-    /**
-     * Working directory where Play! server will be started from.
-     *
-     * @parameter expression="${project.build.directory}/play"
-     * @required
-     */
-    File workingDirectory
-
-    /**
-     * Enable logging mode.
-     *
-     * @parameter expression="${logOutput}" default-value="false"
-     */
-    boolean logOutput
-
-    /**
-     * The file that Play! server logs will be written to.
-     *
-     * @parameter expression="${logFile}" default-value="${project.build.directory}/play/server.log"
-     * @required
-     */
-    File logFile
-
-    /**
      * ...
      *
      * @parameter expression="${play.home}"
      * @required
+     * @since 1.0.0
      */
     String playHome
 
     /**
      * ...
      *
-     * @parameter expression="${play.testProfile}" default-value="test"
-     * @required
+     * @parameter expression="${play.testId}" default-value="test"
+     * @since 1.0.0
      */
-    String testProfile
+    String playTestId
+
+    /**
+     * The port number of the server to connect to.
+     *
+     * @parameter expression="${play.serverPort}" default-value="9000"
+     * @required
+     * @since 1.0.0
+     */
+    int serverPort
+    
+    /**
+     * Enable logging mode.
+     *
+     * @parameter expression="${play.serverLogOutput}" default-value="true"
+     * @since 1.0.0
+     */
+    boolean serverLogOutput
 
     /**
      * Allows the server startup to be skipped.
      *
      * @parameter expression="${play.seleniumSkip}" default-value="false"
+     * @since 1.0.0
      */
     boolean seleniumSkip
     
     /**
      * Arbitrary JVM options to set on the command line.
      *
-     * @parameter expression="${play.seleniumServerProcessArgLine}"
-     * @since 1.0
+     * @parameter expression="${play.serverProcessArgLine}"
+     * @since 1.0.0
      */
-    private String seleniumServerProcessArgLine;
+    private String serverProcessArgLine;
     
     //
     // Components
@@ -143,11 +125,13 @@ class StartServerMojo
         
         def applicationPath = project.basedir;
         
+        File buildDirectory = new File( project.build.directory );
+        File workingDirectory = new File( buildDirectory, "play" );
         ant.mkdir(dir: workingDirectory)
         
-        if (logOutput) {
-            ant.mkdir(dir: logFile.parentFile)
-        }
+        //if (serverLogOutput) {
+        //    ant.mkdir(dir: logFile.parentFile)
+        //}
         
         def pluginArifact = { id ->
             def artifact = pluginArtifactMap[id]
@@ -162,7 +146,7 @@ class StartServerMojo
 
 //System.out.println("playHome:"+playHome);
 //System.out.println("applicationPath:"+applicationPath);
-//System.out.println("playId:"+testProfile);
+//System.out.println("playId:"+playTestId);
         
         def launcher = new ProcessLauncher(name: 'Play! Server', background: true)
         
@@ -188,13 +172,14 @@ class StartServerMojo
                     //GS pathelement(location: pluginArifact('log4j:log4j'))
                 }*/
                 
-                if (logOutput) {
+                if (serverLogOutput) {
+                    File logFile = new File( workingDirectory, "server.log" );
                     log.info("Redirecting output to: $logFile")
                     redirector(output: logFile)
                 }
                 
                 sysproperty(key: 'play.home', value: playHome)
-                sysproperty(key: 'play.id', value: testProfile)
+                sysproperty(key: 'play.id', value: playTestId)
                 sysproperty(key: 'application.path', value: applicationPath)
                 
                 if (seleniumServerProcessArgLine != null) {
@@ -210,7 +195,7 @@ class StartServerMojo
             }
         }
         
-        URL url = new URL("http://localhost:$port")
+        URL url = new URL("http://localhost:$serverPort")
         
         launcher.verifier = {
             log.debug("Trying connection to: $url")

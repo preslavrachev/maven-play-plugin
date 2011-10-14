@@ -34,14 +34,17 @@ class StopServerMojo
     /**
      * The port number of the server to connect to.
      *
-     * @parameter expression="${port}" default-value="9000"
+     * @parameter expression="${play.serverPort}" default-value="9000"
+     * @required
+     * @since 1.0.0
      */
-    int port
+    int serverPort
     
     /**
      * Skip goal execution
      *
      * @parameter expression="${play.seleniumSkip}" default-value="false"
+     * @since 1.0.0
      */
     boolean seleniumSkip
 
@@ -57,7 +60,7 @@ class StopServerMojo
         
         println('Stopping Play! server...')
         
-        def url = new URL("http://localhost:$port/@kill")
+        def url = new URL("http://localhost:$serverPort/@kill")
         
         println("Stop request URL: $url")
         log.debug("Stop request URL: $url")
