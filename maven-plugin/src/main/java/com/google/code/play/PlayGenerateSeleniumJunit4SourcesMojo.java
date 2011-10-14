@@ -118,8 +118,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
                                                                                          "UTF-8" ) ) );
                         try
                         {
-                            generateTestSource( srcFile.getName()/* maybe full path? */, oryginalTestClassName,
-                                                javaPackageName, javaTestClassName, w );
+                            generateTestSource( oryginalTestClassName, javaPackageName, javaTestClassName, w );
                             classesGenerated++;
                         }
                         finally
@@ -135,7 +134,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         return classesGenerated;
     }
 
-    private void generateTestSource( String playTestFileName, String oryginalTestClassName, String javaTestPackage, String javaTestClassName,
+    private void generateTestSource( String oryginalTestClassName, String javaTestPackage, String javaTestClassName,
                                      PrintWriter w )
         throws IOException, MojoExecutionException
     {
