@@ -19,10 +19,6 @@
 
 package com.google.code.play;
 
-//import java.io.File;
-//import java.io.IOException;
-//import java.util.List;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,19 +28,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-//import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-//import java.util.ArrayList;
-//import java.util.List;
 
-//import org.apache.maven.artifact.handler.ArtifactHandler;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Abstract Base for Play! Mojos.
+ * Abstract base class for Play! Mojos.
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  */
@@ -67,27 +59,14 @@ public abstract class AbstractPlayMojo
     public void execute()
         throws MojoExecutionException, MojoFailureException
     {
-        // if ( check == null )
-        // {
-        // throw new MojoExecutionException( "The Check configuration is missing." );
-        // }
-
-        /*ArtifactHandler artifactHandler = project.getArtifact().getArtifactHandler();
-        if ( !"java".equals( artifactHandler.getLanguage() ) )
+        try
         {
-            getLog().info( "Not executing cobertura:instrument as the project is not a Java classpath-capable package" );
+            internalExecute();
         }
-        else
-        {*/
-            try
-            {
-                internalExecute();
-            }
-            catch ( IOException e )
-            {
-                throw new MojoExecutionException( "?", e );
-            }
-        //}
+        catch ( IOException e )
+        {
+            throw new MojoExecutionException( "?", e );
+        }
     }
 
     protected void checkPlayHome(File playHome) throws MojoExecutionException
@@ -118,13 +97,6 @@ public abstract class AbstractPlayMojo
     {
         return new BufferedWriter( new OutputStreamWriter( new FileOutputStream( file ), encoding ) );
     }
-
-    // a co z buforowaniem?
-/*    protected final PrintWriter createPrintFileWriter( File file, String encoding )
-        throws FileNotFoundException, UnsupportedEncodingException
-    {
-        return new PrintWriter( new OutputStreamWriter( new FileOutputStream( file ), encoding ) );
-    }*/
 
     protected String resolvePlayId(File playHome, String defaultPlayId)
         throws IOException
@@ -164,169 +136,4 @@ public abstract class AbstractPlayMojo
         return result;
     }
 
-    /*
-     * protected String rawInput( String prompt, Object... args ) throws IOException { print( prompt, args ); String
-     * result = null; BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) ); try { result =
-     * br.readLine(); } finally { // nie br.close(); } return result; }
-     */
-
-    /*
-     * protected void print( String text, Object... args ) { System.out.printf( text, args ); System.out.println(); }
-     */
-
-/*TODO-what was it for?
-    protected void checkApplication()
-    {
-
-    }
-
-    protected List<File> loadModules()
-        throws MojoExecutionException, IOException
-    {
-        return loadModules( true );
-    }
-
-    protected List<File> loadModules( boolean failOnMissing )
-        throws MojoExecutionException, IOException
-    {
-        List<File> result = new ArrayList<File>();
-
-        File baseDir = project.getBasedir();
-        // if os.environ.has_key('MODULES'):
-        // if os.name == 'nt':
-        // modules = os.environ['MODULES'].split(';')
-        // else:
-        // modules = os.environ['MODULES'].split(':')
-        // else:
-        // modules = []
-        List<String> pm = readConfs( "module." );
-        for ( String path : pm )
-        {
-            String filteredPath = path;
-            if ( filteredPath.contains( "${play.path}" ) )
-            {
-                filteredPath = filteredPath.replace( "${play.path}", playHome.getAbsolutePath() );
-            }
-            if ( !new File( filteredPath ).isAbsolute() )
-            {
-                filteredPath = new File( baseDir, filteredPath ).getCanonicalPath();
-            }
-            if ( !new File( filteredPath ).exists() && failOnMissing )
-            {
-                // FIXME-polish info output and exceptions throwing
-                // print( "~ Oops," );
-                // print( "~ Module not found: %s", filteredPath );
-                // print( "~" );
-                if ( path.startsWith( "${play.path}/modules" ) )
-                {
-                    // print( "~ You can try to install the missing module using 'play install %s'", path.substring( 21
-                    // ) );
-                    // print( "~" );
-                }
-                throw new MojoExecutionException( "Module not found" );
-            }
-            result.add( new File( filteredPath ) );
-        }
-        if ( "test".equals( playId ) )
-        {
-            result.add( new File( playHome, "modules/testrunner" ) );
-        }
-        return result;
-    }
-
-    // Copied from original Play! Python scripts, but I don't like it because it returns double modules when:
-    // module.<name>=path1
-    // %<playId>.module.<name>=path2
-    protected List<String> readConfs( String key )
-        throws IOException
-    {
-        List<String> result = new ArrayList<String>();
-        File baseDir = project.getBasedir();
-        File configFile = new File( baseDir, "conf/application.conf" );
-        BufferedReader reader =
-            new BufferedReader( new InputStreamReader( new FileInputStream( configFile ), "UTF-8" ) );
-        try
-        {
-            List<String> tmp = new ArrayList<String>();
-            String line = reader.readLine();
-            while ( line != null )
-            {
-                if ( line.startsWith( key ) )
-                {
-                    String value = line.substring( line.indexOf( '=' ) + 1 ).trim();
-                    result.add( value );
-                }
-                else if ( line.startsWith( '%' + playId + '.' + key ) )
-                {
-                    String value = line.substring( line.indexOf( '=' ) + 1 ).trim();
-                    tmp.add( value );
-                }
-                line = reader.readLine();
-            }
-            result.addAll( tmp );
-        }
-        finally
-        {
-            reader.close();
-        }
-        return result;
-    }
-
-    protected List<File> getClasspath( List<File> modules )
-    {
-        List<File> result = new ArrayList<File>();
-
-        File baseDir = project.getBasedir();
-
-        // ?File agentPath = new File(playHome, "framework/play.jar");
-
-        // The default
-        result.add( new File( baseDir, "conf" ) );
-        result.add( new File( playHome, "framework/play.jar" ) );
-
-        // The application
-        File libDir = new File( baseDir, "lib" );
-        if ( libDir.isDirectory() )
-        {
-            File[] files = libDir.listFiles();
-            for ( int i = 0; i < files.length; i++ )
-            {
-                if ( files[i].getName().endsWith( ".jar" ) )
-                {
-                    result.add( files[i] );
-                }
-            }
-        }
-
-        // The modules
-        for ( File module : modules )
-        {
-            libDir = new File( module, "lib" );
-            if ( libDir.isDirectory() )
-            {
-                File[] files = libDir.listFiles();
-                for ( int i = 0; i < files.length; i++ )
-                {
-                    if ( files[i].getName().endsWith( ".jar" ) )
-                    {
-                        result.add( files[i] );
-                    }
-                }
-            }
-        }
-
-        // The framework
-        libDir = new File( playHome, "framework/lib" );
-        File[] files = libDir.listFiles();
-        for ( int i = 0; i < files.length; i++ )
-        {
-            if ( files[i].getName().endsWith( ".jar" ) )
-            {
-                result.add( files[i] );
-            }
-        }
-
-        return result;
-    }
-*/
 }
