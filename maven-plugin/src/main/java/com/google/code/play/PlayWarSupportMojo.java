@@ -133,9 +133,10 @@ public class PlayWarSupportMojo
     {
         if ( !outputDirectory.exists() )
         {
-            if (!outputDirectory.mkdirs())
+            if ( !outputDirectory.mkdirs() )
             {
-                throw new IOException( String.format( "Cannot create \"%s\" directory", outputDirectory.getCanonicalPath() ) );
+                throw new IOException( String.format( "Cannot create \"%s\" directory",
+                                                      outputDirectory.getCanonicalPath() ) );
             }
         }
         File result = new File( outputDirectory, "filtered-application.conf" );
