@@ -32,7 +32,7 @@ under the License.
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <play.testProfile>test</play.testProfile>
+        <play.testId>test</play.testId>
         <play.seleniumSkip>false</play.seleniumSkip>
         <selenium.browser></selenium.browser>
     </properties>
@@ -74,8 +74,8 @@ under the License.
                             <value>${play.home}</value>
                           </property>
                           <property>
-                            <name>play.id</name>
-                            <value>${play.testProfile}</value>
+                            <name>play.testId</name>
+                            <value>${play.testId}</value>
                           </property>
                           <property>
                             <name>application.path</name>
