@@ -367,35 +367,6 @@ public class PlayInitializeMojo
         }
     }
 
-    /*    protected boolean isPlayHomeRequired()//TODO-ugly code!
-    {
-        return true;//
-        boolean result = false;
-        
-        File baseDir = project.getBasedir();
-        File confDir = new File( baseDir, "conf" );
-        File configurationFile = new File( confDir, "application.conf" );
-
-        ConfigurationParser configParser = new ConfigurationParser( configurationFile, playId );
-        try {
-            configParser.parse();
-            Map<String, String> modulePaths = configParser.getModules();
-            for (String modulePath: modulePaths.values())
-            {
-                if (modulePath.contains( "${play.path}" ))
-                {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        catch (IOException e)
-        {
-            //???
-        }
-        return result;
-    }*/
-
     
     private String readFileFirstLine( File file )
         throws IOException
