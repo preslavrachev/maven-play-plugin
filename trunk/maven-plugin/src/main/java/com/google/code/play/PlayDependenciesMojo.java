@@ -44,7 +44,6 @@ import org.codehaus.plexus.util.FileUtils;
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal dependencies
- * @xphase initialize
  * @requiresDependencyResolution runtime
  */
 //a co z zaleznosciami "runtime"? czy na pewno nie sa potrzebne? Play! by je wciagnal

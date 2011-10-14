@@ -52,22 +52,6 @@ public abstract class AbstractPlayMojo
     extends AbstractMojo
 {
 
-//    /**
-//     * ...
-//     * 
-//     * @parameter
-//     * @since 1.0.0
-//     */
-//    protected String playId;
-
-//    /**
-//     * The directory with Play! distribution.
-//     * 
-//     * @parameter expression="${play.home}"
-//     * @since 1.0.0
-//     */
-//    protected File playHome;
-
     /**
      * <i>Maven Internal</i>: Project to interact with.
      * 
@@ -97,7 +81,6 @@ public abstract class AbstractPlayMojo
         {*/
             try
             {
-                //resolvePlayId();
                 internalExecute();
             }
             catch ( IOException e )

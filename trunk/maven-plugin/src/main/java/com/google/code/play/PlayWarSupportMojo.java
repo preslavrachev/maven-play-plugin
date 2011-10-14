@@ -49,19 +49,10 @@ public class PlayWarSupportMojo
     /**
      * ...
      * 
-     * @parameter expression="${play.id}" default-value="war"
+     * @parameter expression="${play.warId}" default-value="war"
      * @since 1.0.0
      */
-    protected String playId;
-
-    /**
-     * The directory for the generated (filtered) files.
-     * 
-     * @parameter expression="${project.build.directory}/play/tmp"
-     * @required
-     * @since 1.0.0
-     */
-    private File outputDirectory;//??
+    protected String playWarId;
 
     @Override
     protected void internalExecute()
@@ -73,17 +64,19 @@ public class PlayWarSupportMojo
             File confDir = new File( baseDir, "conf" );
             File configurationFile = new File( confDir, "application.conf" );
 
-            ConfigurationParser configParser = new ConfigurationParser( configurationFile, playId );
+            ConfigurationParser configParser = new ConfigurationParser( configurationFile, playWarId );
             configParser.parse();
             //Map<String, File> modules = configParser.getModules();
 
             /*File filteredApplicationConf =
                 *///filterApplicationConf( new File( baseDir, "conf/application.conf" ), modules );
 
-            /*File filteredWebXml = */filterWebXml( new File( playHome, "resources/war/web.xml" ), configParser.getApplicationName() );
+            File buildDirectory = new File( project.getBuild().getDirectory() );
+            File outputDirectory = new File( buildDirectory, "play/tmp" );
+            /*File filteredWebXml = */filterWebXml( new File( playHome, "resources/war/web.xml" ), outputDirectory, configParser.getApplicationName() );
     }
 
-    private File filterWebXml( File webXml, String applicationName/*ConfigurationParser configParser*/ )
+    private File filterWebXml( File webXml, File outputDirectory, String applicationName/*ConfigurationParser configParser*/ )
         throws IOException
     {
         if ( !outputDirectory.exists() )
@@ -111,7 +104,7 @@ public class PlayWarSupportMojo
                     }
                     if ( line.indexOf( "%PLAY_ID%" ) >= 0 )
                     {
-                        line = line.replace( "%PLAY_ID%", playId );
+                        line = line.replace( "%PLAY_ID%", playWarId );
                     }
                     writer.write( line );
                     writer.newLine();
@@ -174,11 +167,3 @@ public class PlayWarSupportMojo
 */
 
 }
-
-// TODO
-/*
- * 1. filtrowanie 'web.xml' - zrobione, ale mozna usprawnic: - wczytywac 'web.xml' odpowiednim readerem xml wylapujacym
- * kodowanie w czasie rzeczywistym - co ze znakami nowej linii? - a moze wczytac inputstream'em? 3. ignorowanie plikow
- * wymienionych w 'war.exclude' deleteFrom(war_path, app.readConf('war.exclude').split("|")) Skąd ja to wziąłem? Nie
- * mogę znaleźć!
- */

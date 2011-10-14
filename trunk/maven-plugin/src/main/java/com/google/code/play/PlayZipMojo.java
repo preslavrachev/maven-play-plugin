@@ -86,7 +86,6 @@ public class PlayZipMojo
             File baseDir = project.getBasedir();
             File zipOutputDirectory = new File( project.getBuild().getDirectory() );
             String zipName = project.getBuild().getFinalName();
-            
             File destFile = new File( zipOutputDirectory, zipName + ".zip" );
 
             Archiver zipArchiver = archiverManager.getArchiver( "zip" );//new ZipArchiver();

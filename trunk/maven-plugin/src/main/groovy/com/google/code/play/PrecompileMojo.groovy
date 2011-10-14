@@ -38,20 +38,23 @@ class PrecompileMojo
      *
      * @parameter expression="${play.home}"
      * @required
+     * @since 1.0.0
      */
     String playHome
 
     /**
      * ...
      *
-     * @parameter expression="${play.profile}" default-value=""
+     * @parameter expression="${play.id}" default-value=""
+     * @since 1.0.0
      */
-    String precompileProfile
+    String playId
 
     /**
      * Allows the server startup to be skipped.
      *
      * @parameter expression="${play.precompileSkip}" default-value="false"
+     * @since 1.0.0
      */
     boolean precompileSkip
     
@@ -129,7 +132,7 @@ class PrecompileMojo
                 }
                 
                 sysproperty(key: 'play.home', value: playHome)
-                sysproperty(key: 'play.id', value: precompileProfile)
+                sysproperty(key: 'play.id', value: playId)
                 sysproperty(key: 'application.path', value: applicationPath)
                 sysproperty(key: 'precompile', value: true)
             }
