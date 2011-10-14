@@ -81,7 +81,7 @@ public class PlayJUnit4Provider
 
         Properties providerProperties = providerParameters.getProviderProperties();
         this.playId =
-            ( providerProperties.containsKey( "play.id" ) ? providerProperties.getProperty( "play.id" ) : "test" );
+            ( providerProperties.containsKey( "play.id" ) ? providerProperties.getProperty( "play.testId" ) : "test" );
         this.playHome = providerProperties.getProperty( "play.home" );
         checkPath(this.playHome);
         this.applicationPath = providerProperties.getProperty( "application.path" );
