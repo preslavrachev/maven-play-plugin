@@ -69,7 +69,8 @@ public abstract class AbstractPlayMojo
         }
     }
 
-    protected void checkPlayHome(File playHome) throws MojoExecutionException
+    protected void checkPlayHome( File playHome )
+        throws MojoExecutionException
     {
         if ( playHome == null )
         {
@@ -98,19 +99,19 @@ public abstract class AbstractPlayMojo
         return new BufferedWriter( new OutputStreamWriter( new FileOutputStream( file ), encoding ) );
     }
 
-    protected String resolvePlayId(File playHome, String defaultPlayId)
+    protected String resolvePlayId( File playHome, String defaultPlayId )
         throws IOException
     {
         String result = defaultPlayId;
 
         if ( result == null || "".equals( result ) )
         {
-            result = readFrameworkPlayId(playHome);
+            result = readFrameworkPlayId( playHome );
         }
         return result;
     }
 
-    private String readFrameworkPlayId(File playHome)
+    private String readFrameworkPlayId( File playHome )
         throws IOException
     {
         String result = null;
