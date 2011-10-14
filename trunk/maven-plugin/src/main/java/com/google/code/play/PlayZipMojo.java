@@ -123,7 +123,6 @@ public class PlayZipMojo
         Map<Artifact, String> moduleTypeArtifacts = new HashMap<Artifact, String>();
 
         Set<?> artifacts = project.getArtifacts();
-
         for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
         {
             Artifact artifact = (Artifact) iter.next();
@@ -132,28 +131,39 @@ public class PlayZipMojo
                 if ( "module".equals( artifact.getClassifier() )
                     || "module-resources".equals( artifact.getClassifier() ) )
                 {
-                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
-
-                    // TODO-dorobic detekcje konfliktow nazw
-                    // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
-                    // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
-                    // + artifact.getClassifier() + ":scope=" + artifact.getScope() );
-                    File zipFile = artifact.getFile();
-                    String moduleName = artifact.getArtifactId();
-                    if ( moduleName.startsWith( "play-" ) )
-                    {
-                        moduleName = moduleName.substring( "play-".length() );
-                    }
-                    String moduleSubDir = String.format( "%s-%s", moduleName, artifact.getVersion() );
-                    archiver.addArchivedFileSet( zipFile, "modules/" + moduleSubDir + "/" );
-
-                    moduleTypeArtifacts.put( artifact, moduleSubDir );
-                    // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId() +
-                    // " added");
+                    processZipDependency( artifact, archiver, moduleTypeArtifacts ); // it's not necessary to add "play" type dependencies to "moduleTypeArtifacts" map
                 }
+            }
+            else if ( "play".equals( artifact.getType() ) )
+            {
+                processZipDependency( artifact, archiver, null ); // it's not necessary to add "play" type dependencies to "moduleTypeArtifacts" map
             }
         }
         return moduleTypeArtifacts;
+    }
+
+    private void processZipDependency( Artifact artifact, Archiver archiver, Map<Artifact, String> moduleTypeArtifacts )
+        throws ArchiverException, NoSuchArchiverException, IOException
+    {
+        // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+
+        // TODO-dorobic detekcje konfliktow nazw
+        // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
+        // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
+        // + artifact.getClassifier() + ":scope=" + artifact.getScope() );
+        File zipFile = artifact.getFile();
+        String moduleName = artifact.getArtifactId();
+        if ( moduleName.startsWith( "play-" ) )
+        {
+            moduleName = moduleName.substring( "play-".length() );
+        }
+        String moduleSubDir = String.format( "%s-%s", moduleName, artifact.getVersion() );
+        archiver.addArchivedFileSet( zipFile, "modules/" + moduleSubDir + "/" );
+
+        if ( moduleTypeArtifacts != null )
+        {
+            moduleTypeArtifacts.put( artifact, moduleSubDir );
+        }
     }
 
     private void processJarDependencies( Archiver archiver, Map<Artifact, String> moduleTypeArtifacts )
