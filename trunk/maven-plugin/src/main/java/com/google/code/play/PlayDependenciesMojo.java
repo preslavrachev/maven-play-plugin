@@ -27,16 +27,15 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.plugin.AbstractMojo;
+//import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.project.MavenProject;
+//import org.apache.maven.project.MavenProject;
 
 import org.codehaus.plexus.archiver.ArchiverException;
 import org.codehaus.plexus.archiver.UnArchiver;
 import org.codehaus.plexus.archiver.manager.ArchiverManager;
 import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
-import org.codehaus.plexus.components.io.fileselectors.FileSelector;
 
 import org.codehaus.plexus.util.FileUtils;
 
@@ -51,17 +50,8 @@ import org.codehaus.plexus.util.FileUtils;
 //a co z zaleznosciami "runtime"? czy na pewno nie sa potrzebne? Play! by je wciagnal
 // jak jest "@requiresDependencyResolution compile", to nie wiem, jak odfiltrowac drzewo bibliotek play'a (ma scope provided)
 public class PlayDependenciesMojo
-    extends AbstractMojo/* AbstractPlayMojo */
+    extends AbstractPlayMojo
 {
-
-    /**
-     * <i>Maven Internal</i>: Project to interact with.
-     * 
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    protected MavenProject project;
 
     /**
      * To look up Archiver/UnArchiver implementations.
@@ -70,20 +60,6 @@ public class PlayDependenciesMojo
      * @required
      */
     private ArchiverManager archiverManager;
-
-    public void execute()
-        throws MojoExecutionException, MojoFailureException
-    {
-        try
-        {
-            // resolvePlayId();
-            internalExecute();
-        }
-        catch ( IOException e )
-        {
-            throw new MojoExecutionException( "?", e );
-        }
-    }
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
@@ -173,6 +149,7 @@ public class PlayDependenciesMojo
                     {
                         libDir = new File( moduleTypeArtifacts.get( moduleArtifact ), "lib" );
                         //System.out.println("checked ok - lib is " + libDir.getCanonicalPath());
+                        break;
                     }
                 }
                 //System.out.println("jar: " + artifact.getGroupId() + ":" + artifact.getArtifactId() + " added to " + libDir);

@@ -33,8 +33,6 @@ public class ConfigurationParser
 
     private File configurationFile;
 
-    private File playHome;
-
     private String playId;
 
     private Properties properties;
@@ -42,10 +40,9 @@ public class ConfigurationParser
     // private String applicationName;
     // private Map<String, File> modules;
 
-    public ConfigurationParser( File configurationFile, File playHome, String playId )
+    public ConfigurationParser( File configurationFile, String playId )
     {
         this.configurationFile = configurationFile;
-        this.playHome = playHome;
         this.playId = playId;
         // modules = new HashMap<String, File>();
     }
@@ -70,9 +67,9 @@ public class ConfigurationParser
         return getProperty( "application.name" );
     }
 
-    public Map<String, File> getModules()
+    public Map<String, String> getModules()
     {
-        Map<String, File> modules = new HashMap<String, File>();
+        Map<String, String> modules = new HashMap<String, String>();
         for ( Object key : properties.keySet() )
         {
             String strKey = (String) key;
@@ -80,8 +77,7 @@ public class ConfigurationParser
             {
                 String moduleName = strKey.substring( 7 );
                 String modulePath = (String) properties.get( key );
-                modulePath = modulePath.replace( "${play.path}", playHome.getPath() );
-                modules.put( moduleName, new File( modulePath ) );
+                modules.put( moduleName, modulePath );
             }
         }
         // optimize?
@@ -92,8 +88,7 @@ public class ConfigurationParser
             {
                 String moduleName = strKey.substring( 7 + playId.length() + 2 );
                 String modulePath = (String) properties.get( key );
-                modulePath = modulePath.replace( "${play.path}", playHome.getPath() );
-                modules.put( moduleName, new File( modulePath ) );
+                modules.put( moduleName, modulePath );
             }
         }
         return modules;

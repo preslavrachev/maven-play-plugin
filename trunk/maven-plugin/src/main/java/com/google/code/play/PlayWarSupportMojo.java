@@ -43,8 +43,9 @@ public class PlayWarSupportMojo
      * 
      * @parameter expression="${project.build.directory}/play/tmp"
      * @required
+     * @since 1.0.0
      */
-    private File outputDirectory;
+    private File outputDirectory;//??
 
     @Override
     protected void/* String */resolvePlayId()
@@ -62,11 +63,13 @@ public class PlayWarSupportMojo
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
+            checkPlayHome();
+            
             File baseDir = project.getBasedir();
             File confDir = new File( baseDir, "conf" );
             File configurationFile = new File( confDir, "application.conf" );
 
-            ConfigurationParser configParser = new ConfigurationParser( configurationFile, playHome, playId );
+            ConfigurationParser configParser = new ConfigurationParser( configurationFile, playId );
             configParser.parse();
             //Map<String, File> modules = configParser.getModules();
 
