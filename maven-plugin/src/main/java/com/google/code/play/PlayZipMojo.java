@@ -46,30 +46,10 @@ import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
 public class PlayZipMojo
     extends AbstractPlayMojo
 {
-
-    /**
-     * The directory for the generated ZIP.
-     * 
-     * @parameter default-value="${project.build.directory}"
-     * @required
-     * @since 1.0.0
-     */
-    private String outputDirectory;
-
-    /**
-     * Generated ZIP file name.
-     * 
-     * @parameter default-value="${project.build.finalName}"
-     * @required
-     * @since 1.0.0
-     */
-    private String zipName;
-
     /**
      * Include filter
      * 
      * @parameter expression="${play.zipIncludes}" default-value="app/**,conf/**,public/**,tags/**"
-     * @required
      * @since 1.0.0
      */
     private String zipIncludes;
@@ -77,7 +57,7 @@ public class PlayZipMojo
     /**
      * Exclude filter
      * 
-     * @parameter expression="${play.zipExcludes}"
+     * @parameter expression="${play.zipExcludes}" default-value=""
      * @since 1.0.0
      */
     private String zipExcludes;
@@ -104,10 +84,12 @@ public class PlayZipMojo
         try
         {
             File baseDir = project.getBasedir();
-            File destFile = new File( outputDirectory, zipName + ".zip" );
-            // File destFile = new File( outputDirectory, getDestinationFileName() );
+            File zipOutputDirectory = new File( project.getBuild().getDirectory() );
+            String zipName = project.getBuild().getFinalName();
+            
+            File destFile = new File( zipOutputDirectory, zipName + ".zip" );
 
-            /*Zip*/Archiver zipArchiver = archiverManager.getArchiver( "zip" );//new ZipArchiver();
+            Archiver zipArchiver = archiverManager.getArchiver( "zip" );//new ZipArchiver();
             zipArchiver.setDuplicateBehavior( Archiver.DUPLICATES_FAIL );// Just in case
             zipArchiver.setDestFile( destFile );
 
