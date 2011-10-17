@@ -19,6 +19,8 @@
 
 package com.google.code.play
 
+import org.apache.maven.project.MavenProject
+
 import org.codehaus.gmaven.mojo.GroovyMojo
 
 /**
@@ -47,6 +49,19 @@ class StopServerMojo
      * @since 1.0.0
      */
     boolean seleniumSkip
+
+    //
+    // Components
+    //
+    
+    /**
+     * The enclosing project.
+     * 
+     * @parameter expression="${project}"
+     * @required
+     * @readonly
+     */
+    MavenProject project;
 
     //
     // Mojo
