@@ -315,13 +315,13 @@ public class PlayInitializeMojo
                     result = artifact;
                     // System.out.println( "added framework: " + artifact.getGroupId() + ":" + artifact.getArtifactId()
                     // );
-                    // don't break, maybe there is "framework-resources" artifact too
+                    // don't break, maybe there is "framework-min" artifact too
                 }
-                // "module-resources" overrides "module" (if present)
-                else if ( "framework-resources".equals( artifact.getClassifier() ) )
+                // "module-min" overrides "module" (if present)
+                else if ( "framework-min".equals( artifact.getClassifier() ) )
                 {
                     result = artifact;
-                    // System.out.println( "added framework-resources: " + artifact.getGroupId() + ":"
+                    // System.out.println( "added framework-min: " + artifact.getGroupId() + ":"
                     // + artifact.getArtifactId() );
                     break;
                 }
@@ -341,7 +341,7 @@ public class PlayInitializeMojo
             if ( Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) && "zip".equals( artifact.getType() ) )
             {
                 if ( "module".equals( artifact.getClassifier() )
-                    || "module-resources".equals( artifact.getClassifier() ) )
+                    || "module-min".equals( artifact.getClassifier() ) )
                 {
                     String moduleName = artifact.getArtifactId();
                     if ( moduleName.startsWith( "play-" ) )
@@ -351,7 +351,7 @@ public class PlayInitializeMojo
 
                     if ( "module".equals( artifact.getClassifier() ) )
                     {
-                        if ( result.get( moduleName ) == null ) // if "module-resources" already in map, don't use
+                        if ( result.get( moduleName ) == null ) // if "module-min" already in map, don't use
                                                                 // "module" artifact
                         {
                             result.put( moduleName, artifact );
@@ -360,10 +360,10 @@ public class PlayInitializeMojo
                         }
                     }
                     else
-                    // "module-resources" overrides "module" (if present)
+                    // "module-min" overrides "module" (if present)
                     {
                         result.put( moduleName, artifact );
-                        // System.out.println("added module-resources: " + artifact.getGroupId() + ":" +
+                        // System.out.println("added module-min: " + artifact.getGroupId() + ":" +
                         // artifact.getArtifactId());
                     }
                 }

@@ -96,7 +96,7 @@ public class PlayDependenciesMojo
             if ( "zip".equals( artifact.getType() ) )
             {
                 if ( "module".equals( artifact.getClassifier() )
-                    || "module-resources".equals( artifact.getClassifier() ) )
+                    || "module-min".equals( artifact.getClassifier() ) ) //TODO-which one more important if someone has both in the pom.xml?
                 {
                     extractZipDependency( artifact, modulesDir, moduleTypeArtifacts ); 
                 }

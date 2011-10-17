@@ -129,7 +129,7 @@ public class PlayZipMojo
             if ( "zip".equals( artifact.getType() ) )
             {
                 if ( "module".equals( artifact.getClassifier() )
-                    || "module-resources".equals( artifact.getClassifier() ) )
+                    || "module-min".equals( artifact.getClassifier() ) )
                 {
                     processZipDependency( artifact, archiver, moduleTypeArtifacts );
                 }
