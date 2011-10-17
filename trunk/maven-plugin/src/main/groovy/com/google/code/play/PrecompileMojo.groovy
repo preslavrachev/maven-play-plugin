@@ -19,8 +19,9 @@
 
 package com.google.code.play
 
-import org.codehaus.gmaven.mojo.GroovyMojo
 import org.apache.maven.project.MavenProject
+
+import org.codehaus.gmaven.mojo.GroovyMojo
 import org.codehaus.gmaven.mojo.support.ProcessLauncher
 
 /**
