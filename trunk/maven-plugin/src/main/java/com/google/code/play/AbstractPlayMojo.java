@@ -126,20 +126,41 @@ public abstract class AbstractPlayMojo
             File idFile = new File( playHome, "id" );
             if ( idFile.isFile() )
             {
-                // a moze InputStream, nie Reader?
-                BufferedReader is =
-                    new BufferedReader( new InputStreamReader( new FileInputStream( idFile ), "UTF-8" ) );
-                try
-                {
-                    result = is.readLine();
-                }
-                finally
-                {
-                    is.close();
-                }
+                result = readFileFirstLine(idFile);
             }
         }
         return result;
+    }
+
+    protected String readFileFirstLine( File file )
+        throws IOException
+    {
+        String result = null;
+
+        BufferedReader is = new BufferedReader( new InputStreamReader( new FileInputStream( file ), "UTF-8" ) );
+        try
+        {
+            result = is.readLine();
+        }
+        finally
+        {
+            is.close();
+        }
+        return result;
+    }
+
+    protected void writeToFile( File file, String line )
+        throws IOException
+    {
+        BufferedWriter writer = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( file ), "UTF-8" ) );
+        try
+        {
+            writer.write( line );
+        }
+        finally
+        {
+            writer.close();
+        }
     }
 
 }
