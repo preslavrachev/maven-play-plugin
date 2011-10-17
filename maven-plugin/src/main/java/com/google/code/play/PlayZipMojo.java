@@ -131,7 +131,7 @@ public class PlayZipMojo
                 if ( "module".equals( artifact.getClassifier() )
                     || "module-resources".equals( artifact.getClassifier() ) )
                 {
-                    processZipDependency( artifact, archiver, moduleTypeArtifacts ); // it's not necessary to add "play" type dependencies to "moduleTypeArtifacts" map
+                    processZipDependency( artifact, archiver, moduleTypeArtifacts );
                 }
             }
             else if ( "play".equals( artifact.getType() ) )
