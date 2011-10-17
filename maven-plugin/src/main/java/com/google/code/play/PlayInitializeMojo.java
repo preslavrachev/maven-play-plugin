@@ -20,10 +20,7 @@
 package com.google.code.play;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -51,6 +48,8 @@ public class PlayInitializeMojo
     extends AbstractPlayMojo
 {
 
+    public static final String playFrameworkVersionFilePath = "framework/src/play/version";
+    
     /**
      * The directory with Play! distribution.
      * 
@@ -94,7 +93,23 @@ public class PlayInitializeMojo
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
     {
-        checkPlayHomeExtended();
+        String playVersion = null;
+        Set<?> artifacts = project.getArtifacts();
+        for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            // System.out.println("artifact: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
+            if ( "play".equals( artifact.getArtifactId() ) )
+            {
+                // temporary solution, maybe use zip to unzip resource from a jar file
+                playVersion = artifact.getVersion();
+                // System.out.println("Play version: " + playVersion);
+                // java.net.URL artifactUrl = artifact.getFile().toURI().toURL();
+            }
+        }
+
+        getLog().debug( "Play! version: " + playVersion );
+        checkPlayHomeExtended(playVersion);
         playId = resolvePlayId( playHome, playId );
 
         File baseDir = project.getBasedir();
@@ -116,22 +131,6 @@ public class PlayInitializeMojo
             modules.put( moduleName, new File( modulePath ) );
         }
         // Play 1.2.x
-        String playVersion = null;
-        Set<?> artifacts = project.getArtifacts();
-        for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
-        {
-            Artifact artifact = (Artifact) iter.next();
-            // System.out.println("artifact: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
-            if ( "play".equals( artifact.getArtifactId() ) )
-            {
-                // temporary solution, maybe use zip to unzip resource from a jar file
-                playVersion = artifact.getVersion();
-                // System.out.println("Play version: " + playVersion);
-                // java.net.URL artifactUrl = artifact.getFile().toURI().toURL();
-            }
-        }
-
-        getLog().debug( "Play! version: " + playVersion );
         if ( ( playVersion != null/* nie podoba mi sie to */) && "1.2".compareTo( /* Play.version */playVersion ) <= 0 )
         {
             File modulesDir = new File( baseDir, "modules" );
@@ -218,7 +217,7 @@ public class PlayInitializeMojo
         }
     }
 
-    protected void checkPlayHomeExtended()
+    protected void checkPlayHomeExtended(String playDependencyVersion)
         throws MojoExecutionException, IOException
     {
         if ( playHome == null )
@@ -230,7 +229,7 @@ public class PlayInitializeMojo
             {
                 try
                 {
-                    decompressFrameworkAndSetPlayHome( frameworkArtifact, providedModuleArtifacts );
+                    decompressFrameworkAndSetPlayHome( frameworkArtifact, providedModuleArtifacts, playDependencyVersion );
                 }
                 catch ( ArchiverException e )
                 {
@@ -243,20 +242,60 @@ public class PlayInitializeMojo
             }
             else
             {
-                throw new MojoExecutionException(
-                                                  "Play! home directory (\"playHome\" plugin configuration parameter) not set" );
-                // super.playHomeNotDefined();
+                String playHomePropertyValue = project.getProperties().getProperty( "play.home" );
+                if (playHomePropertyValue != null)
+                {
+                    throw new MojoExecutionException(
+                                                      "Play! home directory not set. There is \"play.home\" project property defined, but not used in play-maven-plugin. Add \"<playHome>${play.home}</playHome>\" to plugin's <configuration> section." );
+                }
+                else
+                {
+                    throw new MojoExecutionException(
+                                                      "Play! home directory not set. Add \"play.home\" property to project <properties> section and \"<playHome>${play.home}</playHome>\" to play-maven-plugin's <configuration> section" );
+                }
             }
         }
         else
         {
             if ( !playHome.exists() )
             {
-                throw new MojoExecutionException( "Play! home directory " + playHome + " does not exist" );
+                throw new MojoExecutionException(
+                                                 String.format( "Play! home directory %s does not exist",
+                                                                playHome.getCanonicalPath() ) );
             }
             if ( !playHome.isDirectory() )
             {
-                throw new MojoExecutionException( "Play! home directory " + playHome + " is not a directory" );
+                throw new MojoExecutionException(
+                                                  String.format( "Play! home directory %s is not a directory",
+                                                                 playHome.getCanonicalPath() ) );
+            }
+
+            File playHomeVersionFile = new File( playHome, playFrameworkVersionFilePath );
+            if ( playHomeVersionFile.exists() )
+            {
+                if ( playHomeVersionFile.isFile() )
+                {
+                    String playHomeVersion = readFileFirstLine( playHomeVersionFile );
+                    if (playHomeVersion == null || !playHomeVersion.equals( playDependencyVersion ))
+                    {
+                        throw new MojoExecutionException(
+                                                         String.format( "Version mismatch: Play! dependency version is %s, but Play! home directory version in %s file is %s.",
+                                                                        playDependencyVersion, playHomeVersionFile.getCanonicalPath(), playHomeVersion ) );
+                    }
+                }
+                else
+                {
+                    throw new MojoExecutionException(
+                                                      String.format( "Play! home directory version file %s is not a file",
+                                                                     playHomeVersionFile.getCanonicalPath() ) );
+                }
+
+            }
+            else
+            {
+                throw new MojoExecutionException(
+                                                  String.format( "Play! home directory version file %s does not exist",
+                                                                 playHomeVersionFile.getCanonicalPath() ) );
             }
         }
     }
@@ -334,7 +373,7 @@ public class PlayInitializeMojo
     }
 
     private void decompressFrameworkAndSetPlayHome( Artifact frameworkAtifact,
-                                                    Map<String, Artifact> providedModuleArtifacts )
+                                                    Map<String, Artifact> providedModuleArtifacts, String playDependencyVersion )
         throws ArchiverException, NoSuchArchiverException, IOException
     {
         File targetDir = new File( project.getBuild().getDirectory() );
@@ -345,12 +384,19 @@ public class PlayInitializeMojo
         {
             // decompress framework
             createDir( playHomeDirectory );
+
+            writeToFile( new File( playHomeDirectory, "WARNING.txt" ), "This directory is generated automatically. Don't change its content." );
+
             UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
             zipUnArchiver.setSourceFile( frameworkAtifact.getFile() );
             zipUnArchiver.setDestDirectory( playHomeDirectory );
             zipUnArchiver.setOverwrite( false/* ??true */);
             zipUnArchiver.extract();
 
+            File playFrameworkVersionFile = new File( playHomeDirectory, playFrameworkVersionFilePath );
+            createDir( playFrameworkVersionFile.getParentFile() );
+            writeToFile( playFrameworkVersionFile, playDependencyVersion );
+            
             // decompress provided-scoped modules
             File modulesDirectory = new File( playHomeDirectory, "modules" );
             for ( Map.Entry<String, Artifact> providedModuleArtifactEntry : providedModuleArtifacts.entrySet() )
@@ -390,22 +436,6 @@ public class PlayInitializeMojo
                 throw new IOException( String.format( "Cannot create \"%s\" directory", directory.getCanonicalPath() ) );
             }
         }
-    }
-
-    private String readFileFirstLine( File file )
-        throws IOException
-    {
-        String result = null;
-        LineNumberReader reader = new LineNumberReader( new InputStreamReader( new FileInputStream( file ), "utf-8" ) );
-        try
-        {
-            result = reader.readLine();
-        }
-        finally
-        {
-            reader.close();
-        }
-        return result;
     }
 
 }
