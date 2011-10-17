@@ -43,11 +43,7 @@ under the License.
                 <plugin>
                     <groupId>com.google.code.maven-play-plugin</groupId>
                     <artifactId>play-maven-plugin</artifactId>
-                    <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} --> 
-                    <configuration>
-                        <!-- options for starting server -->
-                        <logOutput>true</logOutput> <!--???-->
-                    </configuration>
+                    <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} -->
                 </plugin>
 
                 <plugin>
