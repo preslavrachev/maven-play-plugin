@@ -37,7 +37,7 @@ public class Play12TestInvocation
     private Class<?> testClass;
 
     private RunNotifier fNotifier;
-    
+
     private String testMethod;
 
     public Play12TestInvocation( Class<?> testClass, RunNotifier fNotifier, String testMethod )
@@ -49,12 +49,12 @@ public class Play12TestInvocation
 
     @Override
     public void execute()
-        //throws Exception
+    // throws Exception
     {
         if ( !StringUtils.isBlank( testMethod ) )
         {
             Method[] methods = testClass.getMethods();
-            for (int i = 0,size = methods.length;i<size;i++)
+            for ( int i = 0, size = methods.length; i < size; i++ )
             {
                 if ( SelectorUtils.match( testMethod, methods[i].getName() ) )
                 {
@@ -64,23 +64,19 @@ public class Play12TestInvocation
             }
             return;
         }
-        
+
         Runner junitTestRunner = Request.aClass( testClass ).getRunner();
-        
+
         junitTestRunner.run( fNotifier );
-        /*try
-        {
-            Runner junitTestRunner = Request.aClass( testClass ).getRunner();
-            junitTestRunner.run( fNotifier );
-        }
-        catch ( Throwable e )
-        {
-            throw new RuntimeException( e );
-        }*/
+        /*
+         * try { Runner junitTestRunner = Request.aClass( testClass ).getRunner(); junitTestRunner.run( fNotifier ); }
+         * catch ( Throwable e ) { throw new RuntimeException( e ); }
+         */
     }
 
     @Override
-    public Invoker.InvocationContext getInvocationContext() {
-        return new Invoker.InvocationContext(invocationType);
+    public Invoker.InvocationContext getInvocationContext()
+    {
+        return new Invoker.InvocationContext( invocationType );
     }
 }
