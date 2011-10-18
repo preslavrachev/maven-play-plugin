@@ -55,7 +55,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
         {
             File baseDir = project.getBasedir();
             File playTests = new File( baseDir, "test" );
-            File destDir = new File( project.getBuild().getDirectory(), "selenium/generated" );// TODO-parametrize
+            File destDir = new File( project.getBuild().getDirectory(), "selenium/generated" );// TODO - maybe parametrize
 
             int classesGenerated = processTestsInDirectory( playTests, destDir, null );
             if ( classesGenerated == 0 )

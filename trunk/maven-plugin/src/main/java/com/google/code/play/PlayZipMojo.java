@@ -147,7 +147,6 @@ public class PlayZipMojo
     {
         // System.out.println("module: " + artifact.getGroupId() + ":" + artifact.getArtifactId());
 
-        // TODO-dorobic detekcje konfliktow nazw
         // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
         // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
         // + artifact.getClassifier() + ":scope=" + artifact.getScope() );
@@ -201,3 +200,5 @@ public class PlayZipMojo
     }
 
 }
+
+// TODO - add name conflicts detection for modules and jars

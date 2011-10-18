@@ -340,8 +340,7 @@ public class PlayInitializeMojo
             Artifact artifact = (Artifact) iter.next();
             if ( Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) && "zip".equals( artifact.getType() ) )
             {
-                if ( "module".equals( artifact.getClassifier() )
-                    || "module-min".equals( artifact.getClassifier() ) )
+                if ( "module".equals( artifact.getClassifier() ) || "module-min".equals( artifact.getClassifier() ) )
                 {
                     String moduleName = artifact.getArtifactId();
                     if ( moduleName.startsWith( "play-" ) )
