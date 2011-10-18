@@ -87,7 +87,7 @@ under the License.
         <module>play-server-booter</module>
         <module>play12-extensions</module>
         <module>surefire-play-junit4</module>
-        <module>test-projects</module>
+        <!--<module>test-projects</module>-->
     </modules>
 
     <developers>
