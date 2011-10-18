@@ -31,7 +31,8 @@ import org.codehaus.plexus.archiver.ArchiverException;
 import org.codehaus.plexus.archiver.zip.ZipArchiver;
 
 /**
- * Package Play! framework and Play! application as one ZIP achive (standalone distribution).
+ * Packages Play! framework and Play! application as one ZIP achive (standalone distribution).
+ * WARNING: NOT READY YET! DON'T USE IT!
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal uberzip
@@ -60,39 +61,38 @@ public class PlayUberZipMojo
     protected File playHome;
 
     /**
-     * ...
+     * Default Play! id (profile).
      * 
-     * @parameter expression="${play.id}"
+     * @parameter expression="${play.id}" default-value=""
      * @since 1.0.0
      */
     protected String playId;
 
     /**
-     * The directory for the generated ZIP.
+     * The directory for the generated ZIP file.
      * 
-     * @parameter expression="${project.build.directory}"
+     * @parameter expression="${play.uberzipOutputDirectory}" default-value="${project.build.directory}"
      * @required
      * @since 1.0.0
      */
-    private String outputDirectory;
+    private String uberzipOutputDirectory;
 
     /**
-     * The name of the generated ZIP.
+     * The name of the generated ZIP file.
      * 
-     * @parameter expression="${project.build.finalName}"
+     * @parameter expression="${play.uberzipArchiveName}" default-value="${project.build.finalName}"
      * @required
      * @since 1.0.0
      */
-    private String zipName;
+    private String uberzipArchiveName;
 
     /**
-     * Classifier to add to the generated ZIP. If given, the artifact will be an attachment instead.??? The classifier
-     * will not be applied to the jar file of the project - only to the zip file.
+     * Classifier to add to the generated ZIP file.
      * 
-     * @parameter default-value="with-framework"
+     * @parameter expression="${play.uberzipClassifier}" default-value="with-framework"
      * @since 1.0.0
      */
-    private String classifier;
+    private String uberzipClassifier;
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
@@ -100,7 +100,7 @@ public class PlayUberZipMojo
         try
         {
             File baseDir = project.getBasedir();
-            File destFile = new File( outputDirectory, getDestinationFileName() );
+            File destFile = new File( uberzipOutputDirectory, getDestinationFileName() );
 
             ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playId );
             configParser.parse();
@@ -173,14 +173,14 @@ public class PlayUberZipMojo
     private String getDestinationFileName()
     {
         StringBuffer buf = new StringBuffer();
-        buf.append( zipName );
-        if ( classifier != null && !"".equals( classifier ) )
+        buf.append( uberzipArchiveName );
+        if ( uberzipClassifier != null && !"".equals( uberzipClassifier ) )
         {
-            if ( !classifier.startsWith( "-" ) )
+            if ( !uberzipClassifier.startsWith( "-" ) )
             {
                 buf.append( '-' );
             }
-            buf.append( classifier );
+            buf.append( uberzipClassifier );
         }
         buf.append( ".war" );
         return buf.toString();

@@ -29,7 +29,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * Package Play! framework and Play! application as a WAR achive.
+ * Prepares project for WAR packaging.
+ * For now only prepares "web.xml" file (replaces %APPLICATION_NAME% and %PLAY_ID% with actual values).
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal war-support
@@ -47,7 +48,7 @@ public class PlayWarSupportMojo
     protected File playHome;
 
     /**
-     * ...
+     * Play! id (profile) used for WAR packaging.
      * 
      * @parameter expression="${play.warId}" default-value="war"
      * @since 1.0.0

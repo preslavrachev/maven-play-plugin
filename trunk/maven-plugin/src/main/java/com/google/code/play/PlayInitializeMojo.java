@@ -36,8 +36,14 @@ import org.codehaus.plexus.archiver.manager.ArchiverManager;
 import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
 
 /**
- * Adds application sources ('app' directory) to Play! application. Adds application resources ('app' directory) to
- * Play! application. ... finish! ...
+ * Initializes Play! Maven project:
+ * - Checks Play! home directory and creates temporary Play! home in "target" directory
+ * if no Play! home directory defined and there is Play! framework zip dependency
+ * in the project.
+ * - Adds application and dependent modules sources to Maven project as compile source roots.
+ * - Adds application and dependent modules resources to Maven project as resources.
+ * - Adds application and dependent modules test sources to Maven project as test compile source roots.
+ * - Adds application and dependent modules test resources to Maven project as test resources.
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal initialize
@@ -59,7 +65,7 @@ public class PlayInitializeMojo
     protected File playHome;
 
     /**
-     * ...
+     * Default Play! id (profile).
      * 
      * @parameter expression="${play.id}" default-value=""
      * @since 1.0.0
@@ -67,7 +73,7 @@ public class PlayInitializeMojo
     protected String playId;
 
     /**
-     * ...
+     * Should application classes be compiled.
      * 
      * @parameter expression="${play.compileApp}" default-value="true"
      * @since 1.0.0
@@ -75,7 +81,7 @@ public class PlayInitializeMojo
     private boolean compileApp = true;
 
     /**
-     * ...
+     * Should test classes be compiled.
      * 
      * @parameter expression="${play.compileTest}" default-value="true"
      * @since 1.0.0
