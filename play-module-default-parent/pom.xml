@@ -31,6 +31,8 @@ under the License.
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <play.manifest.section>Play</play.manifest.section>
     </properties>
 
     <build>
@@ -95,9 +97,9 @@ under the License.
                         <archive>
                             <manifestSections>
                                 <manifestSection>
-                                    <name>Play</name>
+                                    <name>${play.manifest.section}</name>
                                     <manifestEntries>
-                                        <Specification-Title>${manifest.specification.title}</Specification-Title>
+                                        <Specification-Title>${play.manifest.specification.title}</Specification-Title>
                                     </manifestEntries>
                                 </manifestSection>
                             </manifestSections>
@@ -108,36 +110,6 @@ under the License.
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.8</version>
-                    <configuration>
-                        <author>false</author>
-                        <bottom><![CDATA[<a href="http://guillaume.bort.fr">Guillaume Bort</a> &amp; <a href="http://www.zenexity.fr">zenexity</a> - Distributed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2 licence</a>, without any warrantly]]></bottom>
-                        <detectJavaApiLink>false</detectJavaApiLink> <!-- for compatibility with Ant build only -->
-                        <doctitle><![CDATA[<h1>Play! ${project.version}</h1>]]></doctitle>
-                        <groups>
-                            <group>
-                                <title>Libs</title>
-                                <packages>play.libs.*</packages>
-                            </group>
-                        </groups>
-                        <links>
-                            <link>http://java.sun.com/javaee/5/docs/api</link>
-                            <link>http://commons.apache.org/fileupload/apidocs</link>
-                            <link>http://google-gson.googlecode.com/svn/tags/1.2.3/docs/javadocs</link>
-                            <link>https://www.hibernate.org/hib_docs/v3/api</link>
-                            <link>http://www.mchange.com/projects/c3p0/apidocs</link>
-                        </links>
-                        <!--<sourcepath>${basedir}/src</sourcepath>--> <!--do I need it?-->
-                        <tags>
-                            <tag>
-                                <name>todo</name>
-                                <placement>a</placement>
-                                <head>To do:</head>
-                            </tag>
-                        </tags>
-                        <version>true</version> <!--default-->
-                        <use>true</use> <!--default-->
-                        <windowtitle>Play! API</windowtitle>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -187,7 +159,7 @@ under the License.
                             <configuration>
                                 <descriptors>
                                     <descriptor>${basedir}/assembly-module.xml</descriptor>
-                                    <descriptor>${basedir}/assembly-module-resources.xml</descriptor>
+                                    <descriptor>${basedir}/assembly-module-min.xml</descriptor>
                                 </descriptors>
                             </configuration>
                         </plugin>
