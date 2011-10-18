@@ -37,7 +37,7 @@ public class CustomSeleneseParser
         return result;
     }
 
-    private String xmlUnescape( String value )
+    /*what was it for? private String xmlUnescape( String value )
     {
         String result = value;
         result = result.replace( "&quot;", "\"" );
@@ -46,6 +46,6 @@ public class CustomSeleneseParser
         result = result.replace( "&gt;", ">" );
         result = result.replace( "&amp;", "&" );
         return result;
-    }
+    }*/
 
 }
