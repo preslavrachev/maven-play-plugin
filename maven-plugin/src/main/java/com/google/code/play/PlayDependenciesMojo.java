@@ -84,10 +84,14 @@ public class PlayDependenciesMojo
     private Map<Artifact, File> processModuleDependencies()
         throws ArchiverException, NoSuchArchiverException, IOException
     {
-        Map<Artifact, File> moduleTypeArtifacts = new HashMap<Artifact, File>();
-
-        File baseDir = project.getBasedir();
-        File modulesDir = new File( baseDir, "modules" );
+        Map<String, Artifact> moduleArtifacts = findAllModuleArtifacts();
+        Map<Artifact, File> moduleTypeArtifacts = decompressModuleDependencies( moduleArtifacts );
+        return moduleTypeArtifacts;
+    }
+    
+    private Map<String, Artifact> findAllModuleArtifacts()
+    {
+        Map<String, Artifact> result = new HashMap<String, Artifact>();
 
         Set<?> artifacts = project.getArtifacts();
         for ( Iterator<?> iter = artifacts.iterator(); iter.hasNext(); )
@@ -95,47 +99,68 @@ public class PlayDependenciesMojo
             Artifact artifact = (Artifact) iter.next();
             if ( "zip".equals( artifact.getType() ) )
             {
-                if ( "module".equals( artifact.getClassifier() )
-                    || "module-min".equals( artifact.getClassifier() ) ) //TODO-which one more important if someone has both in the pom.xml?
+                if ( "module".equals( artifact.getClassifier() ) || "module-min".equals( artifact.getClassifier() ) )
                 {
-                    extractZipDependency( artifact, modulesDir, moduleTypeArtifacts ); 
+                    String moduleName = artifact.getArtifactId();
+                    if ( moduleName.startsWith( "play-" ) )
+                    {
+                        moduleName = moduleName.substring( "play-".length() );
+                    }
+
+                    if ( "module".equals( artifact.getClassifier() ) )
+                    {
+                        if ( result.get( moduleName ) == null ) // if "module-min" already in map, don't use
+                                                                // "module" artifact
+                        {
+                            result.put( moduleName, artifact );
+                            // System.out.println("added module: " + artifact.getGroupId() + ":" +
+                            // artifact.getArtifactId());
+                        }
+                    }
+                    else
+                    // "module-min" overrides "module" (if present)
+                    {
+                        result.put( moduleName, artifact );
+                        // System.out.println("added module-min: " + artifact.getGroupId() + ":" +
+                        // artifact.getArtifactId());
+                    }
                 }
             }
             else if ( "play".equals( artifact.getType() ) )
             {
-                extractZipDependency( artifact, modulesDir, null ); // it's not necessary to add "play" type dependencies to "moduleTypeArtifacts" map
+                String moduleName = artifact.getArtifactId();
+                result.put( moduleName, artifact );
             }
         }
-        return moduleTypeArtifacts;
+        return result;
     }
-    
-    private void extractZipDependency(Artifact artifact, File modulesDir, Map<Artifact, File> moduleTypeArtifacts) 
+
+    private Map<Artifact, File> decompressModuleDependencies( Map<String, Artifact> moduleArtifacts )
         throws ArchiverException, NoSuchArchiverException, IOException
     {
-        // TODO-dorobic detekcje konfliktow nazw
-        // System.out.println( "artifact: groupId=" + artifact.getGroupId() + ":artifactId="
-        // + artifact.getArtifactId() + ":type=" + artifact.getType() + ":classifier="
-        // + artifact.getClassifier() + ":scope=" + artifact.getScope() );
-        File zipFile = artifact.getFile();
+        Map<Artifact, File> result = new HashMap<Artifact, File>();
 
-        String moduleName = artifact.getArtifactId();
-        if ( moduleName.startsWith( "play-" ) )
+        File baseDir = project.getBasedir();
+        File modulesDirectory = new File( baseDir, "modules" );
+
+        for ( Map.Entry<String, Artifact> moduleArtifactEntry : moduleArtifacts.entrySet() )
         {
-            moduleName = moduleName.substring( "play-".length() );
+            String moduleName = moduleArtifactEntry.getKey();
+            Artifact moduleArtifact = moduleArtifactEntry.getValue();
+
+            File zipFile = moduleArtifact.getFile();
+            String moduleSubDir = String.format( "%s-%s", moduleName, moduleArtifact.getVersion() );
+            File toDirectory = new File( modulesDirectory, moduleSubDir );
+            createDir( toDirectory );
+            UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
+            zipUnArchiver.setSourceFile( zipFile );
+            zipUnArchiver.setDestDirectory( toDirectory );
+            zipUnArchiver.setOverwrite( false/* ??true */);
+            zipUnArchiver.extract();
+
+            result.put( moduleArtifact, toDirectory );
         }
-        String moduleSubDir = String.format( "%s-%s", moduleName, artifact.getVersion() );
-        File toDirectory = new File( modulesDir, moduleSubDir );
-        createDir( toDirectory );
-        UnArchiver zipUnArchiver = archiverManager.getUnArchiver( "zip" );
-        zipUnArchiver.setSourceFile( zipFile );
-        zipUnArchiver.setDestDirectory( toDirectory );
-        zipUnArchiver.setOverwrite( false/* ??true */);
-        zipUnArchiver.extract();
-        
-        if ( moduleTypeArtifacts != null )
-        {
-            moduleTypeArtifacts.put( artifact, toDirectory );
-        }
+        return result;
     }
 
     private void processJarDependencies( Map<Artifact, File> moduleTypeArtifacts )
@@ -196,4 +221,4 @@ public class PlayDependenciesMojo
 
 }
 
-// TODO-dorobic detekcje konfliktow nazw roznych artifactow (zwlaszcza modulow)
+// TODO - add name conflict detection for modules and jars
