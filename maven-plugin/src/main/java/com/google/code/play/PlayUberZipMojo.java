@@ -52,10 +52,27 @@ public class PlayUberZipMojo
     // "nbproject/**", "samples-and-tests/**", "src/**", "build.xml", "commands.py"};
 
     /**
+     * The directory with Play! distribution.
+     * 
+     * @parameter expression="${play.home}"
+     * @since 1.0.0
+     */
+    protected File playHome;
+
+    /**
+     * ...
+     * 
+     * @parameter expression="${play.id}"
+     * @since 1.0.0
+     */
+    protected String playId;
+
+    /**
      * The directory for the generated ZIP.
      * 
      * @parameter expression="${project.build.directory}"
      * @required
+     * @since 1.0.0
      */
     private String outputDirectory;
 
@@ -64,6 +81,7 @@ public class PlayUberZipMojo
      * 
      * @parameter expression="${project.build.finalName}"
      * @required
+     * @since 1.0.0
      */
     private String zipName;
 
@@ -72,6 +90,7 @@ public class PlayUberZipMojo
      * will not be applied to the jar file of the project - only to the zip file.
      * 
      * @parameter default-value="with-framework"
+     * @since 1.0.0
      */
     private String classifier;
 
@@ -83,9 +102,18 @@ public class PlayUberZipMojo
             File baseDir = project.getBasedir();
             File destFile = new File( outputDirectory, getDestinationFileName() );
 
-            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playHome, playId );
+            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playId );
             configParser.parse();
-            Map<String, File> modules = configParser.getModules();
+            Map<String, String> modules = configParser.getModules();
+            //TODO-create method in a base class (create base class for uberzip i war mojos)?
+            for (String modulePath: modules.values())
+            {
+                if (modulePath.contains( "${play.path}" ))
+                {
+                    checkPlayHome(playHome);
+                    break;
+                }
+            }
 
             ZipArchiver zipArchiver = new ZipArchiver();
             zipArchiver.setDuplicateBehavior( Archiver.DUPLICATES_FAIL );// Just in case
@@ -97,8 +125,7 @@ public class PlayUberZipMojo
             // conf
             zipArchiver.addDirectory( new File( baseDir, "conf" ), "conf/", null, null );
             // lib
-            zipArchiver.addDirectory( new File( baseDir, "lib" ), "lib/", null, null/* albo: libIncludes, libExcludes */);// TODO-bez
-                                                                                                                          // podkatalogow
+            zipArchiver.addDirectory( new File( baseDir, "lib" ), "lib/", null, null/* or: libIncludes, libExcludes */);// TODO-without subdirectories
             // public
             zipArchiver.addDirectory( new File( baseDir, "public" ), "public/", null, null );
             // tags
@@ -111,18 +138,20 @@ public class PlayUberZipMojo
             // framework
             zipArchiver.addFile( new File( playHome, "framework/play.jar" ), "framework/play.jar" );
             zipArchiver.addDirectory( new File( playHome, "framework/lib" ), "framework/lib/", null, null/*
-                                                                                                          * albo:
+                                                                                                          * or:
                                                                                                           * libIncludes,
                                                                                                           * libExcludes
-                                                                                                          */);// TODO-bez
-                                                                                                              // podkatalogow
+                                                                                                          */);// TODO-without subdirectories
             zipArchiver.addDirectory( new File( playHome, "framework/pym" ), "framework/pym/", null, null );
             zipArchiver.addDirectory( new File( playHome, "framework/templates" ), "framework/templates/", null, null );
             // modules
             for ( String moduleName : modules.keySet() )
             {
-                File modulePath = modules.get( moduleName );
-                zipArchiver.addDirectory( modulePath, "modules/" + modulePath.getName() + "/", null, new String[] {
+                String modulePath = modules.get( moduleName );
+                modulePath = modulePath.replace( "${play.path}", playHome.getPath() );
+                File moduleDir = new File( modulePath );
+
+                zipArchiver.addDirectory( moduleDir, "modules/" + moduleDir.getName() + "/", null, new String[] {
                     "documentation/**", "nbproject/**", "src/**", "build.xml", "commands.py" } );
             }
             // python
@@ -153,7 +182,7 @@ public class PlayUberZipMojo
             }
             buf.append( classifier );
         }
-        buf.append( ".zip" );
+        buf.append( ".war" );
         return buf.toString();
     }
 

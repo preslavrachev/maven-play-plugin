@@ -57,10 +57,27 @@ public class PlayWarMojo
         "nbproject/**", "samples-and-tests/**", "src/**", "build.xml", "commands.py" };
 
     /**
+     * The directory with Play! distribution.
+     * 
+     * @parameter expression="${play.home}"
+     * @since 1.0.0
+     */
+    protected File playHome;
+
+    /**
+     * ...
+     * 
+     * @parameter expression="${play.id}"
+     * @since 1.0.0
+     */
+    protected String playId;
+
+    /**
      * The directory for the generated WAR.
      * 
      * @parameter expression="${project.build.directory}"
      * @required
+     * @since 1.0.0
      */
     private String outputDirectory;
 
@@ -69,6 +86,7 @@ public class PlayWarMojo
      * 
      * @parameter expression="${project.build.finalName}"
      * @required
+     * @since 1.0.0
      */
     private String warName;
 
@@ -77,6 +95,7 @@ public class PlayWarMojo
      * will not be applied to the jar file of the project - only to the war file.
      * 
      * @parameter
+     * @since 1.0.0
      */
     private String classifier;
 
@@ -88,9 +107,19 @@ public class PlayWarMojo
             File baseDir = project.getBasedir();
             File destFile = new File( outputDirectory, getDestinationFileName() );
 
-            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playHome, playId );
+            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playId );
             configParser.parse();
-            Map<String, File> modules = configParser.getModules();
+            Map<String, String> modules = configParser.getModules();
+            //TODO-create method in a base class (create base class for uberzip i war mojos)?
+            for (String modulePath: modules.values())
+            {
+                if (modulePath.contains( "${play.path}" ))
+                {
+                    checkPlayHome(playHome);
+                    break;
+                }
+            }
+
 
             // getLog().debug("1" );
 
@@ -103,9 +132,10 @@ public class PlayWarMojo
             // public
             warArchiver.addDirectory( new File( baseDir, "public" ), "WEB-INF/application/public/", null, null );
             // conf
-            File filteredApplicationConf =
-                filterApplicationConf( new File( baseDir, "conf/application.conf" ), modules );
-            warArchiver.addFile( filteredApplicationConf, "WEB-INF/application/conf/application.conf" );
+            //File filteredApplicationConf =
+            //    filterApplicationConf( new File( baseDir, "conf/application.conf" ), modules );
+            //warArchiver.addFile( filteredApplicationConf, "WEB-INF/application/conf/application.conf" );
+            warArchiver.addFile( new File( baseDir, "conf/application.conf" ), "WEB-INF/application/conf/application.conf" );
             warArchiver.addDirectory( new File( baseDir, "conf" ), "WEB-INF/application/conf/",
                                       subtract( confIncludes, new String[] { "application.conf" } ), null );
             // warArchiver.addClasses(new File(baseDir, "conf"), null, confIncludes);
@@ -120,8 +150,11 @@ public class PlayWarMojo
             // modules
             for ( String moduleName : modules.keySet() )
             {
-                File modulePath = modules.get( moduleName );
-                warArchiver.addDirectory( modulePath, "WEB-INF/modules/" + modulePath.getName() + "/", null,
+                String modulePath = modules.get( moduleName );
+                modulePath = modulePath.replace( "${play.path}", playHome.getPath() );
+                File moduleDir = new File( modulePath );
+
+                warArchiver.addDirectory( moduleDir, "WEB-INF/modules/" + moduleDir.getName() + "/", null,
                                           moduleExcludes );
                 if ( new File( modulePath, "lib" ).isDirectory() )
                 {
@@ -215,7 +248,7 @@ public class PlayWarMojo
         return result;
     }
 
-    private File filterApplicationConf( File applicationConf, Map<String, File> modules )
+/*    private File filterApplicationConf( File applicationConf, Map<String, File> modules )
         throws IOException
     {
         File resultDir = new File( project.getBuild().getDirectory(), "play/tmp" );
@@ -252,7 +285,7 @@ public class PlayWarMojo
             reader.close();
         }
         return result;
-    }
+    }*/
 
     protected String[] concatenate( String[] array1, String[] array2 )
     {
@@ -279,9 +312,4 @@ public class PlayWarMojo
 }
 
 // TODO
-/*
- * 1. filtrowanie 'web.xml' - zrobione, ale mozna usprawnic: - wczytywac 'web.xml' odpowiednim readerem xml wylapujacym
- * kodowanie w czasie rzeczywistym - co ze znakami nowej linii? - a moze wczytac inputstream'em? 3. ignorowanie plikow
- * wymienionych w 'war.exclude' deleteFrom(war_path, app.readConf('war.exclude').split("|")) Skąd ja to wziąłem? Nie
- * mogę znaleźć!
- */
+// add "warExclude" option (deleteFrom(war_path, app.readConf('war.exclude').split("|")) where is it from? I don't remember and cannot find ;)
