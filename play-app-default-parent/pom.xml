@@ -31,10 +31,6 @@ under the License.
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <play.testId>test</play.testId>
-        <play.seleniumSkip>false</play.seleniumSkip>
-        <selenium.browser></selenium.browser>
     </properties>
 
     <build>
@@ -102,8 +98,8 @@ under the License.
                         <runOrder>alphabetical</runOrder>
                         <systemPropertyVariables>
                             <selenium.browser>${selenium.browser}</selenium.browser>
-                            <!--<selenium.url>${selenium.url}</selenium.url>-->
-                            <selenium.test.trace>false</selenium.test.trace>
+                            <selenium.url>${selenium.url}</selenium.url>
+                            <selenium.test.trace>${selenium.test.trace}</selenium.test.trace>
                         </systemPropertyVariables>
                     </configuration>
                  </plugin>
