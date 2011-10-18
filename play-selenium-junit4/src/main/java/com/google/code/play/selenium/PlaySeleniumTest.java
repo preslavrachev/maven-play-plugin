@@ -510,7 +510,7 @@ public abstract class PlaySeleniumTest
                 }
                 throw e;
             }
-            catch ( Error e )//TODO-should I handle Errors?
+            catch ( Error e )//TODO-should I handle errors?
             {
                 String msg = "error: " + e.getMessage();
                 String logLine = dumpTestStep( line, indent, step, msg );
@@ -574,7 +574,7 @@ public abstract class PlaySeleniumTest
         String strLine = String.valueOf( line );
         while ( strLine.length() < indent )
         {
-            strLine = " " + strLine;// chamskie rozwiazanie, poprawic potem
+            strLine = " " + strLine;// TODO improve
         }
         return " " + strLine + ": " + step.toString() + " [" + step.getExecutionTimeMillis() + "ms]";
         // System.out.println( strLine + ": " + step.toString() );
@@ -585,7 +585,7 @@ public abstract class PlaySeleniumTest
         String strLine = String.valueOf( line );
         while ( strLine.length() < indent )
         {
-            strLine = " " + strLine;// chamskie rozwiazanie, poprawic potem
+            strLine = " " + strLine;// TODO improve
         }
         return "*" + strLine + ": " + step.toString() + " [" + step.getExecutionTimeMillis() + "ms] " + message;
         // System.out.println( strLine + ": " + step.toString() );
