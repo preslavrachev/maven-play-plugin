@@ -29,18 +29,37 @@ under the License.
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
-    <artifactId>test-projects</artifactId>
+    <artifactId>plugin-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>Play! Framework Maven Test Projects</name>
+    <name>Maven Plugin for Play! Framework Plugin Parent</name>
 
     <modules>
-        <module>external-modules</module>
-        <module>findbugs</module>
-        <module>packagings</module>
-        <module>selenium</module>
-        <module>surefire</module>
-        <module>surefire-with-failures</module>
+        <module>maven-plugin</module>
+        <module>play-app-default-parent</module>
+        <module>play-module-default-parent</module>
+        <module>play-selenium-junit4</module>
+        <module>play-server-booter</module>
+        <module>play12-extensions</module>
+        <module>surefire-play-junit4</module>
+        <module>test-projects</module>
     </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <tagBase>https://maven-play-plugin.googlecode.com/svn/tags/plugin</tagBase>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        </plugins>
+    </build>
 
 </project>
