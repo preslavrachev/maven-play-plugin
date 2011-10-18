@@ -188,8 +188,8 @@ class StartServerMojo
                 sysproperty(key: 'play.id', value: playTestId)
                 sysproperty(key: 'application.path', value: applicationPath)
                 
-                if (seleniumServerProcessArgLine != null) {
-                    String argLine = seleniumServerProcessArgLine.trim();
+                if (serverProcessArgLine != null) {
+                    String argLine = serverProcessArgLine.trim();
                     if (!"".equals(argLine)) {
                         String[] args = argLine.split( " " );
                         for (String arg: args) {
