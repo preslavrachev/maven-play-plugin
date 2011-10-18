@@ -24,7 +24,7 @@ under the License.
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.0-alpha4-SNAPSHOT</version>
+    <version>1.0.0-alpha3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Maven Plugin for Play! Framework Parent</name>
@@ -87,7 +87,7 @@ under the License.
         <module>play-server-booter</module>
         <module>play12-extensions</module>
         <module>surefire-play-junit4</module>
-        <!--<module>test-projects</module>-->
+        <module>test-projects</module>
     </modules>
 
     <developers>

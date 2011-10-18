@@ -24,7 +24,7 @@ under the License.
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
     <artifactId>play-app-default-parent</artifactId>
-    <version>1.0.0-alpha4-SNAPSHOT</version>
+    <version>1.0.0-alpha3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Play! Application Default Configuration Parent</name>
@@ -39,7 +39,7 @@ under the License.
                 <plugin>
                     <groupId>com.google.code.maven-play-plugin</groupId>
                     <artifactId>play-maven-plugin</artifactId>
-                    <version>1.0.0-alpha4-SNAPSHOT</version> <!-- cannot use ${project.version} -->
+                    <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} -->
                 </plugin>
 
                 <plugin>
