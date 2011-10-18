@@ -30,7 +30,10 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * ... //FIXME
+ * Generates JUnit test wrapper sources for Selenium tests. Maven Surefire plugin
+ * operates on Java test classes (JUnit or TestNG). Play! application Selenium tests
+ * are defined in "*.test.html" files so there is a need for a JUnit (or TestNG) wrapper
+ * for every Selenium test.
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal generate-selenium-junit4-sources
@@ -41,7 +44,7 @@ public class PlayGenerateSeleniumJunit4SourcesMojo
 {
 
     /**
-     * ...
+     * Skip generating JUnit test wrapper sources
      * 
      * @parameter expression="${play.seleniumSkip}" default-value="false"
      * @since 1.0.0

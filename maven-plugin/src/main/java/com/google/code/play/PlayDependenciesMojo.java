@@ -27,10 +27,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
-//import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-//import org.apache.maven.project.MavenProject;
 
 import org.codehaus.plexus.archiver.ArchiverException;
 import org.codehaus.plexus.archiver.UnArchiver;
@@ -40,15 +38,14 @@ import org.codehaus.plexus.archiver.manager.NoSuchArchiverException;
 import org.codehaus.plexus.util.FileUtils;
 
 /**
- * ... finish! ...
+ * Extracts project dependencies to "lib" and "modules" directories.
+ * It's like Play! framework's "dependencies" command, but uses Maven dependencies,
+ * instead of "conf/dependencies.yml" file.
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal dependencies
  * @requiresDependencyResolution runtime
  */
-// a co z zaleznosciami "runtime"? czy na pewno nie sa potrzebne? Play! by je wciagnal
-// jak jest "@requiresDependencyResolution compile", to nie wiem, jak odfiltrowac drzewo bibliotek play'a (ma scope
-// provided)
 public class PlayDependenciesMojo
     extends AbstractPlayMojo
 {
@@ -221,4 +218,8 @@ public class PlayDependenciesMojo
 
 }
 
-// TODO - add name conflict detection for modules and jars
+// TODO
+// 1. Add name conflict detection for modules and jars
+// 2. For now I use "runtime". Ideally I would need ALL dependencies except "provided" jars
+//    ("provided" zips still needed). "requiresDependencyResolution" is to week for my needs.
+//    I must use another mechanism (like in maven-dependency-plugin).

@@ -35,6 +35,7 @@ import org.codehaus.plexus.archiver.war.WarArchiver;
 
 /**
  * Package Play! framework and Play! application as a WAR achive.
+ * WARNING: NOT READY YET! DON'T USE IT!
  * 
  * @author <a href="mailto:gslowikowski@gmail.com">Grzegorz Slowikowski</a>
  * @goal war
@@ -65,39 +66,38 @@ public class PlayWarMojo
     protected File playHome;
 
     /**
-     * ...
+     * Play! id (profile) used for WAR packaging.
      * 
-     * @parameter expression="${play.id}"
+     * @parameter expression="${play.warId}" default-value="war"
      * @since 1.0.0
      */
-    protected String playId;
+    protected String playWarId;
 
     /**
-     * The directory for the generated WAR.
+     * The directory for the generated WAR file.
      * 
-     * @parameter expression="${project.build.directory}"
+     * @parameter expression="${play.warOutputDirectory}" default-value="${project.build.directory}"
      * @required
      * @since 1.0.0
      */
-    private String outputDirectory;
+    private String warOutputDirectory;
 
     /**
-     * The name of the generated WAR.
+     * The name of the generated WAR file.
      * 
-     * @parameter expression="${project.build.finalName}"
+     * @parameter expression="${play.warArchiveName}" default-value="${project.build.finalName}"
      * @required
      * @since 1.0.0
      */
-    private String warName;
+    private String warArchiveName;
 
     /**
-     * Classifier to add to the generated WAR. If given, the artifact will be an attachment instead.?? The classifier
-     * will not be applied to the jar file of the project - only to the war file.
+     * Classifier to add to the generated WAR file.
      * 
-     * @parameter
+     * @parameter expression="${play.warClassifier}" default-value=""
      * @since 1.0.0
      */
-    private String classifier;
+    private String warClassifier;
 
     protected void internalExecute()
         throws MojoExecutionException, MojoFailureException, IOException
@@ -105,9 +105,9 @@ public class PlayWarMojo
         try
         {
             File baseDir = project.getBasedir();
-            File destFile = new File( outputDirectory, getDestinationFileName() );
+            File destFile = new File( warOutputDirectory, getDestinationFileName() );
 
-            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playId );
+            ConfigurationParser configParser = new ConfigurationParser( new File( baseDir, "conf" ), playWarId );
             configParser.parse();
             Map<String, String> modules = configParser.getModules();
             //TODO-create method in a base class (create base class for uberzip i war mojos)?
@@ -182,9 +182,9 @@ public class PlayWarMojo
     {
         // String result = super.resolvePlayId();
 
-        if ( playId == null || "".equals( playId ) )
+        if ( playWarId == null || "".equals( playWarId ) )
         {
-            playId = "war";
+            playWarId = "war";
         }
         // return result;
     }
@@ -192,14 +192,14 @@ public class PlayWarMojo
     private String getDestinationFileName()
     {
         StringBuffer buf = new StringBuffer();
-        buf.append( warName );
-        if ( classifier != null && !"".equals( classifier ) )
+        buf.append( warArchiveName );
+        if ( warClassifier != null && !"".equals( warClassifier ) )
         {
-            if ( !classifier.startsWith( "-" ) )
+            if ( !warClassifier.startsWith( "-" ) )
             {
                 buf.append( '-' );
             }
-            buf.append( classifier );
+            buf.append( warClassifier );
         }
         buf.append( ".war" );
         return buf.toString();
@@ -229,7 +229,7 @@ public class PlayWarMojo
                     }
                     if ( line.indexOf( "%PLAY_ID%" ) >= 0 )
                     {
-                        line = line.replace( "%PLAY_ID%", playId );
+                        line = line.replace( "%PLAY_ID%", playWarId );
                     }
                     writer.write( line );
                     writer.newLine();

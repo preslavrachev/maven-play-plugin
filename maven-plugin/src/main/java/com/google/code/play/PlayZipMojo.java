@@ -47,7 +47,7 @@ public class PlayZipMojo
     extends AbstractPlayMojo
 {
     /**
-     * Include filter
+     * Application resources include filter
      * 
      * @parameter expression="${play.zipIncludes}" default-value="app/**,conf/**,public/**,tags/**"
      * @since 1.0.0
@@ -55,7 +55,7 @@ public class PlayZipMojo
     private String zipIncludes;
 
     /**
-     * Exclude filter
+     * Application resources exclude filter.
      * 
      * @parameter expression="${play.zipExcludes}" default-value=""
      * @since 1.0.0
@@ -63,7 +63,8 @@ public class PlayZipMojo
     private String zipExcludes;
 
     /**
-     * Package lib and modules directories or not
+     * Should project dependencies ("lib" and "modules" directories) be packaged.
+     * No include/exclude filters. Use "provided" scope to exclude from packaging.
      * 
      * @parameter expression="${play.zipDependencies}" default-value="false"
      * @since 1.0.0
