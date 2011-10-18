@@ -82,10 +82,12 @@ under the License.
     <modules>
         <module>maven-plugin</module>
         <module>play-app-default-parent</module>
+        <module>play-module-default-parent</module>
         <module>play-selenium-junit4</module>
         <module>play-server-booter</module>
         <module>play12-extensions</module>
         <module>surefire-play-junit4</module>
+        <module>test-projects</module>
     </modules>
 
     <developers>
@@ -203,6 +205,18 @@ under the License.
                         <links>
                             <link>http://download.oracle.com/javase/1.5.0/docs/api/</link>
                         </links>
+                        <tagletArtifacts>
+                            <tagletArtifact>
+                                <groupId>org.apache.maven.plugin-tools</groupId>
+                                <artifactId>maven-plugin-tools-javadoc</artifactId>
+                                <version>2.9</version>
+                            </tagletArtifact>
+                            <tagletArtifact>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-javadoc</artifactId>
+                                <version>1.0</version>
+                            </tagletArtifact>
+                        </tagletArtifacts>
                     </configuration>
                 </plugin>
 
@@ -389,34 +403,9 @@ under the License.
 
     <profiles>
         <profile>
-            <id>hudson</id>
+            <id>fullsite</id>
 
             <build>
-                <!--
-                Note, if youre activating the reporting plugins via a <profile> in a child POMs
-                you need to (pre)configure those reporting plugins in the <build><plugins> section
-                of your parent POM rather than the <pluginsManagement> section due to another bug
-                that prevents specified depenedencies from being picked up in child POMs
-                when activated from <profiles>.
-
-                http://jira.codehaus.org/browse/MNG-2173
-                -->
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-<!--poprawic
-                        <dependencies>
-                            <dependency>
-                                <groupId>pl.com.tiger.developer-resources</groupId>
-                                <artifactId>developer-resources-checkstyle</artifactId>
-                                <version>1.0.1</version>
-                            </dependency>
-                        </dependencies>
--->
-                    </plugin>
-                </plugins>
-
                 <pluginManagement>
                     <plugins>
                         <plugin>
@@ -451,7 +440,6 @@ under the License.
                         <configuration>
                             <configLocation>config/maven_checks.xml</configLocation>
                             <headerLocation>src/conf/checkstyle-header.txt</headerLocation>
-<!--                            <configLocation>pl/com/tiger/checkstyle5.xml</configLocation>-->
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         </configuration>
                     </plugin>
@@ -465,6 +453,18 @@ under the License.
                             <links>
                                 <link>http://download.oracle.com/javase/1.5.0/docs/api/</link>
                             </links>
+                            <tagletArtifacts>
+                                <tagletArtifact>
+                                    <groupId>org.apache.maven.plugin-tools</groupId>
+                                    <artifactId>maven-plugin-tools-javadoc</artifactId>
+                                    <version>2.9</version>
+                                </tagletArtifact>
+                                <tagletArtifact>
+                                    <groupId>org.codehaus.plexus</groupId>
+                                    <artifactId>plexus-javadoc</artifactId>
+                                    <version>1.0</version>
+                                </tagletArtifact>
+                            </tagletArtifacts>
                         </configuration>
                     </plugin>
 
