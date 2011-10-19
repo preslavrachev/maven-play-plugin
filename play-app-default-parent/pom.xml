@@ -39,7 +39,7 @@ under the License.
                 <plugin>
                     <groupId>com.google.code.maven-play-plugin</groupId>
                     <artifactId>play-maven-plugin</artifactId>
-                    <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} -->
+                    <version>1.0.0-alpha3</version> <!-- cannot use ${project.version} -->
                 </plugin>
 
                 <plugin>
@@ -80,7 +80,7 @@ under the License.
                         <dependency>
                             <groupId>com.google.code.maven-play-plugin</groupId>
                             <artifactId>surefire-play-junit4</artifactId>
-                            <version>1.0.0-alpha3-SNAPSHOT</version> <!-- cannot use ${project.version} --> 
+                            <version>1.0.0-alpha3</version> <!-- cannot use ${project.version} --> 
                         </dependency>
                     </dependencies>
                 </plugin>
