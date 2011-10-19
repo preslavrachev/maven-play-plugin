@@ -71,7 +71,7 @@ under the License.
     <scm>
         <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/maven-parent/</connection>
         <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/maven-parent/</developerConnection>
-        <url>http://code.google.com/p/maven-play-plugin/source/browse/</url>
+        <url>http://maven-play-plugin.googlecode.com/svn/trunk/maven-parent/</url>
     </scm>
 
     <issueManagement>
