@@ -33,35 +33,7 @@ under the License.
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>com.google.code.maven-play-plugin</id>
-            <name>Maven Play Plugin - releases</name>
-            <url>dav:https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>com.google.code.maven-play-plugin-snapshots</id>
-            <name>Maven Play Plugin - snapshots</name>
-            <url>dav:https://maven-play-plugin.googlecode.com/svn/mavenrepo/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-webdav</artifactId>
-                <version>1.0-beta-2</version>
-            </extension>
-<!--
-            <extension>
-                <groupId>com.google.code.maven-svn-wagon</groupId>
-                <artifactId>maven-svn-wagon</artifactId>
-                <version>1.2</version>
-            </extension>
--->
-        </extensions>
-
         <pluginManagement>
             <plugins>
                 <plugin>
