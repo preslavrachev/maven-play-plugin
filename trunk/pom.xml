@@ -27,7 +27,7 @@ under the License.
     <version>1.0.0-alpha3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <!--<name>Maven Plugin for Play! Framework Parent</name>-->
+    <name>Parent</name>
 
     <modules>
         <module>plugin</module>
