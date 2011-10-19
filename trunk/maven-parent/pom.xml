@@ -28,8 +28,7 @@ under the License.
     <packaging>pom</packaging>
 
     <name>Maven Parent</name>
-    <inceptionYear>2010</inceptionYear>
-    <url>http://maven-play-plugin.googlecode.com/svn/mavensite/${project.artifactId}/${project.version}</url>
+    <inceptionYear>2011</inceptionYear>
 
     <repositories>
         <repository>

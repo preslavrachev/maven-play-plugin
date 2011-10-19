@@ -29,11 +29,11 @@ under the License.
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
-    <artifactId>test-projects</artifactId>
+    <artifactId>play-default-parents</artifactId>
     <version>1.0.0-alpha4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Play! Framework Maven Test Projects</name>
+    <name>Play! Application and Module Default Parents</name>
 
     <repositories>
         <repository>
@@ -55,18 +55,14 @@ under the License.
     </repositories>
 
     <scm>
-        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/test-projects/</connection>
-        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/</developerConnection>
-        <url>http://maven-play-plugin.googlecode.com/svn/trunk/test-projects/</url>
+        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/play-default-parents/</connection>
+        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/play-default-parents/</developerConnection>
+        <url>http://maven-play-plugin.googlecode.com/svn/trunk/play-default-parents/</url>
     </scm>
 
     <modules>
-        <module>external-modules</module>
-        <module>findbugs</module>
-        <module>packagings</module>
-        <module>selenium</module>
-        <module>surefire</module>
-        <module>surefire-with-failures</module>
+        <module>play-app-default-parent</module>
+        <module>play-module-default-parent</module>
     </modules>
 
 </project>

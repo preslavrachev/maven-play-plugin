@@ -31,8 +31,7 @@ under the License.
 
     <modules>
         <module>plugin</module>
-        <module>play-app-default-parent</module>
-        <module>play-module-default-parent</module>
+        <module>play-default-parents</module>
         <module>test-projects</module>
     </modules>
 
