@@ -23,13 +23,13 @@ under the License.
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
-    <artifactId>plugin-parent</artifactId>
+    <artifactId>maven-parent</artifactId>
     <version>1.0.0-alpha3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Maven Parent</name>
     <inceptionYear>2010</inceptionYear>
-    <url>http://maven-play-plugin.googlecode.com/svn/mavensite/plugin-parent/${project.version}</url>
+    <url>http://maven-play-plugin.googlecode.com/svn/mavensite/${project.artifactId}/${project.version}</url>
 
     <repositories>
         <repository>
@@ -64,13 +64,13 @@ under the License.
         <site>
             <id>com.google.code.maven-play-plugin-sites</id>
             <name>Maven Play Plugin - sites</name>
-            <url>dav:https://maven-play-plugin.googlecode.com/svn/mavensite/${project.version}</url>
+            <url>dav:https://maven-play-plugin.googlecode.com/svn/mavensite/${project.artifactId}/${project.version}</url>
         </site>
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/plugin/</connection>
-        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/plugin/</developerConnection>
+        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/maven-parent/</connection>
+        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/maven-parent/</developerConnection>
         <url>http://code.google.com/p/maven-play-plugin/source/browse/</url>
     </scm>
 
@@ -235,8 +235,6 @@ under the License.
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.1</version>
                     <configuration>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <tagBase>https://maven-play-plugin.googlecode.com/svn/tags</tagBase>
                         <providerImplementations>
                             <svn>javasvn</svn>
                         </providerImplementations>
