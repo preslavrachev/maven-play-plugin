@@ -61,11 +61,6 @@ under the License.
             <name>Maven Play Plugin - snapshots</name>
             <url>dav:https://maven-play-plugin.googlecode.com/svn/mavenrepo/snapshots</url>
         </snapshotRepository>
-        <site>
-            <id>com.google.code.maven-play-plugin-sites</id>
-            <name>Maven Play Plugin - sites</name>
-            <url>dav:https://maven-play-plugin.googlecode.com/svn/mavensite/${project.artifactId}/${project.version}</url>
-        </site>
     </distributionManagement>
 
     <scm>
