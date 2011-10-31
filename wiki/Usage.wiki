@@ -35,6 +35,10 @@ To use Maven to build Play! project, add this to your pom.xml file:
         </repository>
     </repositories>
 
+    <properties>
+        <play.version>1.2.3</play.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
