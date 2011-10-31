@@ -1,11 +1,4 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-How to start using this plugin.
-
-
-= Details =
+#Plugin usage in the pom.xml file
 
 To use Maven to build Play! project, add this to your pom.xml file:
 
