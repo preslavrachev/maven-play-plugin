@@ -72,3 +72,5 @@ Simplest project (pom.xml file) should look like:
     </build>
 </project>
 }}}
+
+For more sample projects go to [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha4/ test projects].
