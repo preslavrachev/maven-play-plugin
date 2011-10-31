@@ -1,0 +1,66 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+How to start using this plugin.
+
+
+= Details =
+
+To use Maven to build Play! project, add this to your pom.xml file:
+
+{{{
+    <parent>
+        <groupId>com.google.code.maven-play-plugin</groupId>
+        <artifactId>play-app-default-parent</artifactId>
+        <version>1.0.0-alpha4</version>
+    </parent>
+
+    <repositories>
+        <repository>
+            <id>com.google.code.maven-play-plugin</id>
+            <name>Maven Play Plugin - releases</name>
+            <url>http://maven-play-plugin.googlecode.com/svn/mavenrepo/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>com.google.code.maven-play-plugin-snapshots</id>
+            <name>Maven Play Plugin - snapshots</name>
+            <url>http://maven-play-plugin.googlecode.com/svn/mavenrepo/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+            <artifactId>play</artifactId>
+            <version>${play.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- needed only if "play.home" property not set -->
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
+            <artifactId>play</artifactId>
+            <version>${play.version}</version>
+            <classifier>framework-min</classifier>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-play-plugin</groupId>
+                <artifactId>play-maven-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+}}}
