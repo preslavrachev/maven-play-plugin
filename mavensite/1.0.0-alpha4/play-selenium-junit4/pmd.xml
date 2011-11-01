@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2011-11-01T19:29:33.265">
+<pmd version="4.2.5" timestamp="2011-11-01T22:25:52.921">
 <file name="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-alpha4\play-selenium-junit4\src\main\java\com\google\code\play\selenium\step\WaitForEqualsStep.java">
 <violation beginline="59" endline="61" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.google.code.play.selenium.step" class="WaitForEqualsStep" method="doExecute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks

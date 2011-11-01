@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2011-11-01T19:28:12.843">
+<pmd version="4.2.5" timestamp="2011-11-01T22:25:16.718">
 <file name="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-alpha4\play-maven-plugin\src\main\java\com\google\code\play\AbstractPlayMojo.java">
 <violation beginline="263" endline="267" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="com.google.code.play" class="AbstractPlayMojo" method="filterWebXml" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined

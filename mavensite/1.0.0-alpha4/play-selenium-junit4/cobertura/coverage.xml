@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.0" branch-rate="0.0" lines-covered="0" lines-valid="794" branches-covered="0" branches-valid="338" complexity="2.890909090909091" version="1.9.4.1" timestamp="1320172181937">
+<coverage line-rate="0.0" branch-rate="0.0" lines-covered="0" lines-valid="794" branches-covered="0" branches-valid="338" complexity="2.890909090909091" version="1.9.4.1" timestamp="1320182754781">
 	<sources>
 		<source>E:/scm/googlecode.svn/maven-play-plugin/tags/plugin-1.0.0-alpha4/play-selenium-junit4/src/main/java</source>
 		<source>--source</source>

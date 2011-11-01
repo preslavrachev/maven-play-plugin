@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.0" branch-rate="0.0" lines-covered="0" lines-valid="718" branches-covered="0" branches-valid="328" complexity="5.560975609756097" version="1.9.4.1" timestamp="1320172096296">
+<coverage line-rate="0.0" branch-rate="0.0" lines-covered="0" lines-valid="718" branches-covered="0" branches-valid="328" complexity="5.560975609756097" version="1.9.4.1" timestamp="1320182718359">
 	<sources>
 		<source>--source</source>
 		<source>E:/scm/googlecode.svn/maven-play-plugin/tags/plugin-1.0.0-alpha4/play-maven-plugin/src/main/java</source>
