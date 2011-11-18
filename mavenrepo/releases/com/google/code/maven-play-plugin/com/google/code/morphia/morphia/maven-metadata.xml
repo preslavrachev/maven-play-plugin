@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.com.google.code.morphia</groupId>
+  <artifactId>morphia</artifactId>
+  <version>1.00-20110403</version>
+  <versioning>
+    <versions>
+      <version>1.00-20110403</version>
+    </versions>
+    <lastUpdated>20111118145739</lastUpdated>
+  </versioning>
+</metadata>
