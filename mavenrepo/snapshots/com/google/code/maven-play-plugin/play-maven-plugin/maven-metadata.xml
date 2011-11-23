@@ -4,10 +4,11 @@
   <artifactId>play-maven-plugin</artifactId>
   <version>1.0.0-alpha4-SNAPSHOT</version>
   <versioning>
-    <latest>1.0.0-alpha4-SNAPSHOT</latest>
+    <latest>1.0.0-alpha5-SNAPSHOT</latest>
     <versions>
       <version>1.0.0-alpha4-SNAPSHOT</version>
+      <version>1.0.0-alpha5-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20111027105419</lastUpdated>
+    <lastUpdated>20111123135928</lastUpdated>
   </versioning>
 </metadata>
