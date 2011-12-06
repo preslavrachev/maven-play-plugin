@@ -4,11 +4,12 @@
   <artifactId>plugin</artifactId>
   <version>1.0.0-alpha3</version>
   <versioning>
-    <release>1.0.0-alpha4</release>
+    <release>1.0.0-alpha5</release>
     <versions>
       <version>1.0.0-alpha3</version>
       <version>1.0.0-alpha4</version>
+      <version>1.0.0-alpha5</version>
     </versions>
-    <lastUpdated>20111031133551</lastUpdated>
+    <lastUpdated>20111206163104</lastUpdated>
   </versioning>
 </metadata>
