@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="c1246" href="../Step.html" title="&lt;TABLE&gt;" alt="" coords="1063,11,1214,61"/>
+<area shape="rect" id="c1274" href="./AbstractSeleniumStep.html" title="&lt;TABLE&gt;" alt="" coords="1068,127,1209,151"/>
+<area shape="rect" id="c1249" href="./WaitForTrueStep.html" title="&lt;TABLE&gt;" alt="" coords="15,223,126,247"/>
+<area shape="rect" id="c1250" href="./WaitForNotEqualsStep.html" title="&lt;TABLE&gt;" alt="" coords="171,223,315,247"/>
+<area shape="rect" id="c1251" href="./WaitForFalseStep.html" title="&lt;TABLE&gt;" alt="" coords="360,223,477,247"/>
+<area shape="rect" id="c1252" href="./WaitForEqualsStep.html" title="&lt;TABLE&gt;" alt="" coords="523,223,648,247"/>
+<area shape="rect" id="c1254" href="./VerifyTrueStep.html" title="&lt;TABLE&gt;" alt="" coords="693,223,790,247"/>
+<area shape="rect" id="c1255" href="./VerifyNotEqualsStep.html" title="&lt;TABLE&gt;" alt="" coords="835,223,965,247"/>
+<area shape="rect" id="c1256" href="./VerifyFalseStep.html" title="&lt;TABLE&gt;" alt="" coords="1011,223,1115,247"/>
+<area shape="rect" id="c1257" href="./VerifyEqualsStep.html" title="&lt;TABLE&gt;" alt="" coords="1160,223,1272,247"/>
+<area shape="rect" id="c1267" href="./CommandStep.html" title="&lt;TABLE&gt;" alt="" coords="1317,223,1419,247"/>
+<area shape="rect" id="c1269" href="./AssertTrueStep.html" title="&lt;TABLE&gt;" alt="" coords="1464,223,1568,247"/>
+<area shape="rect" id="c1270" href="./AssertNotEqualsStep.html" title="&lt;TABLE&gt;" alt="" coords="1613,223,1750,247"/>
+<area shape="rect" id="c1271" href="./AssertFalseStep.html" title="&lt;TABLE&gt;" alt="" coords="1795,223,1904,247"/>
+<area shape="rect" id="c1272" href="./AssertEqualsStep.html" title="&lt;TABLE&gt;" alt="" coords="1949,223,2067,247"/>
+<area shape="rect" id="c1273" href="./AndWaitStep.html" title="&lt;TABLE&gt;" alt="" coords="2111,223,2201,247"/>
+</map>

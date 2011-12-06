@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="60" tokens="228">
+<file line="67" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\PrecompileMojo.java"/>
+<file line="109" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\StartServerMojo.java"/>
+<codefragment>
+<![CDATA[
+    private MavenProject project = null;
+    public MavenProject getProject() {
+        throw new InternalError("Stubbed method");
+    }
+    public void setProject(MavenProject value) {
+        throw new InternalError("Stubbed method");
+    }
+
+    /**
+     * List of artifacts this plugin depends on. Used for resolving the Findbugs coreplugin.
+     *
+     * @parameter expression="${plugin.artifacts}"
+     * @required
+     * @readonly
+     */
+    private ArrayList pluginArtifacts = null;
+    public ArrayList getPluginArtifacts() {
+        throw new InternalError("Stubbed method");
+    }
+    public void setPluginArtifacts(ArrayList value) {
+        throw new InternalError("Stubbed method");
+    }
+
+    /**
+     * @parameter expression="${plugin.artifactMap}"
+     * @required
+     * @readonly
+     */
+    private Map pluginArtifactMap = null;
+    public Map getPluginArtifactMap() {
+        throw new InternalError("Stubbed method");
+    }
+    public void setPluginArtifactMap(Map value) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void execute() {
+        throw new InternalError("Stubbed method");
+    }
+
+    public groovy.lang.MetaClass getMetaClass() {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void setMetaClass(groovy.lang.MetaClass metaClass) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public java.lang.Object invokeMethod(java.lang.String name, java.lang.Object args) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public java.lang.Object getProperty(java.lang.String name) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void setProperty(java.lang.String name, java.lang.Object value) {
+        throw new InternalError("Stubbed method");
+    }
+}
+]]>
+</codefragment>
+</duplication>
+<duplication lines="28" tokens="139">
+<file line="99" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\PrecompileMojo.java"/>
+<file line="71" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\StopServerMojo.java"/>
+<codefragment>
+<![CDATA[
+    public void setProject(MavenProject value) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void execute() {
+        throw new InternalError("Stubbed method");
+    }
+
+    public groovy.lang.MetaClass getMetaClass() {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void setMetaClass(groovy.lang.MetaClass metaClass) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public java.lang.Object invokeMethod(java.lang.String name, java.lang.Object args) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public java.lang.Object getProperty(java.lang.String name) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void setProperty(java.lang.String name, java.lang.Object value) {
+        throw new InternalError("Stubbed method");
+    }
+}
+]]>
+</codefragment>
+</duplication>
+<duplication lines="24" tokens="126">
+<file line="28" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\AbstractPlayGroovyMojo.java"/>
+<file line="103" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\PrecompileMojo.java"/>
+<codefragment>
+<![CDATA[
+    public void execute() {
+        throw new InternalError("Stubbed method");
+    }
+
+    public groovy.lang.MetaClass getMetaClass() {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void setMetaClass(groovy.lang.MetaClass metaClass) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public java.lang.Object invokeMethod(java.lang.String name, java.lang.Object args) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public java.lang.Object getProperty(java.lang.String name) {
+        throw new InternalError("Stubbed method");
+    }
+
+    public void setProperty(java.lang.String name, java.lang.Object value) {
+        throw new InternalError("Stubbed method");
+    }
+}
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.2.5" timestamp="2011-12-06T22:23:47.687">
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\AbstractPlayMojo.java">
+<violation beginline="281" endline="285" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="com.google.code.play" class="AbstractPlayMojo" method="filterWebXml" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayDependenciesMojo.java">
+<violation beginline="255" endline="258" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="com.google.code.play" class="PlayDependenciesMojo" method="createDir" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayGenerateSeleniumJunit4SourcesMojo.java">
+<violation beginline="113" endline="117" begincolumn="29" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="com.google.code.play" class="PlayGenerateSeleniumJunit4SourcesMojo" method="processTestsInDirectory" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayInitializeMojo.java">
+<violation beginline="349" endline="352" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="com.google.code.play" class="PlayInitializeMojo" method="createDir" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="356" endline="359" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="com.google.code.play" class="PlayInitializeMojo" method="createDir" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\AbstractPlayGroovyMojo.java">
+<violation beginline="7" endline="7" begincolumn="1" endcolumn="19" rule="DontImportJavaLang" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DontImportJavaLang" priority="4">
+Avoid importing anything from the package 'java.lang'
+</violation>
+<violation beginline="13" endline="13" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigDecimal'
+</violation>
+<violation beginline="14" endline="14" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigInteger'
+</violation>
+<violation beginline="15" endline="15" begincolumn="1" endcolumn="54" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.apache.maven.plugin.MojoExecutionException'
+</violation>
+<violation beginline="16" endline="16" begincolumn="1" endcolumn="45" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.apache.maven.project.MavenProject'
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\PrecompileMojo.java">
+<violation beginline="7" endline="7" begincolumn="1" endcolumn="19" rule="DontImportJavaLang" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DontImportJavaLang" priority="4">
+Avoid importing anything from the package 'java.lang'
+</violation>
+<violation beginline="13" endline="13" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigDecimal'
+</violation>
+<violation beginline="14" endline="14" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigInteger'
+</violation>
+<violation beginline="16" endline="16" begincolumn="1" endcolumn="56" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.codehaus.gmaven.mojo.support.ProcessLauncher'
+</violation>
+<violation beginline="35" endline="35" begincolumn="30" endcolumn="35" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="PrecompileMojo" variable="playId" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'playId'.
+</violation>
+<violation beginline="49" endline="49" begincolumn="21" endcolumn="34" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="PrecompileMojo" variable="precompileSkip" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'precompileSkip'.
+</violation>
+<violation beginline="67" endline="67" begincolumn="26" endcolumn="32" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="PrecompileMojo" variable="project" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'project'.
+</violation>
+<violation beginline="82" endline="82" begincolumn="23" endcolumn="37" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="PrecompileMojo" variable="pluginArtifacts" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'pluginArtifacts'.
+</violation>
+<violation beginline="95" endline="95" begincolumn="17" endcolumn="33" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="PrecompileMojo" variable="pluginArtifactMap" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'pluginArtifactMap'.
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\StartServerMojo.java">
+<violation beginline="7" endline="7" begincolumn="1" endcolumn="19" rule="DontImportJavaLang" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DontImportJavaLang" priority="4">
+Avoid importing anything from the package 'java.lang'
+</violation>
+<violation beginline="13" endline="13" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigDecimal'
+</violation>
+<violation beginline="14" endline="14" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigInteger'
+</violation>
+<violation beginline="16" endline="16" begincolumn="1" endcolumn="42" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.codehaus.plexus.util.FileUtils'
+</violation>
+<violation beginline="17" endline="17" begincolumn="1" endcolumn="56" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.codehaus.gmaven.mojo.support.ProcessLauncher'
+</violation>
+<violation beginline="37" endline="37" begincolumn="30" endcolumn="39" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="playTestId" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'playTestId'.
+</violation>
+<violation beginline="52" endline="52" begincolumn="17" endcolumn="26" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="serverPort" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'serverPort'.
+</violation>
+<violation beginline="66" endline="66" begincolumn="21" endcolumn="35" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="serverLogOutput" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'serverLogOutput'.
+</violation>
+<violation beginline="83" endline="83" begincolumn="21" endcolumn="32" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="seleniumSkip" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'seleniumSkip'.
+</violation>
+<violation beginline="100" endline="100" begincolumn="30" endcolumn="49" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="serverProcessArgLine" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'serverProcessArgLine'.
+</violation>
+<violation beginline="109" endline="109" begincolumn="26" endcolumn="32" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="project" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'project'.
+</violation>
+<violation beginline="124" endline="124" begincolumn="23" endcolumn="37" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="pluginArtifacts" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'pluginArtifacts'.
+</violation>
+<violation beginline="137" endline="137" begincolumn="17" endcolumn="33" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StartServerMojo" variable="pluginArtifactMap" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'pluginArtifactMap'.
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\target\generated-sources\groovy-stubs\main\com\google\code\play\StopServerMojo.java">
+<violation beginline="7" endline="7" begincolumn="1" endcolumn="19" rule="DontImportJavaLang" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DontImportJavaLang" priority="4">
+Avoid importing anything from the package 'java.lang'
+</violation>
+<violation beginline="13" endline="13" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigDecimal'
+</violation>
+<violation beginline="14" endline="14" begincolumn="1" endcolumn="28" rule="UnusedImports" ruleset="Import Statement Rules" package="com.google.code.play" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.math.BigInteger'
+</violation>
+<violation beginline="35" endline="35" begincolumn="17" endcolumn="26" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StopServerMojo" variable="serverPort" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'serverPort'.
+</violation>
+<violation beginline="49" endline="49" begincolumn="21" endcolumn="32" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StopServerMojo" variable="seleniumSkip" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'seleniumSkip'.
+</violation>
+<violation beginline="67" endline="67" begincolumn="26" endcolumn="32" rule="UnusedPrivateField" ruleset="Unused Code Rules" package="com.google.code.play" class="StopServerMojo" variable="project" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField" priority="3">
+Avoid unused private fields such as 'project'.
+</violation>
+</file>
+</pmd>

@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="c3215" href="./PlayJUnit4Provider.html" title="&lt;TABLE&gt;" alt="" coords="42,24,163,48"/>
+<area shape="rect" id="c3216" href="./PlayDirectoryScanner.html" title="&lt;TABLE&gt;" alt="" coords="219,127,355,151"/>
+<area shape="rect" id="c3219" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/TestsToRun.html" title="&lt;TABLE&gt;" alt="" coords="16,223,163,259"/>
+<area shape="rect" id="c3220" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/report/ConsoleLogger.html" title="&lt;TABLE&gt;" alt="" coords="207,216,366,267"/>
+<area shape="rect" id="c3221" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/RunOrder.html" title="&lt;TABLE&gt;" alt="" coords="411,223,557,259"/>
+<area shape="rect" id="c3222" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/ScannerFilter.html" title="&lt;TABLE&gt;" alt="" coords="603,216,749,267"/>
+<area shape="rect" id="c3218" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/DirectoryScanner.html" title="&lt;TABLE&gt;" alt="" coords="213,11,360,61"/>
+</map>

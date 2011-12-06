@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="c0" href="./StopServerMojo.html" title="&lt;TABLE&gt;" alt="" coords="15,113,121,137"/>
+<area shape="rect" id="c1" href="./StartServerMojo.html" title="&lt;TABLE&gt;" alt="" coords="165,113,270,137"/>
+<area shape="rect" id="c2" href="./PrecompileMojo.html" title="&lt;TABLE&gt;" alt="" coords="314,113,422,137"/>
+<area shape="rect" id="c3" href="./PlayZipMojo.html" title="&lt;TABLE&gt;" alt="" coords="467,113,552,137"/>
+<area shape="rect" id="c4" href="./PlayWarSupportMojo.html" title="&lt;TABLE&gt;" alt="" coords="597,113,731,137"/>
+<area shape="rect" id="c5" href="./PlayWarMojo.html" title="&lt;TABLE&gt;" alt="" coords="775,113,865,137"/>
+<area shape="rect" id="c6" href="./PlayUberZipMojo.html" title="&lt;TABLE&gt;" alt="" coords="909,113,1021,137"/>
+<area shape="rect" id="c7" href="./PlayInitializeMojo.html" title="&lt;TABLE&gt;" alt="" coords="1067,113,1179,137"/>
+<area shape="rect" id="c8" href="./PlayGenerateSeleniumJunit4SourcesMojo.html" title="&lt;TABLE&gt;" alt="" coords="1224,113,1475,137"/>
+<area shape="rect" id="c9" href="./PlayDependenciesMojo.html" title="&lt;TABLE&gt;" alt="" coords="1520,113,1669,137"/>
+<area shape="rect" id="c10" href="./ConfigurationParser.html" title="&lt;TABLE&gt;" alt="" coords="1066,17,1195,41"/>
+<area shape="rect" id="c11" href="./AbstractPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="909,17,1021,41"/>
+<area shape="rect" id="c12" href="./AbstractPlayGroovyMojo.html" title="&lt;TABLE&gt;" alt="" coords="143,17,292,41"/>
+<area shape="rect" id="c13" href="./PlayServerBooter.html" title="&lt;TABLE&gt;" alt="" coords="1239,17,1353,41"/>
+</map>

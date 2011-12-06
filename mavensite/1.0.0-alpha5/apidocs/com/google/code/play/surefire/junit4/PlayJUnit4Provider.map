@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="c3140" href="./PlayJUnit4Provider.html" title="&lt;TABLE&gt;" alt="" coords="671,113,793,137"/>
+<area shape="rect" id="c3141" href="./PlayDirectoryScanner.html" title="&lt;TABLE&gt;" alt="" coords="563,216,699,240"/>
+<area shape="rect" id="c3146" href="http://java.sun.com/j2se/1.4.2/docs/api/org/junit/runner/notification/RunListener.html" title="&lt;TABLE&gt;" alt="" coords="149,210,278,246"/>
+<area shape="rect" id="c3149" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/common/junit4/JUnit4TestChecker.html" title="&lt;TABLE&gt;" alt="" coords="322,210,518,246"/>
+<area shape="rect" id="c3150" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/TestsToRun.html" title="&lt;TABLE&gt;" alt="" coords="16,319,163,355"/>
+<area shape="rect" id="c3156" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/providerapi/ProviderParameters.html" title="&lt;TABLE&gt;" alt="" coords="744,203,925,253"/>
+<area shape="rect" id="c3157" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/report/ConsoleLogger.html" title="&lt;TABLE&gt;" alt="" coords="722,312,881,363"/>
+<area shape="rect" id="c3161" href="http://java.sun.com/j2se/1.4.2/docs/api/org/junit/runner/Result.html" title="&lt;TABLE&gt;" alt="" coords="1021,210,1102,246"/>
+<area shape="rect" id="c3162" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/suite/RunResult.html" title="&lt;TABLE&gt;" alt="" coords="1147,210,1301,246"/>
+<area shape="rect" id="c3163" href="http://java.sun.com/j2se/1.4.2/docs/api/org/junit/runner/notification/RunNotifier.html" title="&lt;TABLE&gt;" alt="" coords="1346,210,1475,246"/>
+<area shape="rect" id="c3164" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/report/RunListener.html" title="&lt;TABLE&gt;" alt="" coords="1519,203,1678,253"/>
+<area shape="rect" id="c3145" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/providerapi/AbstractProvider.html" title="&lt;TABLE&gt;" alt="" coords="641,11,823,47"/>
+</map>
