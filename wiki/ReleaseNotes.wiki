@@ -1,0 +1,105 @@
+Release notes:
+
+* 1.0.0-alpha5 (2011.12.06)
+
+improved working with Play! Framework and modules loaded from dependencies,
+
+removed the possibility to work with preinstalled Play! Framework (not coming from dependency) - ${play.home} variable is useless now,
+
+changed wrong assumption that play-testrunner jar dependency is required only for Selenium tests; executing unit and functional tests without it leads to strange classloader problems, so it's needed for these tests too; warning in Play! Surefire provider when test class'es classloader is different from Play! Framework's one.
+
+upgraded Play! Surefire provider's compatible Surefire version from 2.9 to 2.10 (Surefire provider API is not stable, so every upgrade requires changes in provider code)
+
+"dependenciesOverride" configuration parameter name changed to [https://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha5/play-maven-plugin/dependencies-mojo.html dependenciesOverwrite]
+
+added [https://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha5/play-maven-plugin/dependencies-mojo.html dependenciesSkipJars] configuration parameter to ignore jar dependencies when executing "play:dependencies"; they have to be copied to "lib" directory for Play! Framework to work with the project, but are not required if only Maven is used (Maven uses it's dependency mechanism exclusively for jar dependencies)
+
+added [https://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha5/play-maven-plugin/dependencies-mojo.html dependenciesSkip], [https://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha5/play-maven-plugin/uberzip-mojo.html uberzipSkip] and [https://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha5/play-maven-plugin/war-mojo.html warSkip] configuration properties to skip corresponding mojo executions
+
+application's "conf" directory added to project resources (Java classpath)
+
+multiple Selenium tests in one test file supported,
+
+improved [https://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-alpha5/play-app-default-parent/ default Play! application parent pom]
+
+improved [https://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-alpha5/play-module-default-parent/ default Play! module parent pom]
+
+polished [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/ test projects]
+
+mavenized modules:
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/ebean/play-ebean/1.0.5/ Ebean 1.0.5],
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/excel/play-excel/1.2.3/ Excel 1.2.3],
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/fbgraph/play-fbgraph/0.3/ FBGraph 0.3],
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4b/ Morphia 1.2.4b],
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/spring/play-spring/1.0.2/ Spring 1.0.2]
+
+added test projects for modules:
+[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/ebean/ Ebean]
+[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/excel/ Excel]
+[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/morphia/ Morphia]
+[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/sass/ Sass]
+[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/spring/ Spring]
+
+* 1.0.0-aplha4 (2011.10.31)
+
+[http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha4/play-maven-plugin/war-mojo.html "war"] and [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha4/play-maven-plugin/uberzip-mojo.html "uberzip"] mojos implemented
+
+Additional parametrization for [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha4/play-maven-plugin/dependencies-mojo.html "dependencies"] mojo
+
+Maven generated plugin page is [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha4/index.html here]. Most interesting is plugin's goals [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha4/play-maven-plugin/plugin-info.html page].
+
+* 1.0.0-alpha3 (2011.10.19)
+
+This is not a Play! module, this is a Maven plugin. It defines new
+"play" Maven lifecycle.
+For those understanding Maven internals here is this [http://maven-play-plugin.googlecode.com/svn/tags/plugin-1.0.0-alpha3/play-maven-plugin/src/main/resources/META-INF/plexus/components.xml lifecycle] definition.
+
+Plugin's home page is [http://code.google.com/p/maven-play-plugin/ here].
+
+Plugin sources are [http://maven-play-plugin.googlecode.com/svn/tags/plugin-1.0.0-alpha3/ here].
+
+There is no documentation yet, but there are many working example
+[http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/ projects].
+
+The main features of "play" Maven lifecycle are:
+
+  compiling application and test classes using standard Maven [http://maven.apache.org/plugins/maven-compiler-plugin/ Compiler] Plugin, so Maven reporting plugins using class files ([http://mojo.codehaus.org/findbugs-maven-plugin/ FindBugs], http://maven.apache.org/plugins/maven-pmd-plugin/ PMD], etc.) work as expected
+
+  automatically executing unit and functional tests using standard [http://maven.apache.org/plugins/maven-surefire-plugin/ Maven Surefire Plugin]
+
+  automatically executing Selenium tests using Selenium client-server architecture with [http://mojo.codehaus.org/selenium-maven-plugin/ Selenium Maven Plugin]
+
+  packaging application as a zip file ready for deployment
+
+  working with Play! Framework versions from 1.1 to 1.2.3
+
+  working with Play! external modules needs their mavenization, I began this work with Play! LESS Module, and you can see [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/external-modules/less/0.3/less-sample/ test project]
+
+  working with Play! Framework distribution on your disk, or without it (all needed Play! resources coming from Maven dependencies)
+
+
+There are three additional mojos (Maven plugin goals) not connected to
+"play" lifecycle:
+
+  "dependencies" analogous to "play dependencies" command,  but resolving application's
+ jar and module dependencies from Maven dependencies instead of "dependencies.yml" file
+
+  "precompile" - simple wrapper to "play precompile" command
+
+  "war-support" - for preparation tasks before creating "war" file
+
+"precompile" and "war-support" mojos are used in [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/packagings/war/using-assembly/ test projects]
+
+In the near future I play to implement "war" and "uberzip" (Play!
+Framework with application
+and all required modules in one archive ready for deployment) packagings.
+While this is a work in progress, I prepared workarounds using [http://maven.apache.org/plugins/maven-assembly-plugin/ Maven Assembly Plugin].
+
+Test projects using assemblies for "war" and "uberzip" packagings are [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/packagings/war/using-assembly/ here] and [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/packagings/uberzip/using-assembly/ here].
+
+Maven repository containing: mavenized Play! framework and embedded modules (crud, docviewer, grizzly, secure and testrunner), framework's dependencies not available in
+other public repositories and this plugin's artifacts is available [http://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/ here].
+
+Look at this plugin, Play! with it and if you will like it, I will be happy to extend and improve it. All contributors are welcomed. All constructive critics are welcomed too. Start with [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/ test projects], it's the best way to understand this plugin.
+
+The best way to start mavenizing your own application is to copy "pom.xml" file from one of [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha3/ test projects] and customize it.
