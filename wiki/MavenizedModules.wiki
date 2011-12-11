@@ -1,5 +1,7 @@
 * Mavenized modules:
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/coffee/play-coffee/1.0/ Coffee 1.0] - 2011.12.11
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/db/play-db/1.1.1/ DB 1.1.1] - 2011.10.21
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.4.3/ Deadbolt 1.4.3] - 2011.12.09
@@ -21,6 +23,8 @@
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/webdrive/play-webdrive/0.2/ WebDrive 0.2] - 2011.10.21
 
 * Test projects for above modules:
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/coffee/ Coffee]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/deadbolt/ Deadbolt]
 
