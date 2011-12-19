@@ -2,12 +2,11 @@
 <metadata>
   <groupId>com.google.code.maven-play-plugin</groupId>
   <artifactId>maven-parent</artifactId>
-  <version>1.0.0-alpha5-SNAPSHOT</version>
   <versioning>
     <versions>
       <version>1.0.0-alpha5-SNAPSHOT</version>
       <version>1.0.0-alpha6-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20111218193208</lastUpdated>
+    <lastUpdated>20111219132557</lastUpdated>
   </versioning>
 </metadata>
