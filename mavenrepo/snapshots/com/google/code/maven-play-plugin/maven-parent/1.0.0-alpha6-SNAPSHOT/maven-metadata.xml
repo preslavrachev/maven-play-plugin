@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metadata modelVersion="1.1.0">
+<metadata>
   <groupId>com.google.code.maven-play-plugin</groupId>
   <artifactId>maven-parent</artifactId>
   <version>1.0.0-alpha6-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20111220.074400</timestamp>
-      <buildNumber>3</buildNumber>
+      <timestamp>20111220.091134</timestamp>
+      <buildNumber>4</buildNumber>
     </snapshot>
-    <lastUpdated>20111220074400</lastUpdated>
-    <snapshotVersions>
-      <snapshotVersion>
-        <extension>pom</extension>
-        <value>1.0.0-alpha6-20111220.074400-3</value>
-        <updated>20111220074400</updated>
-      </snapshotVersion>
-    </snapshotVersions>
+    <lastUpdated>20111220091136</lastUpdated>
   </versioning>
 </metadata>
