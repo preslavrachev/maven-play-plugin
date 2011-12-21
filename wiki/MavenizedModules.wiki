@@ -22,6 +22,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/sass/play-sass/1.1/ Sass 1.1] - 2011.10.21
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/shibboleth/play-shibboleth/1.1/ Shibboleth 1.1] - 2011.12.21
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/spring/play-spring/1.0.2/ Spring 1.0.2] - 2011.12.07
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/webdrive/play-webdrive/0.2/ WebDrive 0.2] - 2011.10.21
@@ -43,5 +45,7 @@
 [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/morphia/ Morphia]
 
 [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/sass/ Sass]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/shibboleth/ Shibboleth]
 
 [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/spring/ Spring]
