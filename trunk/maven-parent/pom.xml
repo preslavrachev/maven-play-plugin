@@ -419,6 +419,14 @@ under the License.
                             <headerLocation>src/conf/checkstyle-header.txt</headerLocation>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         </configuration>
+                        <reportSets>
+                            <reportSet>
+                                <id>html</id>
+                                <reports>
+                                    <report>checkstyle</report> <!-- exclude checkstyle-aggregate -->
+                                </reports>
+                            </reportSet>
+                        </reportSets>
                     </plugin>
 
                     <plugin>
