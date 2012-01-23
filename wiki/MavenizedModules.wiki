@@ -20,6 +20,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/qunit/play-qunit/1.0/ QUnit 1.0] - 2011.12.12
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/recaptcha/play-recaptcha/1.2/ Recaptcha 1.2] - 2012.01.23
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/router/play-router/1.2/ Router 1.2] - 2011.12.23
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/sass/play-sass/1.1/ Sass 1.1] - 2011.10.21
@@ -45,6 +47,8 @@
 [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/less/ Less]
 
 [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/morphia/ Morphia]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/recaptcha/ Recaptcha]
 
 [https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/external-modules/sass/ Sass]
 
