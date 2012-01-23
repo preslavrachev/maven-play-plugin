@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="c468" href="./PlayWarSupportMojo.html" title="&lt;TABLE&gt;" alt="" coords="16,209,149,233"/>
+<area shape="rect" id="c472" href="./PlayStopServerMojo.html" title="&lt;TABLE&gt;" alt="" coords="195,209,323,233"/>
+<area shape="rect" id="c473" href="./PlayStopMojo.html" title="&lt;TABLE&gt;" alt="" coords="368,209,461,233"/>
+<area shape="rect" id="c478" href="./PlayInitializeMojo.html" title="&lt;TABLE&gt;" alt="" coords="507,209,619,233"/>
+<area shape="rect" id="c489" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/Artifact.html" title="&lt;TABLE&gt;" alt="" coords="1017,299,1146,349"/>
+<area shape="rect" id="c479" href="./PlayGenerateSeleniumJunit4SourcesMojo.html" title="&lt;TABLE&gt;" alt="" coords="664,209,915,233"/>
+<area shape="rect" id="c483" href="./AbstractPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="620,113,732,137"/>
+<area shape="rect" id="c484" href="./AbstractDependencyProcessingPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="959,209,1203,233"/>
+<area shape="rect" id="c488" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/project/MavenProject.html" title="&lt;TABLE&gt;" alt="" coords="1248,203,1376,239"/>
+<area shape="rect" id="c487" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/plugin/AbstractMojo.html" title="&lt;TABLE&gt;" alt="" coords="614,11,738,47"/>
+</map>

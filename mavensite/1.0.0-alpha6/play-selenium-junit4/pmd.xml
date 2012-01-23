@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.2.5" timestamp="2012-01-23T13:03:03.703">
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-selenium-junit4\src\main\java\com\google\code\play\selenium\step\WaitForEqualsStep.java">
+<violation beginline="59" endline="61" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.google.code.play.selenium.step" class="WaitForEqualsStep" method="doExecute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-selenium-junit4\src\main\java\com\google\code\play\selenium\step\WaitForFalseStep.java">
+<violation beginline="63" endline="65" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.google.code.play.selenium.step" class="WaitForFalseStep" method="doExecute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-selenium-junit4\src\main\java\com\google\code\play\selenium\step\WaitForNotEqualsStep.java">
+<violation beginline="58" endline="60" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.google.code.play.selenium.step" class="WaitForNotEqualsStep" method="doExecute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-selenium-junit4\src\main\java\com\google\code\play\selenium\step\WaitForTrueStep.java">
+<violation beginline="63" endline="65" begincolumn="13" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="com.google.code.play.selenium.step" class="WaitForTrueStep" method="doExecute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+</pmd>

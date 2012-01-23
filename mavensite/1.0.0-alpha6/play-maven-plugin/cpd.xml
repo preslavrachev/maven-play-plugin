@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="27" tokens="135">
+<file line="157" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayUberZipMojo.java"/>
+<file line="188" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayWarMojo.java"/>
+<codefragment>
+<![CDATA[
+            warArchiver.setWebxml( filteredWebXmlFile );
+
+            // preparation
+            Set<?> projectArtifacts = project.getArtifacts();
+
+            Set<Artifact> excludedArtifacts = new HashSet<Artifact>();
+            Artifact playSeleniumJunit4Artifact =
+                getDependencyArtifact( projectArtifacts, "com.google.code.maven-play-plugin", "play-selenium-junit4",
+                                       "jar" );
+            if ( playSeleniumJunit4Artifact != null )
+            {
+                excludedArtifacts.addAll( getDependencyArtifacts( projectArtifacts, playSeleniumJunit4Artifact ) );
+            }
+
+            Set<Artifact> filteredArtifacts = new HashSet<Artifact>();
+            for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+            {
+                Artifact artifact = (Artifact) iter.next();
+                if ( artifact.getArtifactHandler().isAddedToClasspath() && !excludedArtifacts.contains( artifact ) )
+                {
+                    // TODO-add checkPotentialReactorProblem( artifact );
+                    filteredArtifacts.add( artifact );
+                }
+            }
+
+            // framework
+            Artifact frameworkZipArtifact = findFrameworkArtifact( true );
+]]>
+</codefragment>
+</duplication>
+<duplication lines="34" tokens="115">
+<file line="66" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayRunMojo.java"/>
+<file line="66" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayTestMojo.java"/>
+<codefragment>
+<![CDATA[
+        addSystemProperty( java, "play.id", playTestId );
+        addSystemProperty( java, "application.path", baseDir.getAbsolutePath() );
+
+        JavaRunnable runner = new JavaRunnable( java );
+        Thread t = new Thread( runner, "Play! Server runner" );
+        t.start();
+        try
+        {
+            t.join();
+        }
+        catch ( InterruptedException e )
+        {
+            throw new MojoExecutionException( "?", e );
+        }
+        Exception precompileException = runner.getException();
+        if ( precompileException != null )
+        {
+            throw new MojoExecutionException( "?", precompileException );
+        }
+
+        while ( true ) // wait for Ctrl+C
+        {
+            try
+            {
+                Thread.sleep( 10000 );
+            }
+            catch ( InterruptedException e )
+            {
+                throw new MojoExecutionException( "?", e );
+            }
+        }
+    }
+
+}
+]]>
+</codefragment>
+</duplication>
+<duplication lines="21" tokens="101">
+<file line="44" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayStopMojo.java"/>
+<file line="120" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayStopServerMojo.java"/>
+<codefragment>
+<![CDATA[
+            if ( !pidFile.exists() )
+            {
+                throw new MojoExecutionException( String.format( "Play! Server is not started (\"%s\" file not found)",
+                                                                 pidFile.getName() ) );
+            }
+
+            String pid = readFileFirstLine( pidFile ).trim();
+            if ( "unknown".equals( pid ) )
+            {
+                throw new MojoExecutionException(
+                                                  String.format( "Cannot stop Play! Server (unknown process id in \"%s\" file",
+                                                                 pidFile.getAbsolutePath() ) );
+            }
+
+            try
+            {
+                kill( pid );
+                if ( !pidFile.delete() )
+                {
+                    throw new IOException( String.format( "Cannot delete %s file", pidFile.getAbsolutePath() ) );
+                }
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>
