@@ -8,7 +8,7 @@ Simplest project (pom.xml file) should look like:
     <parent>
         <groupId>com.google.code.maven-play-plugin</groupId>
         <artifactId>play-app-default-parent</artifactId>
-        <version>1.0.0-alpha5</version>
+        <version>1.0.0-alpha6</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -38,28 +38,6 @@ Simplest project (pom.xml file) should look like:
         </repository>
     </repositories>
 
-    <properties>
-        <play.version>1.2.4</play.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
-            <artifactId>play</artifactId>
-            <version>${play.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.maven-play-plugin.org.playframework</groupId>
-            <artifactId>play</artifactId>
-            <version>${play.version}</version>
-            <classifier>framework-min</classifier>
-            <type>zip</type>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -72,4 +50,4 @@ Simplest project (pom.xml file) should look like:
 </project>
 }}}
 
-For more sample projects go to [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha5/ test projects].
+For more sample projects go to [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/ test projects].
