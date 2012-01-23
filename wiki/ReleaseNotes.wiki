@@ -1,5 +1,9 @@
 Release notes:
 
+* 1.0.0-alpha6 (2012.01.23)
+
+todo - write notes
+
 * 1.0.0-alpha5 (2011.12.06)
 
 improved working with Play! Framework and modules loaded from dependencies,
