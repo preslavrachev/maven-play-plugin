@@ -2,7 +2,29 @@ Release notes:
 
 * 1.0.0-alpha6 (2012.01.23)
 
-todo - write notes
+new mojos:
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/run-mojo.html run] (invoke mvn play:run)
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/test-mojo.html test] (invoke mvn play:test)
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/start-mojo.html start] (invoke mvn play:start)
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/stop-mojo.html stop] (invoke mvn play:stop)
+
+[http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/start-server-mojo.html start-server], [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/stop-server-mojo.html stop-server] and [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-alpha6/play-maven-plugin/precompile-mojo.html precompile] mojos used for Selenium tests rewritten from Groovy to plain Java (for better performance, debugging, and maintainability)
+
+common Play! dependencies added to [https://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-alpha6/play-module-default-parent/ default Play! module parent pom], they can be removed from every Play! application pom.xml file (see in [http://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/ test projects])
+
+"play.version" property set to "1.2.4 in [https://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-alpha6/play-module-default-parent/ default Play! module parent pom], overwrite it to change inherited dependencies versions
+
+better dependency handling in packaging mojos (zip, war, uberzip) for example packaging only active modules from "application.conf" file, and excluding "play-selenium-junit4" test dependency and its transitives
+
+upgraded Play! Surefire provider's compatible Surefire version from 2.10 to 2.11 (Surefire provider API is not stable, so every upgrade requires changes in provider code)
+
+upgraded Selenium Maven Plugin version in [https://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-alpha6/play-module-default-parent/ default Play! module parent pom] from 2.0 to 2.1
+
+changed "user-extensions.js" file location for Selenium Maven Plugin from "${project.build.directory}/selenium/user-extensions.js" to "${project.build.directory}/play/home/modules/testrunner/public/test-runner/selenium/scripts/user-extensions.js"; this is important only for projects not using "play-app-default-parent" as their parent artifact
 
 * 1.0.0-alpha5 (2011.12.06)
 
