@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.net.tanesha.recaptcha4j</groupId>
+  <artifactId>recaptcha4j</artifactId>
+  <version>0.0.8</version>
+  <versioning>
+    <versions>
+      <version>0.0.8</version>
+    </versions>
+    <lastUpdated>20120123214758</lastUpdated>
+  </versioning>
+</metadata>
