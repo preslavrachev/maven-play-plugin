@@ -6,9 +6,11 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/db/play-db/1.1.1/ DB 1.1.1] - 2011.10.21
 
-[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.4.3/ Deadbolt 1.4.3] - 2011.12.09
+Deadbolt:
 
-[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.4.4/ Deadbolt 1.4.4] - 2012.01.24
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.4.3/ 1.4.3] - 2011.12.09
+
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.4.4/ 1.4.4] - 2012.01.24
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/ebean/play-ebean/1.0.5/ Ebean 1.0.5] - 2011.12.05
 
