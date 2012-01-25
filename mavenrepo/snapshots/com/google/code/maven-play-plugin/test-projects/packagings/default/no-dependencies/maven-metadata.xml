@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.test-projects.packagings.default</groupId>
+  <artifactId>no-dependencies</artifactId>
+  <version>1.0.0-alpha7-SNAPSHOT</version>
+  <versioning>
+    <versions>
+      <version>1.0.0-alpha7-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20120125131720</lastUpdated>
+  </versioning>
+</metadata>
