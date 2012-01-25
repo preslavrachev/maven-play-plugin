@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.apache.ddlutils</groupId>
+  <artifactId>ddlutils</artifactId>
+  <version>1.0-patched-play-siena-2.0.0</version>
+  <versioning>
+    <versions>
+      <version>1.0-patched-play-siena-2.0.0</version>
+    </versions>
+    <lastUpdated>20120125130855</lastUpdated>
+  </versioning>
+</metadata>
