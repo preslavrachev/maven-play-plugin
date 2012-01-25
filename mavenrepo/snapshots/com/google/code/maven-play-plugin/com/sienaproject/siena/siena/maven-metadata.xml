@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.com.sienaproject.siena</groupId>
+  <artifactId>siena</artifactId>
+  <version>1.0.0-b6-SNAPSHOT</version>
+  <versioning>
+    <versions>
+      <version>1.0.0-b6-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20120125143602</lastUpdated>
+  </versioning>
+</metadata>
