@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin</groupId>
+  <artifactId>surefire-play-junit4</artifactId>
+  <version>1.0.0-alpha7-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20120127.133900</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20120127134148</lastUpdated>
+  </versioning>
+</metadata>
