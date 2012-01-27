@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin</groupId>
+  <artifactId>maven-parent</artifactId>
+  <version>1.0.0-alpha7-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20120127.110101</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20120127110110</lastUpdated>
+  </versioning>
+</metadata>
