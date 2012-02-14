@@ -4,6 +4,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/coffee/play-coffee/1.0/ Coffee 1.0] - 2011.12.11
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/constretto/play-constretto/0.1.1/ Constretto 0.1.1] - 2012.02.14
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/db/play-db/1.1.1/ DB 1.1.1] - 2011.10.21
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/ Deadbolt]:
@@ -53,6 +55,8 @@
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/associations/ Associations]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/coffee/ Coffee]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/constretto/ Constretto]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/deadbolt/ Deadbolt]
 
