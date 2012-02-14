@@ -20,6 +20,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/fbgraph/play-fbgraph/0.3/ FBGraph 0.3] - 2011.12.07
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/guice/play-guice/1.2/ Guice 1.2] - 2012.02.14
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/less/play-less/0.3/ Less 0.3] - 2011.10.18
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4b/ Morphia 1.2.4b] - 2011.11.19
@@ -57,6 +59,8 @@
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/ebean/ Ebean]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/excel/ Excel]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/guice/ Guice]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/less/ Less]
 
