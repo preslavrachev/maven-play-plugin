@@ -38,30 +38,34 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/spring/play-spring/1.0.2/ Spring 1.0.2] - 2011.12.07
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/springtester/play-springtester/0.1/ SpringTester 0.1] - 2012.02.14
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/webdrive/play-webdrive/0.2/ WebDrive 0.2] - 2011.10.21
 
 * Test projects for above modules:
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/associations/ Associations]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/associations/ Associations]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/coffee/ Coffee]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/coffee/ Coffee]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/deadbolt/ Deadbolt]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/ebean/ Ebean]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/ebean/ Ebean]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/excel/ Excel]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/excel/ Excel]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/less/ Less]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/less/ Less]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/morphia/ Morphia]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/morphia/ Morphia]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/recaptcha/ Recaptcha]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/sass/ Sass]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/sass/ Sass]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/securesocial/ SecureSocial]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/shibboleth/ Shibboleth]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/shibboleth/ Shibboleth]
 
-[https://maven-play-plugin.googlecode.com/svn/tags/test-projects-1.0.0-alpha6/external-modules/spring/ Spring]
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/spring/ Spring]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/springtester/ SpringTester]
