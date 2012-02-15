@@ -26,7 +26,11 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/less/play-less/0.3/ Less 0.3] - 2011.10.18
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/markdown/play-markdown/1.6/ Markdown 1.6] - 2012.02.15
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4b/ Morphia 1.2.4b] - 2011.11.19
+
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/postmark/play-postmark/1.0/ Postmark 1.0] - 2012.02.15
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/qunit/play-qunit/1.0/ QUnit 1.0] - 2011.12.12
 
@@ -68,7 +72,11 @@
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/less/ Less]
 
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/markdown/ Markdown]
+
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/morphia/ Morphia]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/postmark/ Postmark]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/recaptcha/ Recaptcha]
 
