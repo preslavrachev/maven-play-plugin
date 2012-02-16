@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.com.yahoo.platform.yui</groupId>
+  <artifactId>yuicompressor</artifactId>
+  <version>2.4.7</version>
+  <versioning>
+    <versions>
+      <version>2.4.7</version>
+    </versions>
+    <lastUpdated>20120216195832</lastUpdated>
+  </versioning>
+</metadata>
