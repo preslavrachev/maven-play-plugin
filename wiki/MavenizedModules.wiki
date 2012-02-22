@@ -18,6 +18,8 @@
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.5/ 1.5] - 2012.02.20
 
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/deadbolt/play-deadbolt/1.5.1/ 1.5.1] - 2012.02.22
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/ebean/play-ebean/1.0.5/ Ebean 1.0.5] - 2011.12.05
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/excel/play-excel/1.2.3/ Excel 1.2.3] - 2011.11.23
