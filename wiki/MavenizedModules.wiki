@@ -32,11 +32,11 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/ Morphia]:
 
-- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4b/ Morphia 1.2.4b] - 2011.11.19
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4b/ 1.2.4b] - 2011.11.19
 
-- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4c/ Morphia 1.2.4c] - 2012.02.22
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4c/ 1.2.4c] - 2012.02.22
 
-- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4d/ Morphia 1.2.4d] - 2012.02.22
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.4d/ 1.2.4d] - 2012.02.22
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/postmark/play-postmark/1.0/ Postmark 1.0] - 2012.02.15
 
