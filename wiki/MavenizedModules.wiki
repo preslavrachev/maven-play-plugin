@@ -30,6 +30,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/less/play-less/0.3/ Less 0.3] - 2011.10.18
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/mockito/play-mockito/0.1/ Mockito 0.1] - 2012.02.22
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/markdown/play-markdown/1.6/ Markdown 1.6] - 2012.02.15
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/ Morphia]:
