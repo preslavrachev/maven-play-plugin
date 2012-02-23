@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.net.sourceforge.cobertura</groupId>
+  <artifactId>cobertura</artifactId>
+  <version>1.9.2-patched-play-cobertura-1.0</version>
+  <versioning>
+    <versions>
+      <version>1.9.2-patched-play-cobertura-1.0</version>
+    </versions>
+    <lastUpdated>20120223085339</lastUpdated>
+  </versioning>
+</metadata>
