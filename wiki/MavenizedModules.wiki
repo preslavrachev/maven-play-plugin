@@ -36,6 +36,8 @@
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/fbgraph/play-fbgraph/0.4/ 0.4] - 2012.02.27
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/gravatar/play-gravatar/1.0.2/ Gravatar 1.0.2] - 2012.02.27
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/guice/play-guice/1.2/ Guice 1.2] - 2012.02.14
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/less/play-less/ Less]:
