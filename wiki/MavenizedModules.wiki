@@ -68,6 +68,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/sass/play-sass/1.1/ Sass 1.1] - 2011.10.21
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/search/play-search/2.0/ Search 2.0] - 2012.02.27
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/securesocial/play-securesocial/0.2.3/ SecureSocial 0.2.3] - 2012.01.24
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/shibboleth/play-shibboleth/1.1/ Shibboleth 1.1] - 2011.12.21
