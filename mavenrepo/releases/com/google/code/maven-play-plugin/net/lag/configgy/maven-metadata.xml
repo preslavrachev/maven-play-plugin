@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.net.lag</groupId>
+  <artifactId>configgy</artifactId>
+  <version>2.0.2-nologgy</version>
+  <versioning>
+    <versions>
+      <version>2.0.2-nologgy</version>
+    </versions>
+    <lastUpdated>20120319160146</lastUpdated>
+  </versioning>
+</metadata>
