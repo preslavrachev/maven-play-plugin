@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="c1415" href="./PlayStartServerMojo.html" title="&lt;TABLE&gt;" alt="" coords="192,216,320,240"/>
+<area shape="rect" id="c1416" href="./PlayStartMojo.html" title="&lt;TABLE&gt;" alt="" coords="365,216,459,240"/>
+<area shape="rect" id="c1418" href="./PlayPrecompileMojo.html" title="&lt;TABLE&gt;" alt="" coords="504,216,635,240"/>
+<area shape="rect" id="c1423" href="./AbstractPlayServerMojo.html" title="&lt;TABLE&gt;" alt="" coords="673,113,820,137"/>
+<area shape="rect" id="c1424" href="./AbstractPlayRunMojo.html" title="&lt;TABLE&gt;" alt="" coords="679,216,814,240"/>
+<area shape="rect" id="c1469" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/Artifact.html" title="&lt;TABLE&gt;" alt="" coords="858,203,987,253"/>
+<area shape="rect" id="c1470" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/tools/ant/Project.html" title="&lt;TABLE&gt;" alt="" coords="1032,210,1136,246"/>
+<area shape="rect" id="c1471" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/tools/ant/taskdefs/Java.html" title="&lt;TABLE&gt;" alt="" coords="1181,210,1325,246"/>
+<area shape="rect" id="c1472" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/tools/ant/types/Path.html" title="&lt;TABLE&gt;" alt="" coords="16,210,147,246"/>
+<area shape="rect" id="c1427" href="./AbstractAntJavaBasedPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="828,17,1017,41"/>
+</map>

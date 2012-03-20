@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="c4126" href="./PlayJUnit4Provider.html" title="&lt;TABLE&gt;" alt="" coords="878,113,999,137"/>
+<area shape="rect" id="c4127" href="./PlayDirectoryScanner.html" title="&lt;TABLE&gt;" alt="" coords="563,216,699,240"/>
+<area shape="rect" id="c4131" href="http://java.sun.com/j2se/1.4.2/docs/api/org/junit/runner/notification/RunListener.html" title="&lt;TABLE&gt;" alt="" coords="149,210,278,246"/>
+<area shape="rect" id="c4134" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/common/junit4/JUnit4TestChecker.html" title="&lt;TABLE&gt;" alt="" coords="322,210,518,246"/>
+<area shape="rect" id="c4135" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/TestsToRun.html" title="&lt;TABLE&gt;" alt="" coords="16,319,163,355"/>
+<area shape="rect" id="c4141" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/providerapi/ProviderParameters.html" title="&lt;TABLE&gt;" alt="" coords="744,203,925,253"/>
+<area shape="rect" id="c4142" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/util/RunOrderCalculator.html" title="&lt;TABLE&gt;" alt="" coords="971,203,1117,253"/>
+<area shape="rect" id="c4143" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/report/ConsoleLogger.html" title="&lt;TABLE&gt;" alt="" coords="818,312,977,363"/>
+<area shape="rect" id="c4144" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/report/RunListener.html" title="&lt;TABLE&gt;" alt="" coords="1213,203,1371,253"/>
+<area shape="rect" id="c4145" href="http://java.sun.com/j2se/1.4.2/docs/api/play/Invoker/DirectInvocation.html" title="&lt;TABLE&gt;" alt="" coords="1415,210,1521,246"/>
+<area shape="rect" id="c4146" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/suite/RunResult.html" title="&lt;TABLE&gt;" alt="" coords="1565,210,1720,246"/>
+<area shape="rect" id="c4147" href="http://java.sun.com/j2se/1.4.2/docs/api/org/junit/runner/notification/RunNotifier.html" title="&lt;TABLE&gt;" alt="" coords="1765,210,1894,246"/>
+<area shape="rect" id="c4150" href="http://java.sun.com/j2se/1.4.2/docs/api/org/junit/runner/Result.html" title="&lt;TABLE&gt;" alt="" coords="1938,210,2019,246"/>
+<area shape="rect" id="c4130" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/surefire/providerapi/AbstractProvider.html" title="&lt;TABLE&gt;" alt="" coords="848,11,1029,47"/>
+</map>

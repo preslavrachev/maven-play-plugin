@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="27" tokens="135">
+<file line="157" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayUberZipMojo.java"/>
+<file line="191" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayWarMojo.java"/>
+<codefragment>
+<![CDATA[
+            zipArchiver.addDirectory( baseDir, "application/", includes, excludes );
+
+            // preparation
+            Set<?> projectArtifacts = project.getArtifacts();
+
+            Set<Artifact> excludedArtifacts = new HashSet<Artifact>();
+            Artifact playSeleniumJunit4Artifact =
+                getDependencyArtifact( projectArtifacts, "com.google.code.maven-play-plugin", "play-selenium-junit4",
+                                       "jar" );
+            if ( playSeleniumJunit4Artifact != null )
+            {
+                excludedArtifacts.addAll( getDependencyArtifacts( projectArtifacts, playSeleniumJunit4Artifact ) );
+            }
+
+            Set<Artifact> filteredArtifacts = new HashSet<Artifact>(); // TODO-rename to filteredClassPathArtifacts
+            for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+            {
+                Artifact artifact = (Artifact) iter.next();
+                if ( artifact.getArtifactHandler().isAddedToClasspath() && !excludedArtifacts.contains( artifact ) )
+                {
+                    // TODO-add checkPotentialReactorProblem( artifact );
+                    filteredArtifacts.add( artifact );
+                }
+            }
+
+            // framework
+            Artifact frameworkZipArtifact = findFrameworkArtifact( false );
+]]>
+</codefragment>
+</duplication>
+<duplication lines="14" tokens="125">
+<file line="272" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayDependenciesMojo.java"/>
+<file line="371" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayInitializeMojo.java"/>
+<codefragment>
+<![CDATA[
+    private void scalaHack( File scalaModuleDirectory, Set<Artifact> filteredArtifacts ) throws IOException
+    {
+        Set<?> projectArtifacts = project.getArtifacts();
+        for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( "org.scala-lang".equals( artifact.getGroupId() )
+                && ( "scala-compiler".equals( artifact.getArtifactId() ) || "scala-library".equals( artifact.getArtifactId() ) )
+                && "jar".equals( artifact.getType() ) )
+            {
+                File jarFile = artifact.getFile();
+                FileUtils.copyFileIfModified( jarFile,
+                                              new File( scalaModuleDirectory, "lib/" + artifact.getArtifactId()
+                                                  + ".jar" ) );
+]]>
+</codefragment>
+</duplication>
+<duplication lines="17" tokens="113">
+<file line="119" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayDependenciesMojo.java"/>
+<file line="160" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayUberZipMojo.java"/>
+<file line="194" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayWarMojo.java"/>
+<codefragment>
+<![CDATA[
+            Set<?> projectArtifacts = project.getArtifacts();
+
+            Set<Artifact> excludedArtifacts = new HashSet<Artifact>();
+            Artifact playSeleniumJunit4Artifact =
+                            getDependencyArtifact( projectArtifacts, "com.google.code.maven-play-plugin",
+                                                    "play-selenium-junit4", "jar" );
+            if ( playSeleniumJunit4Artifact != null )
+            {
+                excludedArtifacts.addAll( getDependencyArtifacts( projectArtifacts, playSeleniumJunit4Artifact ) );
+            }
+
+            Set<Artifact> filteredArtifacts = new HashSet<Artifact>(); // TODO-rename to filteredClassPathArtifacts
+            for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+            {
+                Artifact artifact = (Artifact) iter.next();
+                if ( artifact.getArtifactHandler().isAddedToClasspath()
+                    && !Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) && !excludedArtifacts.contains( artifact ) )
+]]>
+</codefragment>
+</duplication>
+<duplication lines="21" tokens="101">
+<file line="44" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayStopMojo.java"/>
+<file line="114" path="E:\scm\googlecode.svn\maven-play-plugin\trunk\plugin\target\checkout\play-maven-plugin\src\main\java\com\google\code\play\PlayStopServerMojo.java"/>
+<codefragment>
+<![CDATA[
+        if ( !pidFile.exists() )
+        {
+            throw new MojoExecutionException( String.format( "Play! Server is not started (\"%s\" file not found)",
+                                                             pidFile.getName() ) );
+        }
+
+        String pid = readFileFirstLine( pidFile ).trim();
+        if ( "unknown".equals( pid ) )
+        {
+            throw new MojoExecutionException(
+                                              String.format( "Cannot stop Play! Server (unknown process id in \"%s\" file",
+                                                             pidFile.getAbsolutePath() ) );
+        }
+
+        try
+        {
+            kill( pid );
+            if ( !pidFile.delete() )
+            {
+                throw new IOException( String.format( "Cannot delete %s file", pidFile.getAbsolutePath() ) );
+            }
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>

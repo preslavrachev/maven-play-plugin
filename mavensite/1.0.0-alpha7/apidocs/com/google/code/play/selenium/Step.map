@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="c2196" href="./Step.html" title="&lt;TABLE&gt;" alt="" coords="385,11,465,50"/>
+<area shape="rect" id="c2212" href="./step/PauseStep.html" title="&lt;TABLE&gt;" alt="" coords="15,110,187,146"/>
+<area shape="rect" id="c2215" href="./step/EchoStep.html" title="&lt;TABLE&gt;" alt="" coords="231,110,403,146"/>
+<area shape="rect" id="c2216" href="./step/CommentStep.html" title="&lt;TABLE&gt;" alt="" coords="447,110,619,146"/>
+<area shape="rect" id="c2224" href="./step/AbstractSeleniumStep.html" title="&lt;TABLE&gt;" alt="" coords="663,110,835,146"/>
+</map>
