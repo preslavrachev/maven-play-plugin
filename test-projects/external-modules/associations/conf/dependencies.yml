@@ -1,6 +1,0 @@
-# Application dependencies
-
-require:
-    - play
-    - play -> crud
-    - play -> associations 1.0
