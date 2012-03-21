@@ -1,5 +1,15 @@
 Release notes:
 
+* 1.0.0-alpha7 (2012.03.21)
+
+Maven3 + Surefire problems fixed
+
+Play! server starting mojos ("run", "test", "start") improved (details here: http://code.google.com/p/maven-play-plugin/issues/detail?id=24#c2)
+
+"precompileTests" parameter for "precompile" mojo added
+
+Many Play! modules mavenized (complete list: http://code.google.com/p/maven-play-plugin/wiki/MavenizedModules), Scala among them (requires some code hacks implemented in plugin's 1.0.0-alpha7 version)
+
 * 1.0.0-alpha6 (2012.01.23)
 
 new mojos:
