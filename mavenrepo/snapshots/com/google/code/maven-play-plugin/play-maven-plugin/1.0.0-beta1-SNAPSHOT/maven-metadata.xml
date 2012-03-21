@@ -5,9 +5,9 @@
   <version>1.0.0-beta1-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20120321.160525</timestamp>
-      <buildNumber>1</buildNumber>
+      <timestamp>20120321.180225</timestamp>
+      <buildNumber>2</buildNumber>
     </snapshot>
-    <lastUpdated>20120321160625</lastUpdated>
+    <lastUpdated>20120321180232</lastUpdated>
   </versioning>
 </metadata>
