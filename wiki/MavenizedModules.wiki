@@ -82,6 +82,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/sass/play-sass/1.1/ Sass 1.1] - 2011.10.21
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/scala/play-scala/0.9.1/ Scala 0.9.1] - 2012.03.21
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/search/play-search/2.0/ Search 2.0] - 2012.02.27
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/securesocial/play-securesocial/ SecureSocial]:
@@ -133,6 +135,8 @@
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/recaptcha/ Recaptcha]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/sass/ Sass]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/scala/ Scala]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/securesocial/ SecureSocial]
 
