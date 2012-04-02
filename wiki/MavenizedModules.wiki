@@ -38,6 +38,8 @@
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/fbgraph/play-fbgraph/0.4/ 0.4] - 2012.02.27
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/gae/play-gae/1.6.0/ GAE 1.6.0] - 2012.04.02
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/gravatar/play-gravatar/1.0.2/ Gravatar 1.0.2] - 2012.02.27
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/guice/play-guice/1.2/ Guice 1.2] - 2012.02.14
@@ -127,6 +129,8 @@
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/ebean/ Ebean]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/excel/ Excel]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/gae/ GAE]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/guice/ Guice]
 
