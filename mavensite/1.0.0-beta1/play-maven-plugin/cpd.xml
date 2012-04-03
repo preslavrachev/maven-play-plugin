@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="27" tokens="129">
+<file line="203" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\AbstractPlayWarMojo.java"/>
+<file line="218" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayDistMojo.java"/>
+<codefragment>
+<![CDATA[
+            List<String> excl = Arrays.asList( warDependencyExcludes.split( "," ) ); 
+            PatternExcludesArtifactFilter excludeFilter =
+                new PatternExcludesArtifactFilter( excl, true/* actTransitively */ );
+
+            dependencyFilter.add( excludeFilter );
+        }
+
+        Set<Artifact> filteredArtifacts = new HashSet<Artifact>();
+        for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( artifact.getArtifactHandler().isAddedToClasspath() && !excludedArtifacts.contains( artifact ) )
+            {
+                // TODO-add checkPotentialReactorProblem( artifact );
+                if ( dependencyFilter.include( artifact ) )
+                {
+                    filteredArtifacts.add( artifact );
+                }
+                else
+                {
+                    getLog().debug( artifact.toString() + " excluded" );
+                }
+            }
+        }
+
+        // framework
+        Artifact frameworkZipArtifact = findFrameworkArtifact( true );
+]]>
+</codefragment>
+</duplication>
+<duplication lines="14" tokens="125">
+<file line="272" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayDependenciesMojo.java"/>
+<file line="371" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayInitializeMojo.java"/>
+<codefragment>
+<![CDATA[
+    private void scalaHack( File scalaModuleDirectory, Set<Artifact> filteredArtifacts ) throws IOException
+    {
+        Set<?> projectArtifacts = project.getArtifacts();
+        for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( "org.scala-lang".equals( artifact.getGroupId() )
+                && ( "scala-compiler".equals( artifact.getArtifactId() ) || "scala-library".equals( artifact.getArtifactId() ) )
+                && "jar".equals( artifact.getType() ) )
+            {
+                File jarFile = artifact.getFile();
+                FileUtils.copyFileIfModified( jarFile,
+                                              new File( scalaModuleDirectory, "lib/" + artifact.getArtifactId()
+                                                  + ".jar" ) );
+]]>
+</codefragment>
+</duplication>
+<duplication lines="24" tokens="124">
+<file line="203" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\AbstractPlayWarMojo.java"/>
+<file line="218" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayDistMojo.java"/>
+<file line="171" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayZipMojo.java"/>
+<codefragment>
+<![CDATA[
+            List<String> excl = Arrays.asList( warDependencyExcludes.split( "," ) ); 
+            PatternExcludesArtifactFilter excludeFilter =
+                new PatternExcludesArtifactFilter( excl, true/* actTransitively */ );
+
+            dependencyFilter.add( excludeFilter );
+        }
+
+        Set<Artifact> filteredArtifacts = new HashSet<Artifact>();
+        for ( Iterator<?> iter = projectArtifacts.iterator(); iter.hasNext(); )
+        {
+            Artifact artifact = (Artifact) iter.next();
+            if ( artifact.getArtifactHandler().isAddedToClasspath() && !excludedArtifacts.contains( artifact ) )
+            {
+                // TODO-add checkPotentialReactorProblem( artifact );
+                if ( dependencyFilter.include( artifact ) )
+                {
+                    filteredArtifacts.add( artifact );
+                }
+                else
+                {
+                    getLog().debug( artifact.toString() + " excluded" );
+                }
+            }
+        }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="21" tokens="101">
+<file line="44" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayStopMojo.java"/>
+<file line="114" path="E:\scm\googlecode.svn\maven-play-plugin\tags\plugin-1.0.0-beta1\play-maven-plugin\src\main\java\com\google\code\play\PlayStopServerMojo.java"/>
+<codefragment>
+<![CDATA[
+        if ( !pidFile.exists() )
+        {
+            throw new MojoExecutionException( String.format( "Play! Server is not started (\"%s\" file not found)",
+                                                             pidFile.getName() ) );
+        }
+
+        String pid = readFileFirstLine( pidFile ).trim();
+        if ( "unknown".equals( pid ) )
+        {
+            throw new MojoExecutionException(
+                                              String.format( "Cannot stop Play! Server (unknown process id in \"%s\" file",
+                                                             pidFile.getAbsolutePath() ) );
+        }
+
+        try
+        {
+            kill( pid );
+            if ( !pidFile.delete() )
+            {
+                throw new IOException( String.format( "Cannot delete %s file", pidFile.getAbsolutePath() ) );
+            }
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>

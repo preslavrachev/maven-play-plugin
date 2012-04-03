@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="c2534" href="./StoredVars.html" title="&lt;TABLE&gt;" alt="" coords="385,113,465,137"/>
+<area shape="rect" id="c2550" href="./step/StoreStep.html" title="&lt;TABLE&gt;" alt="" coords="15,11,187,47"/>
+<area shape="rect" id="c2551" href="./step/PauseStep.html" title="&lt;TABLE&gt;" alt="" coords="231,11,403,47"/>
+<area shape="rect" id="c2554" href="./step/EchoStep.html" title="&lt;TABLE&gt;" alt="" coords="447,11,619,47"/>
+<area shape="rect" id="c2564" href="./step/AbstractSeleniumCommand.html" title="&lt;TABLE&gt;" alt="" coords="663,11,838,47"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="c91" href="./NekoHtmlSeleneseParser.html" title="&lt;TABLE&gt;" alt="" coords="15,17,179,41"/>
+<area shape="rect" id="c92" href="./JSoupSeleneseParser.html" title="&lt;TABLE&gt;" alt="" coords="224,17,368,41"/>
+<area shape="rect" id="c93" href="./Dom4JSeleneseParser.html" title="&lt;TABLE&gt;" alt="" coords="413,17,563,41"/>
+<area shape="rect" id="c94" href="./CustomSeleneseParser.html" title="&lt;TABLE&gt;" alt="" coords="607,17,761,41"/>
+</map>

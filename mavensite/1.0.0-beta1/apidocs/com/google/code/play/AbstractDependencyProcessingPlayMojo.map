@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="c1963" href="./PlayZipMojo.html" title="&lt;TABLE&gt;" alt="" coords="16,216,101,240"/>
+<area shape="rect" id="c2034" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/Artifact.html" title="&lt;TABLE&gt;" alt="" coords="683,312,813,363"/>
+<area shape="rect" id="c1977" href="./PlayDistMojo.html" title="&lt;TABLE&gt;" alt="" coords="146,216,235,240"/>
+<area shape="rect" id="c1978" href="./PlayDependenciesMojo.html" title="&lt;TABLE&gt;" alt="" coords="280,216,429,240"/>
+<area shape="rect" id="c1981" href="./AbstractPlayWarMojo.html" title="&lt;TABLE&gt;" alt="" coords="475,216,608,240"/>
+<area shape="rect" id="c1984" href="./AbstractPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="1733,17,1845,41"/>
+<area shape="rect" id="c1985" href="./AbstractDependencyProcessingPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="1171,113,1415,137"/>
+<area shape="rect" id="c1986" href="./AbstractAntJavaBasedPlayMojo.html" title="&lt;TABLE&gt;" alt="" coords="653,216,843,240"/>
+<area shape="rect" id="c2028" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/repository/ArtifactRepository.html" title="&lt;TABLE&gt;" alt="" coords="887,203,1062,253"/>
+<area shape="rect" id="c2029" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/factory/ArtifactFactory.html" title="&lt;TABLE&gt;" alt="" coords="1106,203,1270,253"/>
+<area shape="rect" id="c2030" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/metadata/ArtifactMetadataSource.html" title="&lt;TABLE&gt;" alt="" coords="1314,203,1486,253"/>
+<area shape="rect" id="c2031" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/artifact/resolver/ArtifactCollector.html" title="&lt;TABLE&gt;" alt="" coords="1530,203,1697,253"/>
+<area shape="rect" id="c2032" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/shared/dependency/tree/DependencyTreeBuilder.html" title="&lt;TABLE&gt;" alt="" coords="1741,203,1942,253"/>
+<area shape="rect" id="c2033" href="http://java.sun.com/j2se/1.4.2/docs/api/org/apache/maven/shared/dependency/tree/DependencyNode.html" title="&lt;TABLE&gt;" alt="" coords="1986,210,2187,246"/>
+</map>
