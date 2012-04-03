@@ -1,5 +1,27 @@
 Release notes:
 
+* 1.0.0-beta1 (2012.04.02)
+
+new mojos:
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/clean-mojo.html clean] (bound to clean cycle)
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/war-exploded-mojo.html war-exploded] (invoke mvn play:war-exploded, sample usage in [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/gae GAE test project])
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/war-inplace-mojo.html war-inplace] (invoke mvn play:war-inplace, sample usage in [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/siena Siena test project])
+
+improved mojos:
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/war-mojo.html war] - parametrization of the webapp folder location ("war" by default), webapp directory content inclusion/exclusion filters ("warWebappIncludes" and "warWebappExcludes" parameters), dependency inclusion/exclusion filters ("warDependencyIncludes" and "warDependencyExcludes" parameters), possibility to attach the resulting war file to the project ("warAttach" parameter)
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/dist-mojo.html dist] - possibility to attach the resulting war file to the project ("distAttach" parameter)
+
+BACKWARD INCOMPATIBLE CHANGES:
+
+- "uberzip" mojo renamed to "[http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/dist-mojo.html dist]" because it has similar functionality to Play! 2.0 "dist" command
+
+- [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/war-mojo.html war] mojo's "warIncludes" and "warExcludes" configuration parameters renamed to "warApplicationIncludes" and "warApplicationExcludes"
+
 * 1.0.0-alpha7 (2012.03.21)
 
 Maven3 + Surefire problems fixed
