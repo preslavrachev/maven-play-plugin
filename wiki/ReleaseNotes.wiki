@@ -2,6 +2,14 @@ Release notes:
 
 * 1.0.0-beta1 (2012.04.02)
 
+WAR support extended (see new mojos section below)
+
+GAE and Siena support added:
+
+- new [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/war-exploded-mojo.html war-exploded] and [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/war-inplace-mojo.html war-inplace] mojos (described below)
+
+- GAE 1.6.0 and Siena 2.0.7 modules mavenized, sample projects added (check [http://code.google.com/p/maven-play-plugin/wiki/MavenizedModules Mavenized Modules] page)
+
 new mojos:
 
 - [http://maven-play-plugin.googlecode.com/svn/mavensite/1.0.0-beta1/play-maven-plugin/clean-mojo.html clean] (bound to clean cycle)
