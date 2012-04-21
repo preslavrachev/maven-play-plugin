@@ -74,6 +74,8 @@
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.6/ 1.2.6] - 2012.03.22
 
+- [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/morphia/play-morphia/1.2.6a/ 1.2.6a] - 2012.04.21
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/paginate/play-paginate/ Paginate]:
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/paginate/play-paginate/0.13/ 0.13] - 2012.02.23
