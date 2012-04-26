@@ -4,6 +4,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/associations/play-associations/1.0.1/ Associations 1.0.1] - 2011.12.15
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/betterlogs/play-betterlogs/1.0/ BetterLogs 1.0] - 2012.04.26
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/cobertura/play-cobertura/2.4/ Cobertura 2.4] - 2012.02.23
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/coffee/play-coffee/1.0/ Coffee 1.0] - 2011.12.11
