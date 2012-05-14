@@ -30,6 +30,8 @@ under the License.
     <version>3.8.0.v_C18</version>
     <packaging>jar</packaging>
 
+    <name>Java Development Tools Core</name>
+
     <organization>
         <name>The Eclipse Foundation</name>
         <url>http://www.eclipse.org</url>
