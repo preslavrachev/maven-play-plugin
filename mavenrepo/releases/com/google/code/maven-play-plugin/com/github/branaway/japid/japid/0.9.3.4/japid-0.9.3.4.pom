@@ -45,27 +45,4 @@ under the License.
         </dependency>
     </dependencies>
 
-    <build>
-        <sourceDirectory>${basedir}/src.japid</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>${basedir}/src.japid</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
