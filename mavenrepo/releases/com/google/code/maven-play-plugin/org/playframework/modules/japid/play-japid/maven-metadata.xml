@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.playframework.modules.japid</groupId>
+  <artifactId>play-japid</artifactId>
+  <version>0.9.3.4</version>
+  <versioning>
+    <versions>
+      <version>0.9.3.4</version>
+    </versions>
+    <lastUpdated>20120515091409</lastUpdated>
+  </versioning>
+</metadata>
