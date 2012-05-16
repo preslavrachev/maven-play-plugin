@@ -34,8 +34,14 @@ under the License.
 
     <name>Maven Plugin for Play! Framework Japid Module</name>
     <description>
-        ...
+        Maven wrapper for Play! Japid Module commands: "clean", "gen", "regen" and "mkdir".
     </description>
+
+    <scm>
+        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/trunk/play-japid-maven-plugin/</connection>
+        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/trunk/play-japid-maven-plugin/</developerConnection>
+        <url>http://maven-play-plugin.googlecode.com/svn/trunk/play-japid-maven-plugin/</url>
+    </scm>
 
     <prerequisites>
         <maven>2.2.1</maven>
