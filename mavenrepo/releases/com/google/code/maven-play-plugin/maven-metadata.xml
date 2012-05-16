@@ -6,5 +6,10 @@
       <prefix>play</prefix>
       <artifactId>maven-play-plugin</artifactId>
     </plugin>
+    <plugin>
+      <name>Maven Plugin for Play! Framework Japid Module</name>
+      <prefix>play-japid</prefix>
+      <artifactId>play-japid-maven-plugin</artifactId>
+    </plugin>
   </plugins>
 </metadata>
