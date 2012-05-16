@@ -50,6 +50,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/guice/play-guice/1.2/ Guice 1.2] - 2012.02.14
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/japid/play-japid/0.9.3.4/ Japid 0.9.3.4] - 2012.05.16
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/less/play-less/ Less]:
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/less/play-less/0.3/ 0.3] - 2011.10.18
@@ -143,6 +145,8 @@
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/gae/ GAE]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/guice/ Guice]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/japid/ Japid]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/less/ Less]
 
