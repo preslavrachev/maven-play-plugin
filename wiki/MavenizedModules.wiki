@@ -38,6 +38,8 @@
 
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/excel/play-excel/1.2.3/ Excel 1.2.3] - 2011.11.23
 
+[https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/excel/play-fastergt/1.7/ Faster Groovy Templates 1.7] - 2012.05.29
+
 [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/fbgraph/play-fbgraph/ FBGraph]:
 
 - [https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases/com/google/code/maven-play-plugin/org/playframework/modules/fbgraph/play-fbgraph/0.3/ 0.3] - 2011.12.07
@@ -141,6 +143,8 @@
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/ebean/ Ebean]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/excel/ Excel]
+
+[https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/fastergt/ Faster Groovy Templates]
 
 [https://maven-play-plugin.googlecode.com/svn/trunk/test-projects/external-modules/gae/ GAE]
 
