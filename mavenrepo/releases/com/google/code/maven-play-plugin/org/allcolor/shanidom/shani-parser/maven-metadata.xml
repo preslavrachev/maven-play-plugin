@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.allcolor.shanidom</groupId>
+  <artifactId>shani-parser</artifactId>
+  <version>1.4.17</version>
+  <versioning>
+    <versions>
+      <version>1.4.17</version>
+    </versions>
+    <lastUpdated>20120604175623</lastUpdated>
+  </versioning>
+</metadata>
