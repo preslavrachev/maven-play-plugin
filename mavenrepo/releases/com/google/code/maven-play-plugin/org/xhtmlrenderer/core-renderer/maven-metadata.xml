@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.xhtmlrenderer</groupId>
+  <artifactId>core-renderer</artifactId>
+  <version>2011.04.16</version>
+  <versioning>
+    <versions>
+      <version>2011.04.16</version>
+    </versions>
+    <lastUpdated>20120604180848</lastUpdated>
+  </versioning>
+</metadata>
