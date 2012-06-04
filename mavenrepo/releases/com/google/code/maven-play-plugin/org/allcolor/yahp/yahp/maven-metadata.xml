@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.google.code.maven-play-plugin.org.allcolor.yahp</groupId>
+  <artifactId>yahp</artifactId>
+  <version>1.3</version>
+  <versioning>
+    <versions>
+      <version>1.3</version>
+    </versions>
+    <lastUpdated>20120604185528</lastUpdated>
+  </versioning>
+</metadata>
