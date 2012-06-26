@@ -21,20 +21,48 @@ under the License.
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <parent>
+        <groupId>com.google.code.maven-play-plugin</groupId>
+        <artifactId>maven-parent</artifactId>
+        <version>1.0.0-beta2</version>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.google.code.maven-play-plugin</groupId>
-    <artifactId>parent</artifactId>
-    <version>1</version>
+    <artifactId>play-default-parents</artifactId>
+    <version>1.0.0-beta2</version>
     <packaging>pom</packaging>
 
-    <name>Parent</name>
+    <name>Play! Application and Module Default Parents</name>
+
+    <repositories>
+        <repository>
+            <id>com.google.code.maven-play-plugin</id>
+            <name>Maven Play Plugin - releases</name>
+            <url>https://maven-play-plugin.googlecode.com/svn/mavenrepo/releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>com.google.code.maven-play-plugin-snapshots</id>
+            <name>Maven Play Plugin - snapshots</name>
+            <url>https://maven-play-plugin.googlecode.com/svn/mavenrepo/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <scm>
+        <connection>scm:svn:http://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-beta2</connection>
+        <developerConnection>scm:svn:https://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-beta2</developerConnection>
+        <url>http://maven-play-plugin.googlecode.com/svn/tags/play-default-parents-1.0.0-beta2</url>
+    </scm>
 
     <modules>
-        <module>maven-parent</module>
-        <module>play-default-parents</module>
-        <module>play-japid-maven-plugin</module>
-        <module>plugin</module>
-        <module>test-projects</module>
+        <module>play-app-default-parent</module>
+        <module>play-module-default-parent</module>
     </modules>
 
 </project>
