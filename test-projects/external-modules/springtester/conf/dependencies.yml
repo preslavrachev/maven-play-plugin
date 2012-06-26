@@ -1,6 +1,0 @@
-# Application dependencies
-
-require:
-    - play
-    - play -> spring 1.0.1
-    - play -> springtester 0.1
