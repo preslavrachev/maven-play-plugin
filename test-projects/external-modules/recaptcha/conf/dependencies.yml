@@ -1,5 +1,0 @@
-require: 
-     - play
-     - play -> recaptcha 1.3
- 
-
