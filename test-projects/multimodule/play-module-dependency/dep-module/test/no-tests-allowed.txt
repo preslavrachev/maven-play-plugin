@@ -1,2 +1,0 @@
-Play! module cannot have any tests. Surefire will fail baceuse it will not be able to initialize
-Play! engine.
